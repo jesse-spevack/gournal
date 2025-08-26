@@ -375,6 +375,30 @@ body {
   opacity: 0.9;
 }
 
+/* Production Checkbox Container */
+.checkbox-container {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+  display: inline-block;
+}
+
+.checkbox-container .checkbox-box,
+.checkbox-container .checkbox-fill,
+.checkbox-container .checkbox-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.checkbox-container .checkbox-fill,
+.checkbox-container .checkbox-x {
+  z-index: 1;
+}
+
 /* Color Palette Styles */
 .color-grid {
   display: grid;
