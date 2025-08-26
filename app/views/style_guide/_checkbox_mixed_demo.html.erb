@@ -1,0 +1,44 @@
+<div class="style-guide-section">
+  <h3>Mix & Match Checkbox Demo</h3>
+  <p>Combine any box variation (0-9) with any fill pattern:</p>
+  
+  <div class="checkbox-variations">
+    <h4>Box Variations with Different Fills</h4>
+    
+    <!-- Box 0 with different fills -->
+    <%= render 'style_guide/checkbox_mixed', box: 0, fill: nil %>
+    <%= render 'style_guide/checkbox_mixed', box: 0, fill: 'blotch_3' %>
+    <%= render 'style_guide/checkbox_mixed', box: 0, fill: 'x_7' %>
+    
+    <!-- Box 3 with different fills -->
+    <%= render 'style_guide/checkbox_mixed', box: 3, fill: nil %>
+    <%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blotch_1' %>
+    <%= render 'style_guide/checkbox_mixed', box: 3, fill: 'x_9' %>
+    
+    <!-- Box 7 with different fills -->
+    <%= render 'style_guide/checkbox_mixed', box: 7, fill: nil %>
+    <%= render 'style_guide/checkbox_mixed', box: 7, fill: 'blotch_8' %>
+    <%= render 'style_guide/checkbox_mixed', box: 7, fill: 'x_2' %>
+  </div>
+
+  <div class="checkbox-variations">
+    <h4>Same Fill Pattern with Different Boxes</h4>
+    
+    <!-- Blotch 5 with different boxes -->
+    <%= render 'style_guide/checkbox_mixed', box: 1, fill: 'blotch_5' %>
+    <%= render 'style_guide/checkbox_mixed', box: 4, fill: 'blotch_5' %>
+    <%= render 'style_guide/checkbox_mixed', box: 8, fill: 'blotch_5' %>
+    
+    <!-- X mark 4 with different boxes -->
+    <%= render 'style_guide/checkbox_mixed', box: 2, fill: 'x_4' %>
+    <%= render 'style_guide/checkbox_mixed', box: 6, fill: 'x_4' %>
+    <%= render 'style_guide/checkbox_mixed', box: 9, fill: 'x_4' %>
+  </div>
+
+  <div class="usage-example">
+    <h4>Usage Examples:</h4>
+    <code>&lt;%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blotch_7' %&gt;</code><br>
+    <code>&lt;%= render 'style_guide/checkbox_mixed', box: 5, fill: 'x_2' %&gt;</code><br>
+    <code>&lt;%= render 'style_guide/checkbox_mixed', box: 8, fill: nil %&gt;</code>
+  </div>
+</div>

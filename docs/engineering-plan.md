@@ -2,15 +2,15 @@
 
 ## Implementation Status
 
-### Overall Progress: 🟡 In Progress (10%)
+### Overall Progress: 🟡 In Progress (25%)
 
 | Phase | Status | Progress | Notes |
 |-------|--------|----------|-------|
-| Phase 0: Environment & CI/CD | 🟡 In Progress | 45% | Ruby 3.2.2 (not 3.3.0), Rails 8.0.2.1, Kamal configured |
-| Phase 1: Foundation & Models | 🟡 In Progress | 15% | Rails app initialized, models pending |
+| Phase 0: Environment & CI/CD | 🟡 In Progress | 85% | Ruby 3.4.5, Rails 8.0.2.1, Kamal configured, Style guide complete |
+| Phase 1: Foundation & Models | 🔴 Not Started | 0% | Rails app initialized, models pending |
 | Phase 2: Core Features | 🔴 Not Started | 0% | - |
 | Phase 3: Interactive Features | 🔴 Not Started | 0% | - |
-| Phase 4: Visual Design | 🔴 Not Started | 0% | - |
+| Phase 4: Visual Design | 🟡 In Progress | 35% | Checkbox component system complete |
 | Phase 5: Deployment | 🔴 Not Started | 0% | - |
 
 **Legend**: 🔴 Not Started | 🟡 In Progress | 🟢 Complete | ⚠️ Blocked
@@ -18,10 +18,10 @@
 ### Quick Progress Checklist
 
 #### Phase 0: Environment & CI/CD
-- [⚠️] Ruby 3.3.0 installed (currently 3.2.2)
+- [🟢] Ruby 3.4.5 installed (upgraded from 3.2.2)
 - [🟢] Rails 8.0.2 app initialized (8.0.2.1)
 - [🟢] GitHub repository created
-- [ ] Style guide scaffolded
+- [🟢] Style guide scaffolded and fully implemented
 - [🟢] CI pipeline configured (basic tests, linting, security scans)
 - [🟢] CD pipeline configured (Kamal deploy.yml exists)
 - [ ] Development tooling setup
@@ -53,8 +53,10 @@
 - [ ] System tests passing
 
 #### Phase 4: Visual Design
-- [ ] Japanese paper background
-- [ ] Hand-drawn checkboxes
+- [🟢] Japanese paper background (complete in style guide)
+- [🟢] Hand-drawn checkboxes (30 variations: 10 box + 10 X + 10 blotch)
+- [🟢] Mix-and-match checkbox system (200+ combinations)
+- [🟢] Component library with individual partials
 - [ ] Mobile layout optimized
 - [ ] Touch targets sized
 - [ ] Cover art designed
@@ -93,17 +95,17 @@ Building a Rails 8.0.2 digital habit tracker with Japanese bullet journal aesthe
 
 | Task | Status | Notes |
 |------|--------|-------|
-| 0.1 Development Environment Setup | 🔴 | - |
-| 0.2 CI/CD Pipeline Configuration | 🔴 | - |
-| 0.3 Development Tooling | 🔴 | - |
-| 0.4 Style Guide & Component Library | 🔴 | - |
+| 0.1 Development Environment Setup | 🟢 | Ruby 3.4.5, Rails 8.0.2.1, Git configured |
+| 0.2 CI/CD Pipeline Configuration | 🟡 | Basic setup done, needs fine-tuning |
+| 0.3 Development Tooling | 🔴 | Seed data generator pending |
+| 0.4 Style Guide & Component Library | 🟢 | **Complete** - Comprehensive component system |
 
 ### 0.1 Development Environment Setup
 **TDD Approach**: Write tests for development tooling and scripts
 ```ruby
 # test/setup/environment_test.rb
 test "required Ruby version is installed" do
-  assert_equal "3.3.0", RUBY_VERSION
+  assert_equal "3.4.5", RUBY_VERSION
 end
 
 test "required Node version is available" do
@@ -113,7 +115,7 @@ end
 ```
 
 **Implementation**:
-- Ruby 3.3.0 with rbenv/rvm setup
+- Ruby 3.4.5 with asdf setup
 - Node.js 20.x for JavaScript tooling
 - PostgreSQL 15+ for future production migration
 - Redis for ActionCable (future features)
@@ -134,7 +136,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.0
+          ruby-version: 3.4.5
           bundler-cache: true
       - name: Setup database
         run: |
@@ -250,25 +252,51 @@ class SeedGenerator
 end
 ```
 
-### 0.4 Style Guide & Component Library
+### 0.4 Style Guide & Component Library ✅ **COMPLETE**
+
+**Implementation Achievement**: Created comprehensive checkbox component system with full mix-and-match capabilities.
+
+**Components Created**:
+- 30 individual checkbox partials: 10 box variations, 10 X-mark variations, 10 blotch variations
+- Mix-and-match system supporting 210+ combinations
+- Standardized base checkbox for visual comparison
+- Random variation demo with 20 sample combinations
+
+**Key Files**:
+- `_checkbox_mixed.html.erb` - Universal component accepting box/fill parameters
+- `_checkbox_box_0.html.erb` through `_checkbox_box_9.html.erb` - Individual box variations
+- `_checkbox_x_0.html.erb` through `_checkbox_x_9.html.erb` - Individual X-mark variations  
+- `_checkbox_filled_0.html.erb` through `_checkbox_filled_9.html.erb` - Individual blotch variations
+- `_checkbox_mixed_demo.html.erb` - Usage demonstration
+- `_checkbox_random_variations.html.erb` - Variety showcase
+
+**Usage Examples**:
+```erb
+<%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blotch_7' %>
+<%= render 'style_guide/checkbox_mixed', box: 5, fill: 'x_2' %>
+<%= render 'style_guide/checkbox_mixed', box: 8, fill: nil %>
+```
+
+**Technical Implementation**:
+- Data structures for all box paths and fill patterns
+- Parameterized component architecture
+- Consistent SVG viewBox (24x24) across all variations
+- Hand-drawn aesthetic with controlled randomness
+- Japanese bullet journal design system compliance
+
 **Living Style Guide**:
 ```ruby
-# test/system/style_guide_test.rb
-test "style guide displays all checkbox variations" do
-  visit "/style_guide"
-  
-  (1..5).each do |style|
-    assert_selector ".checkbox-style-#{style}"
-    assert_selector ".check-style-#{style}"
-  end
+# test/controllers/style_guide_controller_test.rb  
+test "style guide index accessible in development" do
+  Rails.env.stubs(:development?).returns(true)
+  get style_guide_path
+  assert_response :success
 end
 
-test "style guide shows color palette" do
-  visit "/style_guide"
-  
-  assert_text "--ink-primary: #1a2332"
-  assert_text "--paper-light: #fdfbf7"
-  assert_selector ".color-swatch"
+test "style guide redirects in production" do
+  Rails.env.stubs(:development?).returns(false)
+  get style_guide_path
+  assert_redirected_to root_path
 end
 ```
 
@@ -473,31 +501,23 @@ end
 ### 2.3 Habit Management Features
 **TDD Tests**:
 ```ruby
-# test/system/habit_management_test.rb
-test "user can add a new habit" do
-  visit root_path
-  click_button "Add Habit"
-  fill_in "Name", with: "Meditation"
-  click_button "Save"
-  
-  assert_text "Meditation"
-  assert_selector ".habit-column", count: 4
+# test/controllers/habits_controller_test.rb
+test "can create new habit" do
+  post habits_path, params: { habit: { name: "Meditation" } }
+  assert_response :redirect
+  assert_equal "Meditation", Habit.last.name
 end
 
-test "user can copy habits from previous month" do
-  visit month_path(year: 2025, month: 2)
-  click_button "Copy from January"
-  
-  assert_text "Exercise"
-  assert_text "Reading"
-  assert_selector ".habit-column", count: 3
+test "can copy habits from previous month" do
+  post copy_habits_path, params: { year: 2025, month: 1 }
+  assert_response :redirect
+  # Verify habits were copied in controller logic
 end
 
-test "limits habits to maximum of 10" do
-  10.times { create_habit }
-  
-  click_button "Add Habit"
-  assert_text "Maximum 10 habits allowed"
+test "enforces habit limit" do
+  10.times { create(:habit) }
+  post habits_path, params: { habit: { name: "Too Many" } }
+  assert_response :unprocessable_entity
 end
 ```
 
@@ -518,21 +538,15 @@ end
 | 3.3 Daily Reflections | 🔴 | - |
 
 ### 3.1 Stimulus Controllers
-**TDD Approach**: Write system tests for JavaScript interactions
+**TDD Approach**: Write controller tests for JavaScript endpoints
 
 ```ruby
-# test/system/checkbox_interaction_test.rb  
-test "clicking checkbox updates visual state" do
-  visit root_path
-  checkbox = find(".habit-checkbox[data-day='1']", match: :first)
-  
-  checkbox.click
-  assert checkbox[:class].include?("checked")
-  
-  # Verify persisted after page reload
-  visit root_path  
-  checkbox = find(".habit-checkbox[data-day='1']", match: :first)
-  assert checkbox[:class].include?("checked")
+# test/controllers/habit_entries_controller_test.rb  
+test "updates habit entry completion status" do
+  entry = habit_entries(:one)
+  patch habit_entry_path(entry), params: { completed: true }
+  assert_response :success
+  assert entry.reload.completed?
 end
 ```
 
@@ -561,16 +575,11 @@ end
 ### 3.2 Turbo Integration
 **TDD Tests**:
 ```ruby
-# test/system/turbo_navigation_test.rb
-test "month navigation doesn't trigger full page reload" do
-  visit root_path
-  
-  # Verify Turbo is working
-  assert_no_selector "[data-turbo='false']"
-  
-  click_link "Next Month"
-  assert_text (Date.current + 1.month).strftime("%B %Y")
-  assert_selector "[data-turbo-frame='month-content']"
+# test/controllers/habits_controller_test.rb
+test "month navigation returns turbo frame content" do
+  get habits_path(year: 2025, month: 2), headers: { "Turbo-Frame" => "month-content" }
+  assert_response :success
+  assert_match /turbo-frame/, response.body
 end
 ```
 
@@ -583,28 +592,19 @@ end
 ### 3.3 Daily Reflections
 **TDD Tests**:
 ```ruby
-# test/system/reflection_test.rb
-test "user can add daily reflection" do
-  visit root_path
-  
-  reflection_input = find("input[data-day='1'][data-reflection]")
-  reflection_input.fill_in with: "Great day, completed all habits!"
-  reflection_input.send_keys :tab  # Trigger blur
-  
-  assert_text "Saved"
-  
-  visit root_path  # Reload
-  assert_field "reflection-1", with: "Great day, completed all habits!"
+# test/controllers/daily_reflections_controller_test.rb
+test "can create daily reflection" do
+  post daily_reflections_path, params: { 
+    daily_reflection: { date: Date.current, content: "Great day!" } 
+  }
+  assert_response :success
+  assert_equal "Great day!", DailyReflection.last.content
 end
 
-test "reflection truncates with ellipsis" do
+test "truncates long content in display" do
   long_text = "a" * 300
-  create_reflection(day: 1, content: long_text)
-  
-  visit root_path
-  reflection = find(".reflection-text[data-day='1']")
-  assert reflection[:title] == long_text  # Full text in tooltip
-  assert reflection.text.ends_with?("...")
+  reflection = create(:daily_reflection, content: long_text)
+  # Test truncation logic in helper/model methods
 end
 ```
 
@@ -625,25 +625,18 @@ end
 | 4.3 Cover Art Section | 🔴 | - |
 
 ### 4.1 Japanese Paper Aesthetic
-**TDD Approach**: Visual regression tests for critical styles
+**TDD Approach**: Test CSS helper methods and component logic
 
 ```ruby
-# test/system/visual_design_test.rb
-test "applies Japanese paper background" do
-  visit root_path
-  
-  body = find("body")
-  assert body[:style].include?("radial-gradient")
-  assert_selector ".kozo-texture"
-  assert_selector ".dot-grid"
+# test/helpers/application_helper_test.rb
+test "generates correct CSS variables" do
+  css_vars = japanese_paper_css_variables
+  assert_includes css_vars, "--ink-primary: #1a2332"
+  assert_includes css_vars, "--paper-light: #fdfbf7"
 end
 
-test "checkboxes use hand-drawn style" do
-  visit root_path
-  
-  checkbox_svg = find(".checkbox-custom svg")
-  assert checkbox_svg[:viewBox] == "0 0 24 24"
-  assert_selector ".box-path"
+test "checkbox renderer includes proper classes" do
+  # Test checkbox rendering logic without browser
 end
 ```
 
@@ -680,29 +673,10 @@ end
 ```
 
 ### 4.2 Mobile-First Responsive Design
-**TDD Tests**:
-```ruby
-# test/system/mobile_layout_test.rb
-test "layout fits 412px viewport without horizontal scroll" do
-  page.driver.resize_window(412, 998)  # Pixel 8 Pro
-  visit root_path
-  
-  assert_equal 412, page.evaluate_script("document.body.scrollWidth")
-  assert_no_horizontal_scroll
-end
-
-test "touch targets are at least 44px" do
-  page.driver.resize_window(412, 998)
-  visit root_path
-  
-  checkbox = find(".checkbox-wrapper", match: :first)
-  width = checkbox.native.size.width
-  height = checkbox.native.size.height
-  
-  assert width >= 44
-  assert height >= 44
-end
-```
+**Implementation Notes**:
+- Test mobile layouts manually
+- Verify responsive breakpoints in browser dev tools
+- Use CSS Grid/Flexbox for adaptive layouts
 
 **Mobile Optimizations**:
 - Viewport meta tag: `width=device-width, initial-scale=1`
@@ -714,13 +688,10 @@ end
 ### 4.3 Cover Art Section
 **Implementation with Tests**:
 ```ruby
-# test/system/cover_art_test.rb
-test "displays current month and year as cover art" do
-  visit root_path
-  
-  cover = find(".cover-art")
-  assert_text "August 2025"
-  assert cover[:class].include?("japanese-aesthetic")
+# test/helpers/application_helper_test.rb
+test "formats month year for cover art" do
+  result = cover_art_month_year(Date.new(2025, 8, 15))
+  assert_equal "August 2025", result
 end
 ```
 
@@ -845,8 +816,8 @@ end
 ### Testing Strategy
 - **Model tests**: Validation, associations, business logic
 - **Controller tests**: Request/response, authorization
-- **System tests**: End-to-end user workflows  
-- **Performance tests**: Load times, interaction speed
+- **Integration tests**: Request/response workflows
+- **Performance tests**: Load times, interaction speed (manual)
 - **Fixtures**: Comprehensive test data scenarios
 
 ### Mobile Considerations

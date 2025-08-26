@@ -8,3 +8,580 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* ============================================ */
+/* COLOR PALETTE - Japanese Paper & Ink Theme  */
+/* ============================================ */
+
+:root {
+  /* Primary Ink Colors */
+  --ink-primary: #1a2332;        /* Main fountain pen ink color */
+  --ink-hover: #0f1821;           /* Darker ink on hover/checked */
+  
+  /* Paper Background Colors */
+  --paper-light: #fdfbf7;         /* Lightest washi paper tone */
+  --paper-mid: #f8f5ed;           /* Mid-tone paper */
+  --paper-dark: #f3ede3;          /* Darkest paper tone */
+  
+  /* Container Paper Colors */
+  --container-top: rgba(255, 254, 252, 0.85);
+  --container-mid: rgba(255, 253, 250, 0.75);
+  --container-bottom: rgba(252, 250, 246, 0.8);
+  
+  /* Texture & Fiber Colors */
+  --fiber-dark: rgba(165, 155, 135, 0.02);
+  --fiber-mid: rgba(145, 135, 115, 0.015);
+  --fiber-light: rgba(125, 115, 95, 0.01);
+  
+  /* Shadow & Depth Colors */
+  --shadow-subtle: rgba(0, 0, 0, 0.08);
+  --shadow-light: rgba(0, 0, 0, 0.03);
+  --shadow-medium: rgba(0, 0, 0, 0.05);
+  --shadow-focus: rgba(30, 40, 50, 0.15);
+  
+  /* Accent Colors */
+  --accent-watermark: rgba(100, 90, 80, 0.25);
+  --accent-dots: rgba(100, 90, 80, 0.06);
+  --accent-ink-bleed: rgba(30, 30, 40, 0.01);
+  
+  /* ============================================ */
+  /* TYPOGRAPHY SCALE                             */
+  /* ============================================ */
+  
+  /* Font Families */
+  --font-serif: 'Georgia', serif;
+  --font-mono: 'Courier New', monospace;
+  
+  /* Font Sizes */
+  --text-xs: 11px;    /* Day numbers, watermark */
+  --text-reflection: 12px;  /* Reflection text */
+  --text-sm: 16px;    /* Headers */
+  
+  /* Font Weights */
+  --weight-normal: normal;
+  --weight-regular: 400;
+  
+  /* Letter Spacing */
+  --letter-spacing-tight: 0.2px;
+  --letter-spacing-normal: 0.3px;
+  --letter-spacing-wide: 0.5px;
+  
+  /* Opacity Values */
+  --opacity-watermark: 0.25;
+  --opacity-grid: 0.4;
+  --opacity-texture: 0.7;
+  --opacity-numbers: 0.75;
+  --opacity-headers: 0.8;
+  --opacity-checkbox: 0.85;
+  --opacity-checkbox-hover: 0.95;
+  
+  /* ============================================ */
+  /* SPACING SYSTEM                               */
+  /* ============================================ */
+  
+  /* Micro Spacing */
+  --space-xxs: 1px;
+  --space-xs: 2px;
+  --space-sm: 4px;
+  
+  /* Component Spacing */
+  --space-checkbox-gap: 2px;      /* Between checkboxes */
+  --space-column-gap: 4px;         /* Between columns */
+  --space-number-margin: 12px;    /* Between number and checkbox */
+  
+  /* Layout Spacing */
+  --space-md: 15px;
+  --space-lg: 20px;
+  --space-xl: 40px;
+  --space-xxl: 80px;
+  
+  /* ============================================ */
+  /* DIMENSIONS                                   */
+  /* ============================================ */
+  
+  /* Checkbox Dimensions */
+  --checkbox-size: 24px;
+  --checkbox-viewbox: 24;
+  
+  /* Container Dimensions */
+  --container-max-width: 1200px;
+  --container-min-height: 100vh;
+  
+  /* Reflection Column Spacing */
+  --space-reflection-gap: 8px;     /* Gap before reflection column */
+  
+  /* Grid Pattern */
+  --grid-dot-size: 1.2px;
+  --grid-spacing: 24px;
+  
+  /* ============================================ */
+  /* STROKE PROPERTIES                            */
+  /* ============================================ */
+  
+  /* Base Strokes */
+  --stroke-width-base: 1.4;
+  --stroke-width-hover: 1.6;
+  
+  /* X Mark Stroke Variations */
+  --stroke-x-thin: 1.9;
+  --stroke-x-regular: 2.0;
+  --stroke-x-medium: 2.2;
+  --stroke-x-bold: 2.4;
+  --stroke-x-heavy: 2.6;
+  
+  /* ============================================ */
+  /* ANIMATION & TRANSITIONS                      */
+  /* ============================================ */
+  
+  /* Timing Functions */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Durations */
+  --duration-fast: 0.26s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.35s;
+  
+  /* ============================================ */
+  /* TRANSFORMS                                  */
+  /* ============================================ */
+  
+  /* Rotations for handwritten effect */
+  --rotate-subtle: -0.5deg;
+  --rotate-paper: 0.1deg;
+  --rotate-header: -90deg;
+}
+
+/* ============================================ */
+/* CHECKBOX COMPONENT STYLES                   */
+/* ============================================ */
+
+.checkbox-style-1,
+.checkbox-style-2,
+.checkbox-style-3,
+.checkbox-style-4,
+.checkbox-style-5 {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+  display: inline-block;
+}
+
+.check-style-1,
+.check-style-2,
+.check-style-3,
+.check-style-4,
+.check-style-5 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* Color swatches for style guide */
+.color-swatch {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ============================================ */
+/* GLOBAL STYLES                               */
+/* ============================================ */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f5f5f5;
+  padding: 40px 20px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============================================ */
+/* STYLE GUIDE SPECIFIC STYLES                 */
+/* ============================================ */
+
+/* Style Guide Layout */
+.design-system-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.style-guide-header {
+  background: linear-gradient(135deg, var(--ink-primary), var(--ink-hover));
+  color: white;
+  padding: 40px;
+  text-align: center;
+}
+
+.style-guide-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.style-guide-header p {
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.style-guide-section {
+  padding: 40px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Checkbox Showcase */
+.checkbox-showcase {
+  background: radial-gradient(ellipse at top left, var(--paper-light) 0%, var(--paper-mid) 40%, var(--paper-dark) 100%);
+  padding: 40px;
+  border-radius: 8px;
+  position: relative;
+  margin: 20px 0;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 30px;
+  align-items: start;
+  justify-items: center;
+}
+
+.checkbox-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  opacity: 0.8;
+}
+
+/* Checkbox Wrapper (for interactive checkboxes) */
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Standard Checkbox Component */
+.checkbox-custom {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.checkbox-box svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.box-path {
+  fill: none;
+  stroke: var(--ink-primary);
+  stroke-width: var(--stroke-width-base);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: var(--opacity-checkbox);
+}
+
+/* X Marks Container */
+.x-marks-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.x-mark {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--duration-normal) var(--ease-standard),
+              transform var(--duration-normal) var(--ease-bounce);
+}
+
+.x-mark.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.x-mark svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.x-path-1,
+.x-path-2 {
+  fill: none;
+  stroke: var(--ink-hover);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Hover states */
+.checkbox-wrapper:hover .box-path {
+  stroke: var(--ink-hover);
+  stroke-width: var(--stroke-width-hover);
+  opacity: var(--opacity-checkbox-hover);
+}
+
+/* Filled Checkbox Styles */
+.filled-checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+}
+
+.filled-path {
+  fill: var(--ink-primary);
+  stroke: none;
+  opacity: 0.9;
+}
+
+/* Color Palette Styles */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.color-swatch {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.color-display {
+  height: 80px;
+  width: 100%;
+  position: relative;
+}
+
+.color-info {
+  padding: 12px;
+}
+
+.color-name {
+  font-weight: 600;
+  color: var(--ink-primary);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.color-value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-primary);
+  opacity: 0.7;
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 1.8rem;
+  color: var(--ink-primary);
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+.subsection {
+  margin-bottom: 40px;
+}
+
+.subsection-title {
+  font-size: 1.2rem;
+  color: var(--ink-primary);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+/* Typography Samples */
+.typography-sample {
+  margin-bottom: 24px;
+}
+
+.type-label {
+  font-size: 14px;
+  color: var(--ink-primary);
+  opacity: 0.8;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+
+.type-example {
+  padding: 16px;
+  background: var(--paper-light);
+  border-radius: 4px;
+  border-left: 3px solid var(--ink-primary);
+}
+
+/* Spacing Grid */
+.spacing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.spacing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.spacing-visual {
+  height: 16px;
+  background: var(--ink-primary);
+  opacity: 0.8;
+  min-width: 1px;
+}
+
+.spacing-label {
+  font-size: 12px;
+  color: var(--ink-primary);
+  opacity: 0.7;
+  font-family: var(--font-mono);
+}
+
+/* Token Tables */
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.token-table th {
+  background: var(--paper-dark);
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink-primary);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.token-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.token-table tr:last-child td {
+  border-bottom: none;
+}
+
+.token-table code {
+  background: var(--paper-light);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-primary);
+}
+
+/* Blot Effects */
+.blot-1, .blot-2, .blot-3, .blot-4, .blot-5, .blot-6 {
+  position: absolute;
+  background: var(--ink-primary);
+  border-radius: 50%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blot-1 {
+  width: 120px;
+  height: 140px;
+  top: 15%;
+  left: 8%;
+  transform: rotate(-12deg);
+  border-radius: 60% 40% 55% 45%;
+}
+
+.blot-2 {
+  width: 80px;
+  height: 95px;
+  top: 35%;
+  right: 12%;
+  transform: rotate(25deg);
+  border-radius: 45% 55% 60% 40%;
+}
+
+.blot-3 {
+  width: 160px;
+  height: 180px;
+  bottom: 20%;
+  left: 15%;
+  transform: rotate(8deg);
+  border-radius: 70% 30% 40% 60%;
+}
+
+.blot-4 {
+  width: 100px;
+  height: 120px;
+  top: 60%;
+  right: 8%;
+  transform: rotate(-15deg);
+  border-radius: 50% 50% 45% 55%;
+}
+
+.blot-5 {
+  width: 90px;
+  height: 110px;
+  top: 8%;
+  right: 35%;
+  transform: rotate(18deg);
+  border-radius: 55% 45% 50% 50%;
+}
+
+.blot-6 {
+  width: 130px;
+  height: 150px;
+  bottom: 15%;
+  right: 25%;
+  transform: rotate(-22deg);
+  border-radius: 40% 60% 65% 35%;
+}
