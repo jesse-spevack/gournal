@@ -20,6 +20,9 @@ module CheckboxHelper
 
   def validate_checkbox_params!(box_variant, fill_variant, fill_style)
     raise ArgumentError, "box_variant must be an integer" unless box_variant.is_a?(Integer)
+    raise ArgumentError, "fill_variant must be an integer" unless fill_variant.nil? || fill_variant.is_a?(Integer)
+    raise ArgumentError, "fill_style must be a symbol" unless fill_style.nil? || fill_style.is_a?(Symbol)
+
     raise ArgumentError, "Invalid box_variant: must be 0-9 (got #{box_variant.inspect})" unless VALID_VARIANTS.include?(box_variant)
 
     if fill_variant && !VALID_VARIANTS.include?(fill_variant)

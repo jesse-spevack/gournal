@@ -75,6 +75,30 @@ class CheckboxHelperTest < ActionView::TestCase
     end
   end
 
+  test "raises error for non-symbol fill_style" do
+    assert_raises(ArgumentError) do
+      habit_checkbox(box_variant: 0, fill_variant: 0, fill_style: "invalid")
+    end
+  end
+
+  test "raises error for integer fill_style" do
+    assert_raises(ArgumentError) do
+      habit_checkbox(box_variant: 0, fill_variant: 0, fill_style: 123)
+    end
+  end
+
+  test "raises error for float box_variant" do
+    assert_raises(ArgumentError) do
+      habit_checkbox(box_variant: 1.5)
+    end
+  end
+
+  test "raises error for float fill_variant" do
+    assert_raises(ArgumentError) do
+      habit_checkbox(box_variant: 0, fill_variant: 1.5, fill_style: :x)
+    end
+  end
+
   # Test rendering output
   test "renders checkbox container div" do
     # The actual rendering will fail in test environment without full view context,
