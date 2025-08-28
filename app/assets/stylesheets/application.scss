@@ -1,1 +1,16 @@
-// Sassy
+/*
+ * Gournal - A Japanese paper & ink themed journaling application
+ * 
+ * This is the main stylesheet manifest that imports all component files.
+ * The modular architecture makes styles easier to maintain and organize.
+ */
+
+/* Configuration & Tokens */
+@use "config/design-tokens";
+
+/* Base Styles */
+@use "base/reset";
+
+/* Component Styles */
+@use "components/checkbox";
+@use "components/style-guide";

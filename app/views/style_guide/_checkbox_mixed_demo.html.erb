@@ -1,0 +1,44 @@
+<div class="style-guide-section">
+  <h3>Mix & Match Checkbox Demo</h3>
+  <p>Combine any box variation (0-9) with any fill pattern:</p>
+  
+  <div class="checkbox-variations">
+    <h4>Box Variations with Different Fills</h4>
+    
+    <!-- Box 0 with different fills -->
+    <%= habit_checkbox(box_variant: 0) %>
+    <%= habit_checkbox(box_variant: 0, fill_variant: 3, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 0, fill_variant: 7, fill_style: :x) %>
+    
+    <!-- Box 3 with different fills -->
+    <%= habit_checkbox(box_variant: 3) %>
+    <%= habit_checkbox(box_variant: 3, fill_variant: 1, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 3, fill_variant: 9, fill_style: :x) %>
+    
+    <!-- Box 7 with different fills -->
+    <%= habit_checkbox(box_variant: 7) %>
+    <%= habit_checkbox(box_variant: 7, fill_variant: 8, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 7, fill_variant: 2, fill_style: :x) %>
+  </div>
+
+  <div class="checkbox-variations">
+    <h4>Same Fill Pattern with Different Boxes</h4>
+    
+    <!-- Blot 5 with different boxes -->
+    <%= habit_checkbox(box_variant: 1, fill_variant: 5, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 4, fill_variant: 5, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 8, fill_variant: 5, fill_style: :blot) %>
+    
+    <!-- X mark 4 with different boxes -->
+    <%= habit_checkbox(box_variant: 2, fill_variant: 4, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 6, fill_variant: 4, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 9, fill_variant: 4, fill_style: :x) %>
+  </div>
+
+  <div class="usage-example">
+    <h4>Usage Examples:</h4>
+    <code>&lt;%= habit_checkbox(box_variant: 3, fill_variant: 7, fill_style: :blot) %&gt;</code><br>
+    <code>&lt;%= habit_checkbox(box_variant: 5, fill_variant: 2, fill_style: :x) %&gt;</code><br>
+    <code>&lt;%= habit_checkbox(box_variant: 8) %&gt;</code>
+  </div>
+</div>

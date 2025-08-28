@@ -26,7 +26,7 @@ People who appreciate bullet journal aesthetics but prefer digital convenience. 
 ### Daily Workflow
 1. User opens app in the evening
 2. Views current month's habit grid
-3. Fills in completed habits with satisfying ink blotch interactions
+3. Fills in completed habits with satisfying ink blot interactions
 4. Optionally adds single-line reflection for the day
 5. Enjoys the aesthetic result and feels accomplished
 
@@ -45,7 +45,7 @@ People who appreciate bullet journal aesthetics but prefer digital convenience. 
 - **Custom habit creation**: User-defined habit names, limited by screen width
 - **Checkbox interactions**: 
   - Hand-drawn checkbox borders (many variations to mimic random variations in hand writing in a bullet journal)
-  - Ink blotch fills (many variations to mimic random variations in hand writing in a bullet journal) 
+  - Ink blot fills (many variations to mimic random variations in hand writing in a bullet journal) 
   - Random selection for organic feel
 - **Daily reflections**: Optional single-line text, truncated with ellipsis
 - **Data persistence**: Edit any previous day, no future date entry
@@ -158,7 +158,7 @@ DailyReflection
 
 ### Interaction Design
 - **Organic randomness**: Each checkbox uses random variations
-- **Ink blotch satisfaction**: Filling feels like real pen marks
+- **Ink blot satisfaction**: Filling feels like real pen marks
 - **Smooth navigation**: Fluid month transitions
 - **Forgiving UX**: Easy to edit, no harsh validation
 
@@ -223,7 +223,7 @@ DailyReflection
 - **Engagement**: Will minimal approach maintain daily usage?
 
 ### Validation Needed
-- **Interaction feedback**: Do ink blotches feel satisfying?
+- **Interaction feedback**: Do ink blotes feel satisfying?
 - **Mobile usability**: Can users easily tap checkboxes on small screens?
 - **Aesthetic resonance**: Does Japanese paper theme appeal to target users?
 

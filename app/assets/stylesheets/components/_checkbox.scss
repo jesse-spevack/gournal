@@ -1,0 +1,181 @@
+/* ============================================ */
+/* CHECKBOX COMPONENT STYLES                   */
+/* ============================================ */
+
+/* Checkbox grid and item layout */
+.checkbox-showcase {
+  background: radial-gradient(ellipse at top left, var(--paper-light) 0%, var(--paper-mid) 40%, var(--paper-dark) 100%);
+  padding: 40px;
+  border-radius: 8px;
+  position: relative;
+  margin: 20px 0;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 30px;
+  align-items: start;
+  justify-items: center;
+}
+
+.checkbox-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  opacity: 0.8;
+}
+
+/* Interactive checkbox wrapper */
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Standard checkbox component */
+.checkbox-custom {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.checkbox-box svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.box-path {
+  fill: none;
+  stroke: var(--ink-primary);
+  stroke-width: var(--stroke-width-base);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: var(--opacity-checkbox);
+}
+
+/* Stimulus CSS class states */
+.box-path.checkbox-checked {
+  stroke: var(--ink-hover);
+  stroke-width: 1.6;
+  opacity: 0.95;
+}
+
+.box-path.checkbox-unchecked {
+  stroke: var(--ink-primary);
+  stroke-width: 1.4;
+  opacity: 0.85;
+}
+
+/* X Marks */
+.x-marks-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.x-mark {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--duration-normal) var(--ease-standard),
+              transform var(--duration-normal) var(--ease-bounce);
+}
+
+.x-mark.show,
+.x-mark.x-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.x-mark svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.x-path-1,
+.x-path-2 {
+  fill: none;
+  stroke: var(--ink-hover);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Hover states */
+.checkbox-wrapper:hover .box-path {
+  stroke: var(--ink-hover);
+  stroke-width: var(--stroke-width-hover);
+  opacity: var(--opacity-checkbox-hover);
+}
+
+/* Filled checkbox styles */
+.filled-checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+}
+
+.filled-path {
+  fill: var(--ink-primary);
+  stroke: none;
+  opacity: 0.9;
+}
+
+/* Production checkbox container */
+.checkbox-container {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+  display: inline-block;
+}
+
+.checkbox-container .checkbox-box,
+.checkbox-container .checkbox-fill,
+.checkbox-container .checkbox-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.checkbox-container .checkbox-fill,
+.checkbox-container .checkbox-x {
+  z-index: 1;
+}

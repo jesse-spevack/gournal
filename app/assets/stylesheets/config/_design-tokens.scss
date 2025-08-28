@@ -1,0 +1,151 @@
+/* ============================================ */
+/* DESIGN TOKENS - Japanese Paper & Ink Theme  */
+/* ============================================ */
+/* 
+ * Gournal Design System v1.0.0
+ * Last updated: 2025-08-27
+ * 
+ * Breaking changes policy:
+ * - Major: Remove/rename core tokens (rare)
+ * - Minor: Add new tokens, adjust values (common)  
+ * - Patch: Bug fixes, documentation (frequent)
+ */
+
+:root {
+  /* Primary Ink Colors - v1.0.0 */
+  --ink-primary: #1a2332;        /* Main fountain pen ink color - v1.0.0 */
+  --ink-hover: #0f1821;           /* Darker ink on hover/checked - v1.0.0 */
+  
+  /* Paper Background Colors - v1.0.0 */
+  --paper-light: #fdfbf7;         /* Lightest washi paper tone - v1.0.0 */
+  --paper-mid: #f8f5ed;           /* Mid-tone paper - v1.0.0 */
+  --paper-dark: #f3ede3;          /* Darkest paper tone - v1.0.0 */
+  
+  /* Container Paper Colors */
+  --container-top: rgba(255, 254, 252, 0.85);
+  --container-mid: rgba(255, 253, 250, 0.75);
+  --container-bottom: rgba(252, 250, 246, 0.8);
+  
+  /* Texture & Fiber Colors */
+  --fiber-dark: rgba(165, 155, 135, 0.02);
+  --fiber-mid: rgba(145, 135, 115, 0.015);
+  --fiber-light: rgba(125, 115, 95, 0.01);
+  
+  /* Shadow & Depth Colors */
+  --shadow-subtle: rgba(0, 0, 0, 0.08);
+  --shadow-light: rgba(0, 0, 0, 0.03);
+  --shadow-medium: rgba(0, 0, 0, 0.05);
+  --shadow-focus: rgba(30, 40, 50, 0.15);
+  
+  /* Accent Colors */
+  --accent-watermark: rgba(100, 90, 80, 0.25);
+  --accent-dots: rgba(100, 90, 80, 0.06);
+  --accent-ink-bleed: rgba(30, 30, 40, 0.01);
+  
+  /* ============================================ */
+  /* TYPOGRAPHY SCALE - v1.0.0                   */
+  /* ============================================ */
+  
+  /* Font Families - v1.0.0 */
+  --font-serif: 'Georgia', serif;        /* v1.0.0 */
+  --font-mono: 'Courier New', monospace; /* v1.0.0 */
+  
+  /* Font Sizes */
+  --text-xs: 11px;    /* Day numbers, watermark */
+  --text-reflection: 12px;  /* Reflection text */
+  --text-sm: 16px;    /* Headers */
+  
+  /* Font Weights */
+  --weight-normal: normal;
+  --weight-regular: 400;
+  
+  /* Letter Spacing */
+  --letter-spacing-tight: 0.2px;
+  --letter-spacing-normal: 0.3px;
+  --letter-spacing-wide: 0.5px;
+  
+  /* Opacity Values */
+  --opacity-watermark: 0.25;
+  --opacity-grid: 0.4;
+  --opacity-texture: 0.7;
+  --opacity-numbers: 0.75;
+  --opacity-headers: 0.8;
+  --opacity-checkbox: 0.85;
+  --opacity-checkbox-hover: 0.95;
+  
+  /* ============================================ */
+  /* SPACING SYSTEM                               */
+  /* ============================================ */
+  
+  /* Micro Spacing */
+  --space-xxs: 1px;
+  --space-xs: 2px;
+  --space-sm: 4px;
+  
+  /* Component Spacing */
+  --space-checkbox-gap: 2px;      /* Between checkboxes */
+  --space-column-gap: 4px;         /* Between columns */
+  --space-number-margin: 12px;    /* Between number and checkbox */
+  
+  /* Layout Spacing */
+  --space-md: 15px;
+  --space-lg: 20px;
+  --space-xl: 40px;
+  --space-xxl: 80px;
+  
+  /* ============================================ */
+  /* DIMENSIONS                                   */
+  /* ============================================ */
+  
+  /* Checkbox Dimensions - v1.0.0 */
+  --checkbox-size: 24px;          /* v1.0.0 - Core component size */
+  --checkbox-viewbox: 24;         /* v1.0.0 */
+  
+  /* Container Dimensions */
+  --container-max-width: 1200px;
+  --container-min-height: 100vh;
+  
+  /* Reflection Column Spacing */
+  --space-reflection-gap: 8px;     /* Gap before reflection column */
+  
+  /* Grid Pattern */
+  --grid-dot-size: 1.2px;
+  --grid-spacing: 24px;
+  
+  /* ============================================ */
+  /* STROKE PROPERTIES                            */
+  /* ============================================ */
+  
+  /* Base Strokes */
+  --stroke-width-base: 1.4;
+  --stroke-width-hover: 1.6;
+  
+  /* X Mark Stroke Variations */
+  --stroke-x-thin: 1.9;
+  --stroke-x-regular: 2.0;
+  --stroke-x-medium: 2.2;
+  --stroke-x-bold: 2.4;
+  --stroke-x-heavy: 2.6;
+  
+  /* ============================================ */
+  /* ANIMATION & TRANSITIONS                      */
+  /* ============================================ */
+  
+  /* Timing Functions */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Durations */
+  --duration-fast: 0.26s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.35s;
+  
+  /* ============================================ */
+  /* TRANSFORMS                                  */
+  /* ============================================ */
+  
+  /* Rotations for handwritten effect */
+  --rotate-subtle: -0.5deg;
+  --rotate-paper: 0.1deg;
+  --rotate-header: -90deg;
+}
