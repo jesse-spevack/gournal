@@ -3,30 +3,30 @@
   <p>Randomly mixed box and fill variations to showcase the variety possible:</p>
   
   <div class="checkbox-variations">
-    <!-- Random combinations using the mix-and-match partial -->
-    <%= render 'style_guide/checkbox_mixed', box: 4, fill: 'blot_2' %>
-    <%= render 'style_guide/checkbox_mixed', box: 7, fill: 'x_5' %>
-    <%= render 'style_guide/checkbox_mixed', box: 1, fill: 'blot_8' %>
-    <%= render 'style_guide/checkbox_mixed', box: 9, fill: 'x_1' %>
-    <%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blot_6' %>
+    <!-- Random combinations using the habit_checkbox helper -->
+    <%= habit_checkbox(box_variant: 4, fill_variant: 2, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 7, fill_variant: 5, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 1, fill_variant: 8, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 9, fill_variant: 1, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 3, fill_variant: 6, fill_style: :blot) %>
     
-    <%= render 'style_guide/checkbox_mixed', box: 8, fill: 'x_9' %>
-    <%= render 'style_guide/checkbox_mixed', box: 2, fill: 'blot_4' %>
-    <%= render 'style_guide/checkbox_mixed', box: 6, fill: 'x_3' %>
-    <%= render 'style_guide/checkbox_mixed', box: 5, fill: 'blot_1' %>
-    <%= render 'style_guide/checkbox_mixed', box: 0, fill: 'x_7' %>
+    <%= habit_checkbox(box_variant: 8, fill_variant: 9, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 2, fill_variant: 4, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 6, fill_variant: 3, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 5, fill_variant: 1, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 0, fill_variant: 7, fill_style: :x) %>
     
-    <%= render 'style_guide/checkbox_mixed', box: 1, fill: 'blot_9' %>
-    <%= render 'style_guide/checkbox_mixed', box: 8, fill: 'x_0' %>
-    <%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blot_5' %>
-    <%= render 'style_guide/checkbox_mixed', box: 7, fill: 'x_8' %>
-    <%= render 'style_guide/checkbox_mixed', box: 4, fill: 'blot_3' %>
+    <%= habit_checkbox(box_variant: 1, fill_variant: 9, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 8, fill_variant: 0, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 3, fill_variant: 5, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 7, fill_variant: 8, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 4, fill_variant: 3, fill_style: :blot) %>
     
-    <%= render 'style_guide/checkbox_mixed', box: 9, fill: 'x_6' %>
-    <%= render 'style_guide/checkbox_mixed', box: 2, fill: 'blot_7' %>
-    <%= render 'style_guide/checkbox_mixed', box: 6, fill: 'x_2' %>
-    <%= render 'style_guide/checkbox_mixed', box: 5, fill: 'blot_0' %>
-    <%= render 'style_guide/checkbox_mixed', box: 0, fill: 'x_4' %>
+    <%= habit_checkbox(box_variant: 9, fill_variant: 6, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 2, fill_variant: 7, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 6, fill_variant: 2, fill_style: :x) %>
+    <%= habit_checkbox(box_variant: 5, fill_variant: 0, fill_style: :blot) %>
+    <%= habit_checkbox(box_variant: 0, fill_variant: 4, fill_style: :x) %>
   </div>
   
   <div class="note">
