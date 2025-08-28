@@ -107,6 +107,19 @@
   opacity: var(--opacity-checkbox);
 }
 
+/* Stimulus CSS class states */
+.box-path.checkbox-checked {
+  stroke: var(--ink-hover);
+  stroke-width: 1.6;
+  opacity: 0.95;
+}
+
+.box-path.checkbox-unchecked {
+  stroke: var(--ink-primary);
+  stroke-width: 1.4;
+  opacity: 0.85;
+}
+
 /* X Marks */
 .x-marks-container {
   position: absolute;
@@ -127,7 +140,8 @@
               transform var(--duration-normal) var(--ease-bounce);
 }
 
-.x-mark.show {
+.x-mark.show,
+.x-mark.x-visible {
   opacity: 1;
   transform: scale(1);
 }

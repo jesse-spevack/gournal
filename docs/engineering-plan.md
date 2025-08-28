@@ -54,7 +54,7 @@
 
 #### Phase 4: Visual Design
 - [🟢] Japanese paper background (complete in style guide)
-- [🟢] Hand-drawn checkboxes (30 variations: 10 box + 10 X + 10 blotch)
+- [🟢] Hand-drawn checkboxes (30 variations: 10 box + 10 X + 10 blot)
 - [🟢] Mix-and-match checkbox system (200+ combinations)
 - [🟢] Component library with individual partials
 - [ ] Mobile layout optimized
@@ -257,7 +257,7 @@ end
 **Implementation Achievement**: Created comprehensive checkbox component system with full mix-and-match capabilities.
 
 **Components Created**:
-- 30 individual checkbox partials: 10 box variations, 10 X-mark variations, 10 blotch variations
+- 30 individual checkbox partials: 10 box variations, 10 X-mark variations, 10 blot variations
 - Mix-and-match system supporting 210+ combinations
 - Standardized base checkbox for visual comparison
 - Random variation demo with 20 sample combinations
@@ -266,13 +266,13 @@ end
 - `_checkbox_mixed.html.erb` - Universal component accepting box/fill parameters
 - `_checkbox_box_0.html.erb` through `_checkbox_box_9.html.erb` - Individual box variations
 - `_checkbox_x_0.html.erb` through `_checkbox_x_9.html.erb` - Individual X-mark variations  
-- `_checkbox_filled_0.html.erb` through `_checkbox_filled_9.html.erb` - Individual blotch variations
+- `_checkbox_filled_0.html.erb` through `_checkbox_filled_9.html.erb` - Individual blot variations
 - `_checkbox_mixed_demo.html.erb` - Usage demonstration
 - `_checkbox_random_variations.html.erb` - Variety showcase
 
 **Usage Examples**:
 ```erb
-<%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blotch_7' %>
+<%= render 'style_guide/checkbox_mixed', box: 3, fill: 'blot_7' %>
 <%= render 'style_guide/checkbox_mixed', box: 5, fill: 'x_2' %>
 <%= render 'style_guide/checkbox_mixed', box: 8, fill: nil %>
 ```

@@ -1,7 +1,7 @@
 module CheckboxHelper
   VALID_VARIANTS = (0..9).freeze
   VALID_FILL_STYLES = {
-    blot: "blotch",
+    blot: "blot",
     x: "x"
   }.freeze
 
@@ -19,14 +19,15 @@ module CheckboxHelper
   private
 
   def validate_checkbox_params!(box_variant, fill_variant, fill_style)
-    raise ArgumentError, "Invalid box_variant: must be 0-9 (got #{box_variant})" unless VALID_VARIANTS.include?(box_variant)
+    raise ArgumentError, "box_variant must be an integer" unless box_variant.is_a?(Integer)
+    raise ArgumentError, "Invalid box_variant: must be 0-9 (got #{box_variant.inspect})" unless VALID_VARIANTS.include?(box_variant)
 
     if fill_variant && !VALID_VARIANTS.include?(fill_variant)
-      raise ArgumentError, "Invalid fill_variant: must be 0-9 (got #{fill_variant})"
+      raise ArgumentError, "Invalid fill_variant: must be 0-9 (got #{fill_variant.inspect})"
     end
 
     if fill_style && !VALID_FILL_STYLES.key?(fill_style)
-      raise ArgumentError, "Invalid fill_style: must be #{VALID_FILL_STYLES.keys.join(', ')} (got #{fill_style})"
+      raise ArgumentError, "Invalid fill_style: must be #{VALID_FILL_STYLES.keys.join(', ')} (got #{fill_style.inspect})"
     end
   end
 

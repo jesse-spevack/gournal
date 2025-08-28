@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="checkbox"
 export default class extends Controller {
   static targets = [ "input", "xMark", "boxPath" ]
+  static classes = [ "checked", "unchecked", "xVisible" ]
 
   connect() {
     // Set initial state based on checkbox checked status
@@ -17,20 +18,30 @@ export default class extends Controller {
   updateVisual() {
     if (this.hasInputTarget && this.hasXMarkTarget) {
       if (this.inputTarget.checked) {
-        // Show X mark and update styling for checked state
-        this.xMarkTarget.classList.add('show')
+        // Apply checked state classes
+        if (this.hasXVisibleClass) {
+          this.xMarkTarget.classList.add(...this.xVisibleClasses)
+        }
         if (this.hasBoxPathTarget) {
-          this.boxPathTarget.style.stroke = 'var(--ink-hover)'
-          this.boxPathTarget.style.strokeWidth = '1.6'
-          this.boxPathTarget.style.opacity = '0.95'
+          if (this.hasCheckedClass) {
+            this.boxPathTarget.classList.add(...this.checkedClasses)
+          }
+          if (this.hasUncheckedClass) {
+            this.boxPathTarget.classList.remove(...this.uncheckedClasses)
+          }
         }
       } else {
-        // Hide X mark and revert to unchecked styling
-        this.xMarkTarget.classList.remove('show')
+        // Apply unchecked state classes
+        if (this.hasXVisibleClass) {
+          this.xMarkTarget.classList.remove(...this.xVisibleClasses)
+        }
         if (this.hasBoxPathTarget) {
-          this.boxPathTarget.style.stroke = 'var(--ink-primary)'
-          this.boxPathTarget.style.strokeWidth = '1.4'
-          this.boxPathTarget.style.opacity = '0.85'
+          if (this.hasCheckedClass) {
+            this.boxPathTarget.classList.remove(...this.checkedClasses)
+          }
+          if (this.hasUncheckedClass) {
+            this.boxPathTarget.classList.add(...this.uncheckedClasses)
+          }
         }
       }
     }
