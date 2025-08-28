@@ -314,7 +314,6 @@ All design tokens are defined as CSS custom properties (CSS variables) for:
 
 ### Basic Checkbox Usage
 ```erb
-<%= habit_checkbox(box_variant: 3) %>
 <%= habit_checkbox(box_variant: 7, fill_variant: 2, fill_style: :x) %>
 <%= habit_checkbox(box_variant: 1, fill_variant: 5, fill_style: :blot) %>
 ```
