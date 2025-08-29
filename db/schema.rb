@@ -10,5 +10,61 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_29_045311) do
+  create_table "daily_reflections", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "date", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "date"], name: "index_daily_reflections_on_user_id_and_date", unique: true
+    t.index ["user_id"], name: "index_daily_reflections_on_user_id"
+  end
+
+  create_table "habit_entries", force: :cascade do |t|
+    t.integer "habit_id", null: false
+    t.integer "day", null: false
+    t.boolean "completed", default: false, null: false
+    t.integer "checkbox_style"
+    t.integer "check_style"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["habit_id", "day"], name: "index_habit_entries_on_habit_id_and_day", unique: true
+    t.index ["habit_id"], name: "index_habit_entries_on_habit_id"
+  end
+
+  create_table "habits", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "month", null: false
+    t.integer "year", null: false
+    t.integer "position", null: false
+    t.boolean "active", default: true, null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "year", "month", "position"], name: "index_habits_on_user_id_and_year_and_month_and_position", unique: true
+    t.index ["user_id"], name: "index_habits_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+  end
+
+  add_foreign_key "daily_reflections", "users"
+  add_foreign_key "habit_entries", "habits"
+  add_foreign_key "habits", "users"
+  add_foreign_key "sessions", "users"
 end
