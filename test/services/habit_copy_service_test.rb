@@ -5,6 +5,23 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     @user = users(:one)
   end
 
+  test "should respond to class method call" do
+    assert_respond_to HabitCopyService, :call
+  end
+
+  test "class method call should delegate to instance" do
+    # Ensure the class method returns the same result as instance method
+    Habit.create!(name: "Test", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
+
+    # Using class method
+    class_method_result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
+
+    # Verify it returns an array with the copied habit
+    assert_kind_of Array, class_method_result
+    assert_equal 1, class_method_result.length
+    assert_equal "Test", class_method_result.first.name
+  end
+
   test "should copy habits from previous month" do
     # Create habits for July 2024
     Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
