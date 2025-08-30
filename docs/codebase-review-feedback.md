@@ -157,7 +157,7 @@ This document collects feedback from a file-by-file review of the Gournal codeba
 - Clean Rails 8 pattern
 
 **Action Items:**
-- [ ] Add controller tests
+- [x] Add controller tests
 
 ### 7. app/controllers/passwords_controller.rb
 
