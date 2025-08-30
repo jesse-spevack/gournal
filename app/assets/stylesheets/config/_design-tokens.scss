@@ -42,6 +42,16 @@
   --accent-dots: rgba(100, 90, 80, 0.06);
   --accent-ink-bleed: rgba(30, 30, 40, 0.01);
   
+  /* Opacity variations of primary colors */
+  --ink-primary-05: rgba(26, 35, 50, 0.05);
+  --ink-primary-10: rgba(26, 35, 50, 0.1);
+  --ink-primary-20: rgba(26, 35, 50, 0.2);
+  --ink-primary-30: rgba(26, 35, 50, 0.3);
+  
+  /* Form-specific colors */
+  --paper-form-bg: rgba(255, 255, 255, 0.5);
+  --paper-form-bg-focus: rgba(255, 255, 255, 0.8);
+  
   /* ============================================ */
   /* TYPOGRAPHY SCALE - v1.0.0                   */
   /* ============================================ */
@@ -54,6 +64,8 @@
   --text-xs: 11px;    /* Day numbers, watermark */
   --text-reflection: 12px;  /* Reflection text */
   --text-sm: 16px;    /* Headers */
+  --font-size-small: 0.85rem;  /* Small labels */
+  --font-size-form: 14px;  /* Form inputs and buttons */
   
   /* Font Weights */
   --weight-normal: normal;
@@ -92,6 +104,15 @@
   --space-lg: 20px;
   --space-xl: 40px;
   --space-xxl: 80px;
+  
+  /* ============================================ */
+  /* BORDERS                                      */
+  /* ============================================ */
+  
+  /* Border widths */
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 3px;
   
   /* ============================================ */
   /* DIMENSIONS                                   */
@@ -148,4 +169,30 @@
   --rotate-subtle: -0.5deg;
   --rotate-paper: 0.1deg;
   --rotate-header: -90deg;
+  
+  /* ============================================ */
+  /* RESPONSIVE BREAKPOINTS                      */
+  /* ============================================ */
+  
+  /* Breakpoint values */
+  --breakpoint-mobile: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+}
+
+/* ============================================ */
+/* RESPONSIVE MIXINS                           */
+/* ============================================ */
+
+/* Mobile-first responsive mixins */
+@mixin mobile-up {
+  @media (min-width: 480px) { @content; }
+}
+
+@mixin tablet-up {
+  @media (min-width: 768px) { @content; }
+}
+
+@mixin desktop-up {
+  @media (min-width: 1024px) { @content; }
 }

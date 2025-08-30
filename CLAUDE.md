@@ -114,10 +114,10 @@ rubocop
 
 This approach maintains quality while avoiding the overhead and brittleness of browser-based testing.
 
-## Asset Pipeline Architecture (Rails 8 + Propshaft)
+## Asset Pipeline Architecture (Rails 8 + Propshaft + Dart Sass)
 
 ### Overview
-This application uses Rails 8's default Propshaft asset pipeline, which is fundamentally different from Sprockets. Propshaft embraces simplicity and leverages modern browser capabilities.
+This application uses Rails 8's default Propshaft asset pipeline combined with dartsass-rails for SCSS compilation. Propshaft handles asset serving while Dart Sass handles SCSS to CSS compilation.
 
 ### Key Configuration Files
 
@@ -138,16 +138,35 @@ In `app/views/layouts/application.html.erb`:
 - Use `"application"` (string) not `:app` (symbol)
 - Must match the actual filename: `app/assets/stylesheets/application.css`
 
+### CSS Build Process (Rails 8 + Propshaft + Dart Sass)
+
+**Source Files:** Edit SCSS in `app/assets/stylesheets/`
+**Compiled Output:** Auto-generated `app/assets/builds/application.css`
+**Development:** Run `bin/dev` to start CSS file watcher
+**Production:** `bin/rails assets:precompile` handles everything
+
+#### Commands:
+- `bin/dev` - Start development with live CSS compilation
+- `bin/rails dartsass:build` - Manual one-time CSS build  
+- `bin/rails dartsass:watch` - Watch for SCSS changes
+
 ### File Organization
 
 #### CSS Structure
 ```
 app/assets/stylesheets/
-├── application.css     # Main stylesheet with design system
-└── [no .scss files]    # Avoid conflicts with Propshaft
+├── application.scss     # Main manifest file (imports all components)
+├── config/
+│   └── _design-tokens.scss   # CSS custom properties and variables
+├── base/
+│   └── _reset.scss          # Base styles & resets
+└── components/
+    ├── _checkbox.scss       # Checkbox component styles
+    ├── _auth-forms.scss     # Login/signup form styles
+    └── _style-guide.scss    # Style guide documentation styles
 ```
 
-**IMPORTANT**: Do not have both `application.css` and `application.scss` files. Propshaft may serve the wrong file.
+**IMPORTANT**: The `application.scss` file in `app/assets/stylesheets/` is the source file. Dart Sass compiles it to `app/assets/builds/application.css`, which Propshaft then serves.
 
 #### Design System in CSS
 All design tokens are defined in `application.css`:
@@ -220,5 +239,60 @@ curl -I http://localhost:3000/assets/application-[hash].css
 - Focus on modern CSS features over preprocessors
 
 This architecture prioritizes simplicity, maintainability, and leverages Rails 8's modern defaults while building a solid foundation for an aesthetic application.
+
+### CSS Performance Optimization
+
+#### Build Size Verification
+Check CSS build size to ensure optimization:
+```bash
+# Check CSS build size
+ls -lh app/assets/builds/application.css | awk '{print "CSS Build Size: " $5}'
+
+# Alternative using Rails runner
+bin/rails runner "
+  css_path = Rails.root.join('app/assets/builds/application.css')
+  if css_path.exist?
+    size = File.size(css_path) / 1024.0
+    puts \"CSS Build: #{size.round(1)}KB\"
+  else
+    puts 'CSS Build: MISSING'
+  end
+"
+```
+
+**Note:** Production builds are automatically minified by dartsass-rails, reducing file size significantly.
+
+## CSS File Organization
+
+### Structure:
+```
+app/assets/stylesheets/
+├── application.scss              # Main manifest file
+├── config/
+│   └── _design-tokens.scss      # CSS custom properties and mixins
+├── base/
+│   └── _reset.scss              # Base styles & resets
+└── components/
+    ├── _checkbox.scss           # Checkbox component styles
+    ├── _auth-forms.scss         # Login/signup forms
+    ├── _style-guide-layout.scss # Style guide page structure
+    ├── _style-guide-demos.scss  # Component showcases
+    └── _style-guide-utilities.scss # Helper classes for docs
+```
+
+### Adding New Components:
+1. Create `_component-name.scss` in `components/`
+2. Add `@use "components/component-name";` to `application.scss`
+3. Use design tokens from `config/_design-tokens.scss`
+4. Follow BEM naming: `.component`, `.component__element`, `.component--modifier`
+5. Apply mobile-first responsive approach using provided mixins
+
+### Design Token Categories:
+- **Colors**: Ink and paper themed colors with opacity variations
+- **Typography**: Font families, sizes, weights, and spacing
+- **Spacing**: Consistent spacing scale from xxs to xxl
+- **Borders**: Standardized border widths
+- **Animations**: Timing functions and durations
+- **Responsive**: Breakpoints and mobile-first mixins
 
 /file:.claude-on-rails/context.md
