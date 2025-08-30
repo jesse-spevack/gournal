@@ -73,15 +73,11 @@ class HabitEntry < ApplicationRecord
   # Select random check style based on the habit's check type
   # Ensures visual consistency: x_marks habits use x_styles, blots habits use blot_styles
   def random_check_style
-    return all_check_styles.sample unless habit&.check_type
-
     case habit.check_type
     when Habit::CHECK_TYPE_X_MARKS
       x_style_options.sample
     when Habit::CHECK_TYPE_BLOTS
       blot_style_options.sample
-    else
-      all_check_styles.sample
     end
   end
 
