@@ -1,0 +1,5 @@
+<div class="checkbox" 
+     data-completed="<%= habit_entry.completed %>"
+     data-check-type="<%= habit_entry.habit.check_type %>">
+  <%= render_habit_checkbox(habit_entry, css_class: "habit-checkbox") %>
+</div>

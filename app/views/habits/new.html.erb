@@ -1,0 +1,88 @@
+<div class="form-container">
+  <h1>New Habit</h1>
+
+  <%= form_with(model: @habit, local: true) do |form| %>
+    <% if @habit.errors.any? %>
+      <div class="error-messages">
+        <% @habit.errors.each do |error| %>
+          <div class="error"><%= error.full_message %></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :month %>
+      <%= form.select :month, options_for_select(
+        (1..12).map { |m| [Date::MONTHNAMES[m], m, { selected: m == @habit.month }] }
+      ) %>
+    </div>
+
+    <div class="field">
+      <%= form.label :year %>
+      <%= form.select :year, options_for_select(
+        (Date.current.year-1..Date.current.year+1).map { |y| [y, y, { selected: y == @habit.year }] }
+      ) %>
+    </div>
+
+    <div class="field">
+      <%= form.label :check_type, "Check Style" %>
+      <%= form.select :check_type, options_for_select([
+        ["X Marks", "x_marks"],
+        ["Blots", "blots"]
+      ]) %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Create Habit", class: "btn btn-primary" %>
+      <%= link_to "Cancel", habits_path, class: "btn" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.field input, .field select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.error-messages {
+  background: #fee;
+  border: 1px solid #fcc;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.error {
+  color: #c00;
+  margin-bottom: 5px;
+}
+</style>

@@ -1,0 +1,179 @@
+<div class="habits-container">
+  <div class="month-nav">
+    <%= link_to "Previous", habits_path(nav: "previous"), class: "nav-link" %>
+    <h1><%= Date.new(@year, @month).strftime("%B %Y") %></h1>
+    <%= link_to "Next", habits_path(nav: "next"), class: "nav-link" %>
+  </div>
+
+  <%= link_to "New Habit", new_habit_path(month: @month, year: @year), class: "btn btn-primary" %>
+
+  <% if @habits.any? %>
+    <div class="habit-grid">
+      <div class="grid-header">
+        <div class="habit-header">Habit</div>
+        <% (1..@days_in_month).each do |day| %>
+          <div class="day-header"><%= day %></div>
+        <% end %>
+      </div>
+
+      <% @habits.each do |habit| %>
+        <div class="habit-row">
+          <div class="habit-info">
+            <div class="habit-name"><%= habit.name %></div>
+            <div class="habit-actions">
+              <%= link_to "Edit", edit_habit_path(habit), class: "btn btn-sm" %>
+              <%= link_to "Delete", habit_path(habit), method: :delete,
+                          data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+            </div>
+          </div>
+          
+          <% (1..@days_in_month).each do |day| %>
+            <div class="day-cell">
+              <% entry = habit.habit_entries.find { |e| e.day == day } %>
+              <% entry ||= habit.habit_entries.build(day: day, completed: false) %>
+              
+              <%= form_with model: entry,
+                            url: entry.persisted? ? habit_entry_path(entry) : habit_entry_by_habit_and_day_path(habit_id: habit.id, day: day),
+                            method: :patch,
+                            local: false,
+                            class: "habit-entry-form",
+                            data: { turbo: true } do |f| %>
+                <div id="habit_entry_<%= habit.id %>_<%= day %>" 
+                     class="checkbox" 
+                     data-completed="<%= entry.completed %>"
+                     data-check-type="<%= habit.check_type %>">
+                  <%= render_habit_checkbox(entry, css_class: "habit-checkbox") %>
+                </div>
+                <%= f.hidden_field :completed, value: !entry.completed %>
+                <%= f.submit "Toggle", style: "display: none;" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No habits for this month. <%= link_to "Create your first habit", new_habit_path(month: @month, year: @year) %>.</p>
+  <% end %>
+</div>
+
+<style>
+.habits-container {
+  padding: 20px;
+}
+
+.month-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.habit-grid {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.grid-header {
+  display: grid;
+  grid-template-columns: 200px repeat(<%= @days_in_month %>, 40px);
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.habit-header, .day-header {
+  padding: 10px 5px;
+  text-align: center;
+  font-weight: bold;
+  border-right: 1px solid #ddd;
+}
+
+.habit-row {
+  display: grid;
+  grid-template-columns: 200px repeat(<%= @days_in_month %>, 40px);
+  border-bottom: 1px solid #eee;
+}
+
+.habit-info {
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.habit-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.habit-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.day-cell {
+  padding: 5px;
+  text-align: center;
+  border-right: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.habit-entry-form {
+  margin: 0;
+}
+
+.checkbox {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Handle checkbox clicks
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.checkbox')) {
+      e.preventDefault();
+      const form = e.target.closest('form');
+      if (form) {
+        // Submit the form via Turbo
+        form.requestSubmit();
+      }
+    }
+  });
+});
+</script>

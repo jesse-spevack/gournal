@@ -10,9 +10,23 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  # Custom route for month/year grid (ID=1 is the placeholder)
+  get "habits/1", to: "habits#show", as: :habit_month_grid, defaults: { id: "1" }
+
+  # Habits resource
+  resources :habits do
+    resources :habit_entries, only: [ :update ]
+  end
+
+  # Special route for creating/updating habit entries with habit_id and day
+  patch "habit_entries/habit/:habit_id/day/:day", to: "habit_entries#update", as: :habit_entry_by_habit_and_day
+
+  # Standalone habit entries routes for bulk operations and direct access
+  resources :habit_entries, only: [ :update ]
+
   # Style guide
   get "style_guide" => "style_guide#index", as: :style_guide
 
   # Defines the root path route ("/")
-  root "style_guide#index"
+  root "habits#index"
 end#
