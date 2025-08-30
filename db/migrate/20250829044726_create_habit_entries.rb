@@ -9,7 +9,7 @@ class CreateHabitEntries < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
-    add_index :habit_entries, [:habit_id, :day], unique: true
+
+    add_index :habit_entries, [ :habit_id, :day ], unique: true
   end
 end

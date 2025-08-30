@@ -1,0 +1,230 @@
+/* ============================================ */
+/* AUTH FORMS - Japanese Journal Login/Signup  */
+/* ============================================ */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--paper-light) 0%, var(--paper-mid) 100%);
+  position: relative;
+  padding: 20px;
+  
+  /* Subtle paper texture overlay */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, var(--fiber-dark) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, var(--fiber-mid) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, var(--fiber-light) 0%, transparent 50%);
+    opacity: var(--opacity-texture);
+    pointer-events: none;
+  }
+  
+  /* Dot grid pattern */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, var(--accent-dots) var(--grid-dot-size), transparent var(--grid-dot-size));
+    background-size: var(--grid-spacing) var(--grid-spacing);
+    opacity: var(--opacity-grid);
+    pointer-events: none;
+  }
+}
+
+.auth-form {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  
+  /* Paper-like container with subtle shadow */
+  background: linear-gradient(180deg, 
+    var(--container-top) 0%, 
+    var(--container-mid) 50%, 
+    var(--container-bottom) 100%);
+  border-radius: 2px;
+  box-shadow: 
+    0 1px 3px var(--shadow-light),
+    0 10px 40px var(--shadow-subtle),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.6);
+  
+  /* Subtle paper rotation for organic feel */
+  transform: rotate(var(--rotate-paper));
+  
+  padding: 48px 40px 32px;
+  
+  /* Form title - like a journal header */
+  h1 {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: var(--weight-normal);
+    color: var(--ink-primary);
+    text-align: center;
+    margin: 0 0 32px 0;
+    letter-spacing: 0.02em;
+    opacity: 0.9;
+    
+    /* Subtle underline like ruled paper */
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: var(--ink-primary);
+      opacity: 0.2;
+      margin: 12px auto 0;
+    }
+  }
+  
+  /* Form fields container */
+  .form-field {
+    margin-bottom: 24px;
+    
+    label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-primary);
+      opacity: 0.8;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--ink-primary);
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(26, 35, 50, 0.1);
+      border-radius: 2px;
+      transition: all var(--duration-fast) var(--ease-standard);
+      box-sizing: border-box;
+      
+      /* Subtle ink bleed effect on focus */
+      &:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.8);
+        border-color: var(--ink-primary);
+        box-shadow: 
+          0 0 0 3px var(--shadow-focus),
+          inset 0 1px 2px var(--accent-ink-bleed);
+      }
+      
+      &::placeholder {
+        color: var(--ink-primary);
+        opacity: 0.3;
+        font-style: italic;
+      }
+    }
+  }
+  
+  /* Submit button - styled like an ink stamp */
+  .form-submit {
+    margin-top: 32px;
+    
+    input[type="submit"],
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: var(--weight-normal);
+      letter-spacing: 0.02em;
+      color: var(--paper-light);
+      background: var(--ink-primary);
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--ease-standard);
+      box-sizing: border-box;
+      
+      /* Subtle rotation for handwritten feel */
+      transform: rotate(var(--rotate-subtle));
+      
+      &:hover {
+        background: var(--ink-hover);
+        transform: rotate(0deg) scale(1.02);
+        box-shadow: 0 4px 12px var(--shadow-medium);
+      }
+      
+      &:active {
+        transform: rotate(0deg) scale(0.98);
+      }
+    }
+  }
+  
+  /* Links - styled like footnotes */
+  .form-links {
+    margin-top: 24px;
+    text-align: center;
+    
+    a {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-primary);
+      opacity: 0.7;
+      text-decoration: none;
+      border-bottom: 1px dotted var(--ink-primary);
+      transition: opacity var(--duration-fast) var(--ease-standard);
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* Flash messages - styled like margin notes */
+.flash-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  background: var(--paper-light);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px var(--shadow-medium);
+  z-index: 10;
+  max-width: 90%;
+  text-align: center;
+  
+  &.flash-alert {
+    color: #8b2c2c;
+    border-left: 3px solid #8b2c2c;
+  }
+  
+  &.flash-notice {
+    color: #2c5a2c;
+    border-left: 3px solid #2c5a2c;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 32px 24px 24px;
+    
+    h1 {
+      font-size: 18px;
+    }
+  }
+}

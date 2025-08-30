@@ -10,7 +10,7 @@ class CreateHabits < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
-    add_index :habits, [:user_id, :year, :month, :position], unique: true
+
+    add_index :habits, [ :user_id, :year, :month, :position ], unique: true
   end
 end
