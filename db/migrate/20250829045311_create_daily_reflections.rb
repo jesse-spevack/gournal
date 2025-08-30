@@ -7,7 +7,7 @@ class CreateDailyReflections < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
-    add_index :daily_reflections, [:user_id, :date], unique: true
+
+    add_index :daily_reflections, [ :user_id, :date ], unique: true
   end
 end

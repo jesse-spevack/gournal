@@ -1,0 +1,117 @@
+require "test_helper"
+
+class HabitCopyServiceTest < ActiveSupport::TestCase
+  def setup
+    @user = users(:one)
+  end
+
+  test "should copy habits from previous month" do
+    # Create habits for July 2024
+    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
+    Habit.create!(name: "Read", user: @user, month: 7, year: 2024, position: 2, check_type: "blots")
+
+    # Create habit for different user (should not be copied)
+    Habit.create!(name: "Meditate", user: users(:two), month: 7, year: 2024, position: 1, check_type: "x_marks")
+
+    # Use service to copy to August 2024
+    service = HabitCopyService.new(user: @user, target_year: 2024, target_month: 8)
+    copied_habits = service.call
+
+    assert_equal 2, copied_habits.length
+
+    # Check first copied habit
+    copied_habit1 = copied_habits.find { |h| h.name == "Exercise" }
+    assert_not_nil copied_habit1
+    assert_equal "Exercise", copied_habit1.name
+    assert_equal @user, copied_habit1.user
+    assert_equal 8, copied_habit1.month
+    assert_equal 2024, copied_habit1.year
+    assert_equal 1, copied_habit1.position
+    assert_equal "x_marks", copied_habit1.check_type
+    assert copied_habit1.active
+
+    # Check second copied habit
+    copied_habit2 = copied_habits.find { |h| h.name == "Read" }
+    assert_not_nil copied_habit2
+    assert_equal "Read", copied_habit2.name
+    assert_equal @user, copied_habit2.user
+    assert_equal 8, copied_habit2.month
+    assert_equal 2024, copied_habit2.year
+    assert_equal 2, copied_habit2.position
+    assert_equal "blots", copied_habit2.check_type
+    assert copied_habit2.active
+
+    # Verify habits from different user were not copied
+    refute copied_habits.any? { |h| h.name == "Meditate" }
+  end
+
+  test "should handle December to January transition" do
+    # Create habit for December 2024
+    Habit.create!(name: "Exercise", user: @user, month: 12, year: 2024, position: 1, check_type: "x_marks")
+
+    # Use service to copy to January 2025
+    service = HabitCopyService.new(user: @user, target_year: 2025, target_month: 1)
+    copied_habits = service.call
+
+    assert_equal 1, copied_habits.length
+    copied_habit = copied_habits.first
+    assert_equal "Exercise", copied_habit.name
+    assert_equal @user, copied_habit.user
+    assert_equal 1, copied_habit.month
+    assert_equal 2025, copied_habit.year
+    assert_equal 1, copied_habit.position
+    assert_equal "x_marks", copied_habit.check_type
+  end
+
+  test "should handle January to previous year December lookup" do
+    # Create habit for December 2023
+    Habit.create!(name: "Exercise", user: @user, month: 12, year: 2023, position: 1, check_type: "blots")
+
+    # Use service to copy to January 2024 (should look back to December 2023)
+    service = HabitCopyService.new(user: @user, target_year: 2024, target_month: 1)
+    copied_habits = service.call
+
+    assert_equal 1, copied_habits.length
+    copied_habit = copied_habits.first
+    assert_equal "Exercise", copied_habit.name
+    assert_equal @user, copied_habit.user
+    assert_equal 1, copied_habit.month
+    assert_equal 2024, copied_habit.year
+    assert_equal "blots", copied_habit.check_type
+  end
+
+  test "should return empty array when no previous habits exist" do
+    # No habits exist for previous month
+    service = HabitCopyService.new(user: @user, target_year: 2024, target_month: 8)
+    copied_habits = service.call
+
+    assert_equal [], copied_habits
+    assert_kind_of Array, copied_habits
+  end
+
+  test "should preserve all attributes including check_type" do
+    # Create habit with specific attributes
+    Habit.create!(
+      name: "Complex Habit",
+      user: @user,
+      month: 7,
+      year: 2024,
+      position: 5,
+      active: false,
+      check_type: "blots"
+    )
+
+    # Use service to copy to August
+    service = HabitCopyService.new(user: @user, target_year: 2024, target_month: 8)
+    copied_habits = service.call
+    copied_habit = copied_habits.first
+
+    assert_equal "Complex Habit", copied_habit.name
+    assert_equal @user, copied_habit.user
+    assert_equal 8, copied_habit.month
+    assert_equal 2024, copied_habit.year
+    assert_equal 5, copied_habit.position
+    refute copied_habit.active
+    assert_equal "blots", copied_habit.check_type
+  end
+end

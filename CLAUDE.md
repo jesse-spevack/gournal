@@ -16,8 +16,68 @@ Follow Test-Driven Development but skip system/feature tests:
 1. Write failing unit tests first
 2. Implement minimal code to make tests pass
 3. Refactor while keeping tests green
-4. Use integration tests for controller behavior
-5. Manual testing for UI components
+4. **Run `rubocop -A` after refactoring** to fix style issues
+5. Verify tests still pass after rubocop fixes
+6. Use integration tests for controller behavior
+7. Manual testing for UI components
+
+### Test Writing Standards
+
+**IMPORTANT: Avoid useless variable assignments in tests**
+```ruby
+# BAD - variable assigned but never used
+test "should do something" do
+  user1 = User.create!(email: "test@example.com")
+  assert User.count == 1
+end
+
+# GOOD - no unnecessary assignment
+test "should do something" do
+  User.create!(email: "test@example.com")
+  assert User.count == 1
+end
+
+# GOOD - variable is actually used
+test "should do something" do
+  user = User.create!(email: "test@example.com")
+  assert_equal "test@example.com", user.email
+end
+```
+
+### Code Style Standards
+
+**Avoid compound unless statements** - They're hard to read and understand:
+```ruby
+# BAD - compound unless is confusing
+return unless completed? && habit.present?
+
+# GOOD - use if with early return
+return if !completed? || !habit.present?
+
+# BETTER - be explicit about conditions
+return if incomplete?
+return if habit.blank?
+```
+
+### Code Style Enforcement
+
+**Always run `rubocop -A` before:**
+- Committing code (automatically done by `/ship` command)
+- Completing a TDD cycle
+- Handing off between TDD agents
+- Pushing to remote
+
+```bash
+# Auto-fix all style issues
+rubocop -A
+
+# Auto-fix specific directories
+rubocop -A app/
+rubocop -A test/
+
+# Check without fixing (CI mode)
+rubocop
+```
 
 ## Rails Testing Stack
 
