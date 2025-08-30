@@ -114,4 +114,21 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     refute copied_habit.active
     assert_equal "blots", copied_habit.check_type
   end
+
+  test "should preserve check_type from original habits" do
+    # Create habits for July 2024 with specific check types
+    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
+    Habit.create!(name: "Read", user: @user, month: 7, year: 2024, position: 2, check_type: "blots")
+
+    # Use service to copy to August 2024
+    service = HabitCopyService.new(user: @user, target_year: 2024, target_month: 8)
+    copied_habits = service.call
+
+    # Should preserve the check types from originals
+    exercise_copy = copied_habits.find { |h| h.name == "Exercise" }
+    read_copy = copied_habits.find { |h| h.name == "Read" }
+
+    assert_equal "x_marks", exercise_copy.check_type
+    assert_equal "blots", read_copy.check_type
+  end
 end

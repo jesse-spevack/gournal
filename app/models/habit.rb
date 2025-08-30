@@ -32,10 +32,4 @@ class Habit < ApplicationRecord
   # Scopes
   scope :current_month, ->(year, month) { where(year: year, month: month) }
   scope :ordered, -> { order(:position) }
-
-  # Copy all habits from the previous month to the target month
-  # Delegates to HabitCopyService for better separation of concerns
-  def self.copy_from_previous_month(user, target_year, target_month)
-    HabitCopyService.new(user: user, target_year: target_year, target_month: target_month).call
-  end
 end

@@ -133,110 +133,7 @@ class HabitTest < ActiveSupport::TestCase
     refute_includes current_habits, habit_different_year
   end
 
-  test "should have copy_from_previous_month class method" do
-    assert_respond_to Habit, :copy_from_previous_month
-  end
-
-  test "copy_from_previous_month should copy habits from previous month" do
-    # Create habits for July 2024
-    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
-    Habit.create!(name: "Read", user: @user, month: 7, year: 2024, position: 2, check_type: "blots")
-
-    # Create habit for different user (should not be copied)
-    Habit.create!(name: "Meditate", user: users(:two), month: 7, year: 2024, position: 1, check_type: "x_marks")
-
-    # Copy to August 2024
-    copied_habits = Habit.copy_from_previous_month(@user, 2024, 8)
-
-    assert_equal 2, copied_habits.length
-
-    # Check first copied habit
-    copied_habit1 = copied_habits.find { |h| h.name == "Exercise" }
-    assert_not_nil copied_habit1
-    assert_equal "Exercise", copied_habit1.name
-    assert_equal @user, copied_habit1.user
-    assert_equal 8, copied_habit1.month
-    assert_equal 2024, copied_habit1.year
-    assert_equal 1, copied_habit1.position
-    assert copied_habit1.active
-
-    # Check second copied habit
-    copied_habit2 = copied_habits.find { |h| h.name == "Read" }
-    assert_not_nil copied_habit2
-    assert_equal "Read", copied_habit2.name
-    assert_equal @user, copied_habit2.user
-    assert_equal 8, copied_habit2.month
-    assert_equal 2024, copied_habit2.year
-    assert_equal 2, copied_habit2.position
-    assert copied_habit2.active
-
-    # Verify habits from different user were not copied
-    refute copied_habits.any? { |h| h.name == "Meditate" }
-  end
-
-  test "copy_from_previous_month should handle December to January transition" do
-    # Create habit for December 2024
-    Habit.create!(name: "Exercise", user: @user, month: 12, year: 2024, position: 1, check_type: "x_marks")
-
-    # Copy to January 2025
-    copied_habits = Habit.copy_from_previous_month(@user, 2025, 1)
-
-    assert_equal 1, copied_habits.length
-    copied_habit = copied_habits.first
-    assert_equal "Exercise", copied_habit.name
-    assert_equal @user, copied_habit.user
-    assert_equal 1, copied_habit.month
-    assert_equal 2025, copied_habit.year
-    assert_equal 1, copied_habit.position
-  end
-
-  test "copy_from_previous_month should handle January to previous year December lookup" do
-    # Create habit for December 2023
-    Habit.create!(name: "Exercise", user: @user, month: 12, year: 2023, position: 1, check_type: "blots")
-
-    # Copy to January 2024 (should look back to December 2023)
-    copied_habits = Habit.copy_from_previous_month(@user, 2024, 1)
-
-    assert_equal 1, copied_habits.length
-    copied_habit = copied_habits.first
-    assert_equal "Exercise", copied_habit.name
-    assert_equal @user, copied_habit.user
-    assert_equal 1, copied_habit.month
-    assert_equal 2024, copied_habit.year
-  end
-
-  test "copy_from_previous_month should return empty array when no previous habits exist" do
-    # No habits exist for previous month
-    copied_habits = Habit.copy_from_previous_month(@user, 2024, 8)
-
-    assert_equal [], copied_habits
-    assert_kind_of Array, copied_habits
-  end
-
-  test "copy_from_previous_month should preserve all attributes including check_type" do
-    # Create habit with specific attributes
-    Habit.create!(
-      name: "Complex Habit",
-      user: @user,
-      month: 7,
-      year: 2024,
-      position: 5,
-      active: false,
-      check_type: "blots"
-    )
-
-    # Copy to August
-    copied_habits = Habit.copy_from_previous_month(@user, 2024, 8)
-    copied_habit = copied_habits.first
-
-    assert_equal "Complex Habit", copied_habit.name
-    assert_equal @user, copied_habit.user
-    assert_equal 8, copied_habit.month  # Should be updated
-    assert_equal 2024, copied_habit.year  # Should stay same in this case
-    assert_equal 5, copied_habit.position  # Should be preserved
-    refute copied_habit.active  # Should preserve false value
-    assert_equal "blots", copied_habit.check_type  # Should be preserved
-  end
+  # HabitCopyService tests moved to test/services/habit_copy_service_test.rb
 
   # Check type enum tests
   test "should have check_type enum with x_marks and blots" do
@@ -290,22 +187,7 @@ class HabitTest < ActiveSupport::TestCase
     assert_equal original_check_type, habit.check_type
   end
 
-  # Check type copying behavior tests
-  test "copy_from_previous_month should preserve check_type from original" do
-    # Create habits for July 2024 with specific check types
-    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
-    Habit.create!(name: "Read", user: @user, month: 7, year: 2024, position: 2, check_type: "blots")
-
-    # Copy to August 2024
-    copied_habits = Habit.copy_from_previous_month(@user, 2024, 8)
-
-    # Should preserve the check types from originals
-    exercise_copy = copied_habits.find { |h| h.name == "Exercise" }
-    read_copy = copied_habits.find { |h| h.name == "Read" }
-
-    assert_equal "x_marks", exercise_copy.check_type
-    assert_equal "blots", read_copy.check_type
-  end
+  # Check type tests
 
   test "each monthly habit can have explicitly set check_type" do
     # Create same habit name across different months with explicit check types
