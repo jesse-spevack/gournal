@@ -9,21 +9,23 @@ This document collects feedback from a file-by-file review of the Gournal codeba
 - **Priority 1 (Critical Fixes):** ✅ 100% Complete (4/4 items)
 - **Priority 2 (Model Improvements):** ✅ 100% Complete (8/8 items)  
 - **Priority 3 (Test Coverage):** ✅ 100% Complete (3/3 items)
-- **Priority 4 (UI/UX):** 📋 0% Complete (0/2 items)
+- **Priority 4 (UI/UX):** 🟨 50% Complete (1/2 items)
 - **Priority 5 (Future Planning):** 📋 0% Complete (0/3 items)
 
-**Overall Progress:** 15 of 20 priority items completed (75%)
+**Overall Progress:** 16 of 20 priority items completed (80%)
 
 ### What Was Accomplished in This PR
 - Removed incomplete password reset system completely
 - Added all missing style enums (zero-indexed to match design system)
 - Created HabitCopyService with proper separation of concerns
 - Added comprehensive User model tests (24 tests)
+- Added SessionsController tests (9 tests)
 - Added email validations to User model
 - Removed unnecessary helper methods from User
 - Removed DailyReflection content length limit
 - Fixed all compound unless statements
 - Updated CLAUDE.md with code standards and service patterns
+- Styled login form with Japanese journal aesthetic using design system
 - All tests passing (130 tests, 0 failures)
 
 ## Feedback by Category
@@ -66,9 +68,9 @@ This document collects feedback from a file-by-file review of the Gournal codeba
 14. ✅ **Write tests for SessionsController** - 9 comprehensive tests added
 15. ✅ **Clean up useless variable assignments in all tests**
 
-### Priority 4: UI/UX
-16. **Style the login form** - Currently unstyled, doesn't match design system
-17. **Apply Japanese journal aesthetic to all views**
+### Priority 4: UI/UX 
+16. ✅ **Style the login form** - Login form now styled with Japanese journal aesthetic using design system
+17. [ ] **Apply Japanese journal aesthetic to all views**
 
 ### Priority 5: Future Planning
 18. **Plan OAuth integration** for Google, GitHub, etc.
