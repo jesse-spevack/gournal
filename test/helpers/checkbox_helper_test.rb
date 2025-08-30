@@ -126,4 +126,160 @@ class CheckboxHelperTest < ActionView::TestCase
       assert_includes result, "Ink blot variation 7"
     end
   end
+
+  # Tests for render_habit_checkbox helper method
+  test "render_habit_checkbox renders unchecked entry correctly" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    habit = Habit.create!(
+      user: user,
+      name: "Test Habit",
+      month: 1,
+      year: 2024,
+      position: 1,
+      check_type: "x_marks"
+    )
+    entry = HabitEntry.create!(
+      habit: habit,
+      day: 15,
+      checkbox_style: "box_style_0",
+      completed: false
+    )
+
+    result = render_habit_checkbox(entry)
+
+    assert_not_nil result
+    assert_includes result, "<svg"
+    assert_includes result, 'viewBox="0 0 24 24"'
+    assert_includes result, 'class="checkbox__box-path"'
+    refute_includes result, 'class="checkbox__mark"'
+    refute_includes result, 'class="checkbox__fill"'
+  end
+
+  test "render_habit_checkbox renders checked x_marks entry correctly" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    habit = Habit.create!(
+      user: user,
+      name: "Test Habit",
+      month: 1,
+      year: 2024,
+      position: 1,
+      check_type: "x_marks"
+    )
+    entry = HabitEntry.create!(
+      habit: habit,
+      day: 15,
+      checkbox_style: "box_style_1",
+      check_style: "x_style_2",
+      completed: true
+    )
+
+    result = render_habit_checkbox(entry)
+
+    assert_not_nil result
+    assert_includes result, "<svg"
+    assert_includes result, 'class="checkbox__box-path"'
+    assert_includes result, 'class="checkbox__x-path"'
+    refute_includes result, 'class="checkbox__fill"'
+  end
+
+  test "render_habit_checkbox renders checked blots entry correctly" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    habit = Habit.create!(
+      user: user,
+      name: "Test Habit",
+      month: 1,
+      year: 2024,
+      position: 1,
+      check_type: "blots"
+    )
+    entry = HabitEntry.create!(
+      habit: habit,
+      day: 15,
+      checkbox_style: "box_style_3",
+      check_style: "blot_style_4",
+      completed: true
+    )
+
+    result = render_habit_checkbox(entry)
+
+    assert_not_nil result
+    assert_includes result, "<svg"
+    assert_includes result, 'class="checkbox__box-path"'
+    assert_includes result, 'class="checkbox__fill"'
+    refute_includes result, 'class="checkbox__x-path"'
+  end
+
+  test "render_habit_checkbox accepts custom CSS class" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    habit = Habit.create!(
+      user: user,
+      name: "Test Habit",
+      month: 1,
+      year: 2024,
+      position: 1,
+      check_type: "x_marks"
+    )
+    entry = HabitEntry.create!(
+      habit: habit,
+      day: 15,
+      checkbox_style: "box_style_0",
+      completed: false
+    )
+
+    result = render_habit_checkbox(entry, css_class: "custom-habit-checkbox")
+
+    assert_includes result, 'class="custom-habit-checkbox"'
+  end
+
+  test "render_habit_checkbox raises error for nil entry" do
+    assert_raises(ArgumentError, "entry is required") do
+      render_habit_checkbox(nil)
+    end
+  end
+
+  test "render_habit_checkbox works with different combinations of styles" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    x_habit = Habit.create!(
+      user: user,
+      name: "X Habit",
+      month: 1,
+      year: 2024,
+      position: 1,
+      check_type: "x_marks"
+    )
+    blot_habit = Habit.create!(
+      user: user,
+      name: "Blot Habit",
+      month: 1,
+      year: 2024,
+      position: 2,
+      check_type: "blots"
+    )
+
+    # Test various combinations
+    combinations = [
+      { habit: x_habit, box: "box_style_0", check: "x_style_0", completed: true },
+      { habit: x_habit, box: "box_style_5", check: "x_style_7", completed: true },
+      { habit: blot_habit, box: "box_style_2", check: "blot_style_3", completed: true },
+      { habit: blot_habit, box: "box_style_9", check: "blot_style_9", completed: true },
+      { habit: x_habit, box: "box_style_4", check: nil, completed: false },
+      { habit: blot_habit, box: "box_style_8", check: nil, completed: false }
+    ]
+
+    combinations.each_with_index do |combo, index|
+      entry = HabitEntry.create!(
+        habit: combo[:habit],
+        day: index + 1,
+        checkbox_style: combo[:box],
+        check_style: combo[:check],
+        completed: combo[:completed]
+      )
+
+      assert_nothing_raised do
+        result = render_habit_checkbox(entry)
+        assert_not_nil result
+        assert_includes result, "<svg"
+      end
+    end
+  end
 end

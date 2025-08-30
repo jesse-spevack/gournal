@@ -1,4 +1,6 @@
 class HabitEntry < ApplicationRecord
+  include CheckboxRenderable
+
   belongs_to :habit
 
   # Enums
@@ -37,10 +39,6 @@ class HabitEntry < ApplicationRecord
     blot_style_8: 18,
     blot_style_9: 19
   }
-
-  # Style pattern constants for better maintainability
-  X_STYLE_PREFIX = "x_style_".freeze
-  BLOT_STYLE_PREFIX = "blot_style_".freeze
 
   # Constants for validation
   MIN_DAY = 1
@@ -83,14 +81,14 @@ class HabitEntry < ApplicationRecord
 
   # Style filtering methods - each returns appropriate styles based on habit type
   def x_style_options
-    @x_style_options ||= self.class.check_styles.keys.select { |k| k.start_with?(X_STYLE_PREFIX) }
+    @x_style_options ||= filter_styles_by_prefix(X_STYLE_PREFIX)
   end
 
   def blot_style_options
-    @blot_style_options ||= self.class.check_styles.keys.select { |k| k.start_with?(BLOT_STYLE_PREFIX) }
+    @blot_style_options ||= filter_styles_by_prefix(BLOT_STYLE_PREFIX)
   end
 
-  def all_check_styles
-    @all_check_styles ||= self.class.check_styles.keys
+  def filter_styles_by_prefix(prefix)
+    self.class.check_styles.keys.select { |key| key.start_with?(prefix) }
   end
 end
