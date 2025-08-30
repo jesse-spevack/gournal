@@ -1,5 +1,32 @@
 # Claude Development Guidelines
 
+## Service Object Pattern
+
+When creating service objects, use the following pattern:
+
+```ruby
+class MyService
+  def self.call(param1:, param2:)
+    new(param1: param1, param2: param2).call
+  end
+
+  def initialize(param1:, param2:)
+    @param1 = param1
+    @param2 = param2
+  end
+
+  def call
+    # Service logic here
+  end
+
+  private
+
+  # Private methods here
+end
+```
+
+This allows for cleaner usage: `MyService.call(param1: value1, param2: value2)` instead of `MyService.new(param1: value1, param2: value2).call`.
+
 ## Testing Strategy
 
 **DO NOT implement system tests** - Focus on unit tests and integration tests only.

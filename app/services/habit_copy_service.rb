@@ -1,4 +1,8 @@
 class HabitCopyService
+  def self.call(user:, target_year:, target_month:)
+    new(user: user, target_year: target_year, target_month: target_month).call
+  end
+
   def initialize(user:, target_year:, target_month:)
     @user = user
     @target_year = target_year
