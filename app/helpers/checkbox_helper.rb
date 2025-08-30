@@ -38,7 +38,7 @@ module CheckboxHelper
   end
 
   def render_fill_partial(variant, style)
-    return "" unless variant && style
+    return "" if variant.nil? && style.nil?
 
     partial_prefix = VALID_FILL_STYLES[style]
     render("checkboxes/#{partial_prefix}_#{variant}")
