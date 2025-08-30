@@ -19,6 +19,9 @@ class Habit < ApplicationRecord
   # Constants for validation
   MIN_MONTH = 1
   MAX_MONTH = 12
+  MAX_HABITS_PER_MONTH = 10
+
+  # Callbacks - removed ensure_unique_position to enforce strict validation
 
   # Validations
   validates :name, presence: true
@@ -32,4 +35,6 @@ class Habit < ApplicationRecord
   # Scopes
   scope :current_month, ->(year, month) { where(year: year, month: month) }
   scope :ordered, -> { order(:position) }
+
+  # Position management is handled by controllers and services
 end

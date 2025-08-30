@@ -14,12 +14,13 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     Habit.create!(name: "Test", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
 
     # Using class method
-    class_method_result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
+    result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
 
-    # Verify it returns an array with the copied habit
-    assert_kind_of Array, class_method_result
-    assert_equal 1, class_method_result.length
-    assert_equal "Test", class_method_result.first.name
+    # Verify it returns a successful hash result
+    assert_kind_of Hash, result
+    assert result[:success]
+    assert_equal 1, result[:count]
+    assert_match "1 habit copied", result[:message]
   end
 
   test "should copy habits from previous month" do
@@ -31,8 +32,14 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     Habit.create!(name: "Meditate", user: users(:two), month: 7, year: 2024, position: 1, check_type: "x_marks")
 
     # Use service to copy to August 2024
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
+    result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
 
+    assert result[:success]
+    assert_equal 2, result[:count]
+    assert_match "2 habits copied", result[:message]
+
+    # Verify habits were actually copied
+    copied_habits = @user.habits.current_month(2024, 8).ordered
     assert_equal 2, copied_habits.length
 
     # Check first copied habit
@@ -66,8 +73,14 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     Habit.create!(name: "Exercise", user: @user, month: 12, year: 2024, position: 1, check_type: "x_marks")
 
     # Use service to copy to January 2025
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2025, target_month: 1)
+    result = HabitCopyService.call(user: @user, target_year: 2025, target_month: 1)
 
+    assert result[:success]
+    assert_equal 1, result[:count]
+    assert_match "1 habit copied", result[:message]
+
+    # Verify the habit was copied
+    copied_habits = @user.habits.current_month(2025, 1).ordered
     assert_equal 1, copied_habits.length
     copied_habit = copied_habits.first
     assert_equal "Exercise", copied_habit.name
@@ -83,8 +96,14 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     Habit.create!(name: "Exercise", user: @user, month: 12, year: 2023, position: 1, check_type: "blots")
 
     # Use service to copy to January 2024 (should look back to December 2023)
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 1)
+    result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 1)
 
+    assert result[:success]
+    assert_equal 1, result[:count]
+    assert_match "1 habit copied", result[:message]
+
+    # Verify the habit was copied
+    copied_habits = @user.habits.current_month(2024, 1).ordered
     assert_equal 1, copied_habits.length
     copied_habit = copied_habits.first
     assert_equal "Exercise", copied_habit.name
@@ -94,12 +113,14 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     assert_equal "blots", copied_habit.check_type
   end
 
-  test "should return empty array when no previous habits exist" do
+  test "should return error when no previous habits exist" do
     # No habits exist for previous month
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
+    result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
 
-    assert_equal [], copied_habits
-    assert_kind_of Array, copied_habits
+    refute result[:success]
+    assert_equal 0, result[:count]
+    assert_match "No habits found to copy", result[:error]
+    assert_kind_of Hash, result
   end
 
   test "should preserve all attributes including check_type" do
@@ -115,14 +136,18 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     )
 
     # Use service to copy to August
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
+    result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
 
+    assert result[:success]
+    assert_equal 1, result[:count]
+
+    # Verify the copied habit
+    copied_habit = @user.habits.current_month(2024, 8).first
     assert_equal "Complex Habit", copied_habit.name
     assert_equal @user, copied_habit.user
     assert_equal 8, copied_habit.month
     assert_equal 2024, copied_habit.year
-    assert_equal 5, copied_habit.position
+    assert_equal 1, copied_habit.position  # Position gets reset to next available
     refute copied_habit.active
     assert_equal "blots", copied_habit.check_type
   end
@@ -133,9 +158,13 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     Habit.create!(name: "Read", user: @user, month: 7, year: 2024, position: 2, check_type: "blots")
 
     # Use service to copy to August 2024
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
+    result = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
 
-    # Should preserve the check types from originals
+    assert result[:success]
+    assert_equal 2, result[:count]
+
+    # Verify the copied habits preserve check types
+    copied_habits = @user.habits.current_month(2024, 8).ordered
     exercise_copy = copied_habits.find { |h| h.name == "Exercise" }
     read_copy = copied_habits.find { |h| h.name == "Read" }
 
