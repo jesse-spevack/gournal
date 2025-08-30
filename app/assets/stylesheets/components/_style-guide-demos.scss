@@ -1,45 +1,6 @@
 /* ============================================ */
-/* STYLE GUIDE SPECIFIC STYLES                 */
+/* STYLE GUIDE DEMOS - Component Showcases     */
 /* ============================================ */
-
-/* Style Guide Layout */
-.style-guide-page {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  padding: 40px 20px;
-  background: #f5f5f5;
-}
-
-.design-system-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-.style-guide-header {
-  background: linear-gradient(135deg, var(--ink-primary), var(--ink-hover));
-  color: white;
-  padding: 40px;
-  text-align: center;
-}
-
-.style-guide-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  font-weight: 300;
-}
-
-.style-guide-header p {
-  opacity: 0.9;
-  font-size: 1.1rem;
-}
-
-.style-guide-section {
-  padding: 40px;
-  border-bottom: 1px solid #e0e0e0;
-}
 
 /* Color Palette Styles */
 .color-grid {
@@ -79,25 +40,6 @@
   font-size: 0.75rem;
   color: var(--ink-primary);
   opacity: 0.7;
-}
-
-/* Section Titles */
-.section-title {
-  font-size: 1.8rem;
-  color: var(--ink-primary);
-  margin-bottom: 30px;
-  font-weight: 300;
-}
-
-.subsection {
-  margin-bottom: 40px;
-}
-
-.subsection-title {
-  font-size: 1.2rem;
-  color: var(--ink-primary);
-  margin-bottom: 20px;
-  font-weight: 400;
 }
 
 /* Typography Samples */
@@ -186,68 +128,4 @@
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--ink-primary);
-}
-
-/* Blot Effects */
-.blot-1, .blot-2, .blot-3, .blot-4, .blot-5, .blot-6 {
-  position: absolute;
-  background: var(--ink-primary);
-  border-radius: 50%;
-  opacity: 0.08;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.blot-1 {
-  width: 120px;
-  height: 140px;
-  top: 15%;
-  left: 8%;
-  transform: rotate(-12deg);
-  border-radius: 60% 40% 55% 45%;
-}
-
-.blot-2 {
-  width: 80px;
-  height: 95px;
-  top: 35%;
-  right: 12%;
-  transform: rotate(25deg);
-  border-radius: 45% 55% 60% 40%;
-}
-
-.blot-3 {
-  width: 160px;
-  height: 180px;
-  bottom: 20%;
-  left: 15%;
-  transform: rotate(8deg);
-  border-radius: 70% 30% 40% 60%;
-}
-
-.blot-4 {
-  width: 100px;
-  height: 120px;
-  top: 60%;
-  right: 8%;
-  transform: rotate(-15deg);
-  border-radius: 50% 50% 45% 55%;
-}
-
-.blot-5 {
-  width: 90px;
-  height: 110px;
-  top: 8%;
-  right: 35%;
-  transform: rotate(18deg);
-  border-radius: 55% 45% 50% 50%;
-}
-
-.blot-6 {
-  width: 130px;
-  height: 150px;
-  bottom: 15%;
-  right: 25%;
-  transform: rotate(-22deg);
-  border-radius: 40% 60% 65% 35%;
 }

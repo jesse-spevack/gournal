@@ -2,6 +2,8 @@
 /* AUTH FORMS - Japanese Journal Login/Signup  */
 /* ============================================ */
 
+@use "../config/design-tokens" as *;
+
 .auth-container {
   min-height: 100vh;
   display: flex;
@@ -63,18 +65,29 @@
   /* Subtle paper rotation for organic feel */
   transform: rotate(var(--rotate-paper));
   
-  padding: 48px 40px 32px;
+  /* Mobile-first: start with mobile padding */
+  padding: 32px 24px 24px;
+  
+  /* Desktop padding */
+  @include mobile-up {
+    padding: 48px 40px 32px;
+  }
   
   /* Form title - like a journal header */
   h1 {
     font-family: var(--font-mono);
-    font-size: 20px;
+    font-size: 18px;  /* Mobile-first: smaller on mobile */
     font-weight: var(--weight-normal);
     color: var(--ink-primary);
     text-align: center;
     margin: 0 0 32px 0;
     letter-spacing: 0.02em;
     opacity: 0.9;
+    
+    /* Desktop: larger font size */
+    @include mobile-up {
+      font-size: 20px;
+    }
     
     /* Subtle underline like ruled paper */
     &::after {
@@ -108,10 +121,10 @@
       width: 100%;
       padding: 10px 12px;
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: var(--font-size-form);
       color: var(--ink-primary);
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid rgba(26, 35, 50, 0.1);
+      background: var(--paper-form-bg);
+      border: var(--border-thin) solid var(--ink-primary-10);
       border-radius: 2px;
       transition: all var(--duration-fast) var(--ease-standard);
       box-sizing: border-box;
@@ -119,7 +132,7 @@
       /* Subtle ink bleed effect on focus */
       &:focus {
         outline: none;
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--paper-form-bg-focus);
         border-color: var(--ink-primary);
         box-shadow: 
           0 0 0 3px var(--shadow-focus),
@@ -143,7 +156,7 @@
       width: 100%;
       padding: 12px 24px;
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: var(--font-size-form);
       font-weight: var(--weight-normal);
       letter-spacing: 0.02em;
       color: var(--paper-light);
@@ -215,16 +228,5 @@
   &.flash-notice {
     color: #2c5a2c;
     border-left: 3px solid #2c5a2c;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .auth-form {
-    padding: 32px 24px 24px;
-    
-    h1 {
-      font-size: 18px;
-    }
   }
 }

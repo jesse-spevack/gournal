@@ -13,5 +13,7 @@
 
 /* Component Styles */
 @use "components/checkbox";
-@use "components/style-guide";
+@use "components/style-guide-layout";
+@use "components/style-guide-demos";
+@use "components/style-guide-utilities";
 @use "components/auth-forms";
