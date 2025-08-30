@@ -1,8 +1,15 @@
 /* ============================================ */
-/* CHECKBOX COMPONENT STYLES                   */
+/* CHECKBOX COMPONENT STYLES - BEM METHODOLOGY */
 /* ============================================ */
 
-/* Checkbox grid and item layout */
+/* 
+ * BEM Structure:
+ * Block: .checkbox
+ * Elements: __wrapper, __input, __box, __mark, __label
+ * Modifiers: --checked, --filled, --showcase
+ */
+
+/* Showcase container for style guide */
 .checkbox-showcase {
   background: radial-gradient(ellipse at top left, var(--paper-light) 0%, var(--paper-mid) 40%, var(--paper-dark) 100%);
   padding: 40px;
@@ -26,17 +33,16 @@
   gap: 10px;
 }
 
-.checkbox-label {
-  display: block;
-  margin-top: 10px;
-  font-size: var(--font-size-small);
-  color: var(--ink-primary);
-  font-family: var(--font-mono);
-  opacity: 0.8;
+/* Main checkbox block */
+.checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  position: relative;
+  display: inline-block;
 }
 
-/* Interactive checkbox wrapper */
-.checkbox-wrapper {
+/* Checkbox wrapper element */
+.checkbox__wrapper {
   display: inline-flex;
   align-items: center;
   position: relative;
@@ -44,7 +50,8 @@
   user-select: none;
 }
 
-.checkbox-wrapper input[type="checkbox"] {
+/* Hidden input element */
+.checkbox__input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -52,15 +59,8 @@
   width: 0;
 }
 
-/* Standard checkbox component */
-.checkbox-custom {
-  width: var(--checkbox-size);
-  height: var(--checkbox-size);
-  position: relative;
-  flex-shrink: 0;
-}
-
-.checkbox-box {
+/* Checkbox box element */
+.checkbox__box {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -68,13 +68,14 @@
   left: 0;
 }
 
-.checkbox-box svg {
+.checkbox__box svg {
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.box-path {
+/* Box path styling */
+.checkbox__box-path {
   fill: none;
   stroke: var(--ink-primary);
   stroke-width: var(--stroke-width-base);
@@ -83,21 +84,21 @@
   opacity: var(--opacity-checkbox);
 }
 
-/* Stimulus CSS class states */
-.box-path.checkbox-checked {
+/* Box path modifiers */
+.checkbox__box-path--checked {
   stroke: var(--ink-hover);
   stroke-width: 1.6;
   opacity: 0.95;
 }
 
-.box-path.checkbox-unchecked {
+.checkbox__box-path--unchecked {
   stroke: var(--ink-primary);
   stroke-width: 1.4;
   opacity: 0.85;
 }
 
-/* X Marks */
-.x-marks-container {
+/* X marks container */
+.checkbox__marks {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -106,7 +107,8 @@
   pointer-events: none;
 }
 
-.x-mark {
+/* Individual X mark */
+.checkbox__mark {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -116,47 +118,57 @@
               transform var(--duration-normal) var(--ease-bounce);
 }
 
-.x-mark.show,
-.x-mark.x-visible {
+/* X mark visible state */
+.checkbox__mark--visible {
   opacity: 1;
   transform: scale(1);
 }
 
-.x-mark svg {
+.checkbox__mark svg {
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.x-path-1,
-.x-path-2 {
+/* X mark paths */
+.checkbox__x-path {
   fill: none;
   stroke: var(--ink-hover);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
+/* Checkbox label */
+.checkbox__label {
+  display: block;
+  margin-top: 10px;
+  font-size: var(--font-size-small);
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+  opacity: 0.8;
+}
+
 /* Hover states */
-.checkbox-wrapper:hover .box-path {
+.checkbox__wrapper:hover .checkbox__box-path {
   stroke: var(--ink-hover);
   stroke-width: var(--stroke-width-hover);
   opacity: var(--opacity-checkbox-hover);
 }
 
-/* Filled checkbox styles */
-.filled-checkbox {
+/* Filled checkbox variant */
+.checkbox--filled {
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   position: relative;
 }
 
-.filled-path {
+.checkbox__fill-path {
   fill: var(--ink-primary);
   stroke: none;
   opacity: 0.9;
 }
 
-/* Production checkbox container */
+/* Production checkbox container (for forms) */
 .checkbox-container {
   width: var(--checkbox-size);
   height: var(--checkbox-size);
@@ -164,9 +176,9 @@
   display: inline-block;
 }
 
-.checkbox-container .checkbox-box,
-.checkbox-container .checkbox-fill,
-.checkbox-container .checkbox-x {
+.checkbox-container .checkbox__box,
+.checkbox-container .checkbox__fill,
+.checkbox-container .checkbox__x {
   position: absolute;
   top: 0;
   left: 0;
@@ -175,7 +187,7 @@
   pointer-events: none;
 }
 
-.checkbox-container .checkbox-fill,
-.checkbox-container .checkbox-x {
+.checkbox-container .checkbox__fill,
+.checkbox-container .checkbox__x {
   z-index: 1;
 }

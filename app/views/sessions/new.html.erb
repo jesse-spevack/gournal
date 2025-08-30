@@ -1,23 +1,24 @@
-<div class="auth-container">
+<div class="auth">
   <% if flash[:alert] %>
-    <div class="flash-message flash-alert" data-turbo-temporary>
+    <div class="flash flash--alert" data-turbo-temporary>
       <%= flash[:alert] %>
     </div>
   <% end %>
   
   <% if flash[:notice] %>
-    <div class="flash-message flash-notice" data-turbo-temporary>
+    <div class="flash flash--notice" data-turbo-temporary>
       <%= flash[:notice] %>
     </div>
   <% end %>
 
-  <div class="auth-form">
-    <h1>Sign in to Gournal</h1>
+  <div class="auth__form">
+    <h1 class="auth__title">Sign in to Gournal</h1>
     
     <%= form_with url: session_path, local: true do |form| %>
-      <div class="form-field">
-        <%= form.label :email_address, "Email" %>
+      <div class="auth__field">
+        <%= form.label :email_address, "Email", class: "auth__label" %>
         <%= form.email_field :email_address, 
+            class: "auth__input",
             required: true, 
             autofocus: true, 
             autocomplete: "username",
@@ -25,22 +26,23 @@
             value: params[:email_address] %>
       </div>
       
-      <div class="form-field">
-        <%= form.label :password, "Password" %>
+      <div class="auth__field">
+        <%= form.label :password, "Password", class: "auth__label" %>
         <%= form.password_field :password, 
+            class: "auth__input",
             required: true, 
             autocomplete: "current-password",
             placeholder: "••••••••",
             maxlength: 72 %>
       </div>
       
-      <div class="form-submit">
-        <%= form.submit "Sign in" %>
+      <div class="auth__submit">
+        <%= form.submit "Sign in", class: "auth__button" %>
       </div>
     <% end %>
     
-    <div class="form-links">
-      <%= link_to "Create an account", new_user_path if defined?(new_user_path) %>
+    <div class="auth__links">
+      <%= link_to "Create an account", new_user_path, class: "auth__link" if defined?(new_user_path) %>
     </div>
   </div>
 </div>

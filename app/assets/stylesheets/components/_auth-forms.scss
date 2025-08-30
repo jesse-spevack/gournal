@@ -1,10 +1,18 @@
 /* ============================================ */
-/* AUTH FORMS - Japanese Journal Login/Signup  */
+/* AUTH FORMS - BEM METHODOLOGY                */
 /* ============================================ */
+
+/* 
+ * BEM Structure:
+ * Block: .auth
+ * Elements: __container, __form, __title, __field, __label, __input, __submit, __links
+ * Modifiers: --login, --signup
+ */
 
 @use "../config/design-tokens" as *;
 
-.auth-container {
+/* Auth container block */
+.auth {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -45,7 +53,8 @@
   }
 }
 
-.auth-form {
+/* Auth form element */
+.auth__form {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -72,139 +81,139 @@
   @include mobile-up {
     padding: 48px 40px 32px;
   }
+}
+
+/* Form title element */
+.auth__title {
+  font-family: var(--font-mono);
+  font-size: 18px;  /* Mobile-first: smaller on mobile */
+  font-weight: var(--weight-normal);
+  color: var(--ink-primary);
+  text-align: center;
+  margin: 0 0 32px 0;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
   
-  /* Form title - like a journal header */
-  h1 {
-    font-family: var(--font-mono);
-    font-size: 18px;  /* Mobile-first: smaller on mobile */
-    font-weight: var(--weight-normal);
+  /* Desktop: larger font size */
+  @include mobile-up {
+    font-size: 20px;
+  }
+  
+  /* Subtle underline like ruled paper */
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: var(--ink-primary);
+    opacity: 0.2;
+    margin: 12px auto 0;
+  }
+}
+
+/* Form field element */
+.auth__field {
+  margin-bottom: 24px;
+}
+
+/* Form label element */
+.auth__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-primary);
+  opacity: 0.8;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+/* Form input element */
+.auth__input {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-form);
+  color: var(--ink-primary);
+  background: var(--paper-form-bg);
+  border: var(--border-thin) solid var(--ink-primary-10);
+  border-radius: 2px;
+  transition: all var(--duration-fast) var(--ease-standard);
+  box-sizing: border-box;
+  
+  /* Subtle ink bleed effect on focus */
+  &:focus {
+    outline: none;
+    background: var(--paper-form-bg-focus);
+    border-color: var(--ink-primary);
+    box-shadow: 
+      0 0 0 3px var(--shadow-focus),
+      inset 0 1px 2px var(--accent-ink-bleed);
+  }
+  
+  &::placeholder {
     color: var(--ink-primary);
-    text-align: center;
-    margin: 0 0 32px 0;
-    letter-spacing: 0.02em;
-    opacity: 0.9;
-    
-    /* Desktop: larger font size */
-    @include mobile-up {
-      font-size: 20px;
-    }
-    
-    /* Subtle underline like ruled paper */
-    &::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 1px;
-      background: var(--ink-primary);
-      opacity: 0.2;
-      margin: 12px auto 0;
-    }
+    opacity: 0.3;
+    font-style: italic;
+  }
+}
+
+/* Form submit container */
+.auth__submit {
+  margin-top: 32px;
+}
+
+/* Submit button element */
+.auth__button {
+  width: 100%;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-form);
+  font-weight: var(--weight-normal);
+  letter-spacing: 0.02em;
+  color: var(--paper-light);
+  background: var(--ink-primary);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  box-sizing: border-box;
+  
+  /* Subtle rotation for handwritten feel */
+  transform: rotate(var(--rotate-subtle));
+  
+  &:hover {
+    background: var(--ink-hover);
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 4px 12px var(--shadow-medium);
   }
   
-  /* Form fields container */
-  .form-field {
-    margin-bottom: 24px;
-    
-    label {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--ink-primary);
-      opacity: 0.8;
-      margin-bottom: 8px;
-      letter-spacing: 0.01em;
-    }
-    
-    input[type="email"],
-    input[type="password"],
-    input[type="text"] {
-      width: 100%;
-      padding: 10px 12px;
-      font-family: var(--font-mono);
-      font-size: var(--font-size-form);
-      color: var(--ink-primary);
-      background: var(--paper-form-bg);
-      border: var(--border-thin) solid var(--ink-primary-10);
-      border-radius: 2px;
-      transition: all var(--duration-fast) var(--ease-standard);
-      box-sizing: border-box;
-      
-      /* Subtle ink bleed effect on focus */
-      &:focus {
-        outline: none;
-        background: var(--paper-form-bg-focus);
-        border-color: var(--ink-primary);
-        box-shadow: 
-          0 0 0 3px var(--shadow-focus),
-          inset 0 1px 2px var(--accent-ink-bleed);
-      }
-      
-      &::placeholder {
-        color: var(--ink-primary);
-        opacity: 0.3;
-        font-style: italic;
-      }
-    }
+  &:active {
+    transform: rotate(0deg) scale(0.98);
   }
+}
+
+/* Form links element */
+.auth__links {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.auth__link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-primary);
+  opacity: 0.7;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--ink-primary);
+  transition: opacity var(--duration-fast) var(--ease-standard);
   
-  /* Submit button - styled like an ink stamp */
-  .form-submit {
-    margin-top: 32px;
-    
-    input[type="submit"],
-    button[type="submit"] {
-      width: 100%;
-      padding: 12px 24px;
-      font-family: var(--font-mono);
-      font-size: var(--font-size-form);
-      font-weight: var(--weight-normal);
-      letter-spacing: 0.02em;
-      color: var(--paper-light);
-      background: var(--ink-primary);
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all var(--duration-normal) var(--ease-standard);
-      box-sizing: border-box;
-      
-      /* Subtle rotation for handwritten feel */
-      transform: rotate(var(--rotate-subtle));
-      
-      &:hover {
-        background: var(--ink-hover);
-        transform: rotate(0deg) scale(1.02);
-        box-shadow: 0 4px 12px var(--shadow-medium);
-      }
-      
-      &:active {
-        transform: rotate(0deg) scale(0.98);
-      }
-    }
-  }
-  
-  /* Links - styled like footnotes */
-  .form-links {
-    margin-top: 24px;
-    text-align: center;
-    
-    a {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--ink-primary);
-      opacity: 0.7;
-      text-decoration: none;
-      border-bottom: 1px dotted var(--ink-primary);
-      transition: opacity var(--duration-fast) var(--ease-standard);
-      
-      &:hover {
-        opacity: 1;
-      }
-    }
+  &:hover {
+    opacity: 1;
   }
 }
 
 /* Flash messages - styled like margin notes */
-.flash-message {
+.flash {
   position: fixed;
   top: 20px;
   left: 50%;
@@ -219,14 +228,14 @@
   z-index: 10;
   max-width: 90%;
   text-align: center;
-  
-  &.flash-alert {
-    color: #8b2c2c;
-    border-left: 3px solid #8b2c2c;
-  }
-  
-  &.flash-notice {
-    color: #2c5a2c;
-    border-left: 3px solid #2c5a2c;
-  }
+}
+
+.flash--alert {
+  color: #8b2c2c;
+  border-left: 3px solid #8b2c2c;
+}
+
+.flash--notice {
+  color: #2c5a2c;
+  border-left: 3px solid #2c5a2c;
 }

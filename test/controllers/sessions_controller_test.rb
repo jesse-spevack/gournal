@@ -96,6 +96,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       password: "wrong_password"
     }
     follow_redirect!
-    assert_select "div.flash-message.flash-alert", "Try another email address or password."
+    assert_select "div.flash.flash--alert", "Try another email address or password."
   end
 end

@@ -87,9 +87,9 @@ class CheckboxHelperTest < ActionView::TestCase
       assert_nothing_raised do
         result = habit_checkbox(box_variant: box_variant)
         assert_includes result, "checkbox-container"
-        assert_includes result, "checkbox-box"
+        assert_includes result, "checkbox__box"
         # Should not include any fill partial content
-        refute_includes result, "checkbox-fill"
+        refute_includes result, "checkbox__fill"
         refute_includes result, "Ink blot variation"
         refute_includes result, "X mark variation"
       end
@@ -100,8 +100,8 @@ class CheckboxHelperTest < ActionView::TestCase
     assert_nothing_raised do
       result = habit_checkbox(box_variant: 3, fill_variant: nil, fill_style: nil)
       assert_includes result, "checkbox-container"
-      assert_includes result, "checkbox-box"
-      refute_includes result, "checkbox-fill"
+      assert_includes result, "checkbox__box"
+      refute_includes result, "checkbox__fill"
     end
   end
 
@@ -121,8 +121,8 @@ class CheckboxHelperTest < ActionView::TestCase
     assert_nothing_raised do
       result = habit_checkbox(box_variant: 2, fill_variant: 7, fill_style: :blot)
       assert_includes result, "checkbox-container"
-      assert_includes result, "checkbox-box"
-      assert_includes result, "checkbox-fill"
+      assert_includes result, "checkbox__box"
+      assert_includes result, "checkbox__fill"
       assert_includes result, "Ink blot variation 7"
     end
   end
