@@ -11,11 +11,11 @@ end
 
 # Define the 5 habits for September 2025 (in order, left to right)
 habits_data = [
-  { name: "Run 1 mile", position: 1 },
-  { name: "20 pushups", position: 2 },
+  { name: "Run", position: 1 },
+  { name: "Pushups", position: 2 },
   { name: "Stretch", position: 3 },
-  { name: "Track all food", position: 4 },
-  { name: "Bed by 10", position: 5 }
+  { name: "Nutrition", position: 4 },
+  { name: "Bed@10", position: 5 }
 ]
 
 september_2025_year = 2025

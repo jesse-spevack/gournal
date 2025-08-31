@@ -44,11 +44,11 @@
 /* Month Header */
 .month-header {
   text-align: center;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
   
   h1 {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--ink-primary);
     opacity: var(--opacity-headers);
     letter-spacing: var(--letter-spacing-wide);
@@ -66,26 +66,27 @@
 .grid-headers {
   display: flex;
   align-items: flex-end;
-  margin-bottom: var(--space-md);
-  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
   border-bottom: 1px solid rgba(var(--ink-primary-rgb), 0.1);
   
   .day-column-header {
-    min-width: 32px; /* Space for day numbers */
-    margin-right: var(--space-number-margin);
+    min-width: 20px; /* Match day number width */
+    margin-right: 8px; /* Match day number margin */
   }
   
   .habit-column-header {
-    width: calc(var(--checkbox-size) + var(--space-sm));
+    width: var(--checkbox-size); /* Exact checkbox width */
     margin-right: var(--space-column-gap);
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px; /* Space for rotated text */
+    height: 60px; /* Reduced from 80px for mobile */
+    position: relative;
     
     .habit-name {
       font-family: var(--font-mono);
-      font-size: var(--text-sm);
+      font-size: var(--text-xs);
       color: var(--ink-primary);
       opacity: var(--opacity-headers);
       writing-mode: vertical-rl;
@@ -93,19 +94,25 @@
       transform: rotate(180deg);
       white-space: nowrap;
       letter-spacing: var(--letter-spacing-normal);
+      position: absolute;
+      bottom: 0;
     }
     
-    &:last-of-type {
+    /* Target the last habit column (before reflection) */
+    &:nth-last-child(2) {
       margin-right: var(--space-reflection-gap);
     }
   }
   
   .reflection-column-header {
     flex-grow: 1;
+    height: 60px; /* Match habit column header height */
+    display: flex;
+    align-items: flex-end; /* Align to bottom like habit headers */
     
     .reflection-label {
       font-family: var(--font-mono);
-      font-size: var(--text-sm);
+      font-size: var(--text-xs);
       color: var(--ink-primary);
       opacity: var(--opacity-headers);
       letter-spacing: var(--letter-spacing-normal);
@@ -136,8 +143,14 @@
   opacity: var(--opacity-numbers);
   min-width: 20px;
   text-align: right;
-  margin-right: var(--space-number-margin);
+  margin-right: 8px; /* Reduced from 12px */
   letter-spacing: var(--letter-spacing-tight);
+  
+  /* Precise vertical centering */
+  height: var(--checkbox-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* Habit Checkboxes */
@@ -149,7 +162,8 @@
   align-items: center;
   justify-content: center;
   
-  &:last-of-type {
+  /* Target the last habit checkbox (before reflection) */
+  &:nth-last-child(2) {
     margin-right: var(--space-reflection-gap);
   }
   
@@ -186,7 +200,7 @@
   flex-grow: 1;
   min-height: var(--checkbox-size);
   font-family: var(--font-mono);
-  font-size: var(--text-reflection);
+  font-size: var(--text-xs);
   color: var(--ink-primary);
   opacity: 0.8;
   

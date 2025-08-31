@@ -39,8 +39,8 @@ class HabitEntriesController < ApplicationController
 
     # Update the completed status
     if @habit_entry.update(habit_entry_params)
-      # For Turbo: respond with success status
-      head :ok
+      # For Turbo: respond with no content, no redirect
+      head :no_content
     else
       # For Turbo: respond with unprocessable entity
       head :unprocessable_entity
