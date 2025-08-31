@@ -5,7 +5,7 @@
       
       <%# Header - Simple "September 2025" for Phase 2 %>
       <header class="month-header">
-        <h1><%= @month_name %> <%= @year %></h1>
+        <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %></h1>
       </header>
       
       <%# Grid Layout: Day numbers + Habit columns + Reflection column %>
@@ -14,7 +14,7 @@
         <%# Column Headers %>
         <div class="grid-headers">
           <div class="day-column-header"></div>
-          <% @habits.each do |habit| %>
+          <% @tracker_data.habits.each do |habit| %>
             <div class="habit-column-header">
               <span class="habit-name"><%= habit.name %></span>
             </div>
@@ -26,16 +26,16 @@
         
         <%# Grid Rows: One row per day %>
         <div class="grid-rows">
-          <% @days.each do |day| %>
+          <% @tracker_data.days.each do |day| %>
             <div class="day-row" data-day="<%= day %>">
               
               <%# Day Number %>
               <div class="day-number"><%= day %></div>
               
               <%# Habit Checkboxes %>
-              <% @habits.each do |habit| %>
+              <% @tracker_data.habits.each do |habit| %>
                 <div class="habit-checkbox">
-                  <% entry = @habit_entries_lookup[habit.id][day] %>
+                  <% entry = @tracker_data.habit_entry_for(habit.id, day) %>
                   <% if entry %>
                     <%= render_habit_checkbox(entry) %>
                   <% end %>
