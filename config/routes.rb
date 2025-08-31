@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   # Style guide
   get "style_guide" => "style_guide#index", as: :style_guide
 
+  # Habit entries routes
+  resources :habit_entries, only: [ :index, :update ]
+
   # Defines the root path route ("/")
-  root "style_guide#index"
+  root "habit_entries#index"
 end#
