@@ -34,7 +34,24 @@ class HabitEntriesController < ApplicationController
     end
   end
 
+  def update
+    @habit_entry = HabitEntry.find(params[:id])
+
+    # Update the completed status
+    if @habit_entry.update(habit_entry_params)
+      # For Turbo: respond with success status
+      head :ok
+    else
+      # For Turbo: respond with unprocessable entity
+      head :unprocessable_entity
+    end
+  end
+
   private
+
+  def habit_entry_params
+    params.require(:habit_entry).permit(:completed)
+  end
 
   def render_empty_state
     @month_name = "September"

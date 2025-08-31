@@ -1,0 +1,224 @@
+/* ============================================================================ */
+/* HABIT TRACKING LAYOUT - Phase 2 Implementation                               */
+/* ============================================================================ */
+
+/* Japanese Paper Background */
+.paper-background {
+  background: radial-gradient(ellipse at top left, 
+    var(--paper-light) 0%, 
+    var(--paper-mid) 40%, 
+    var(--paper-dark) 100%);
+  min-height: 100vh;
+  padding: var(--space-lg);
+}
+
+/* Container */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: var(--space-xl) var(--space-xxl);
+  position: relative;
+}
+
+/* Dot Grid Overlay */
+.dot-grid-overlay {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 1px 1px, var(--accent-dots) var(--grid-dot-size), transparent 0);
+    background-size: var(--grid-spacing) var(--grid-spacing);
+    pointer-events: none;
+    opacity: var(--opacity-grid);
+  }
+}
+
+/* Month Header */
+.month-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  
+  h1 {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--ink-primary);
+    opacity: var(--opacity-headers);
+    letter-spacing: var(--letter-spacing-wide);
+    margin: 0;
+  }
+}
+
+/* Habit Grid Layout */
+.habit-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Grid Headers */
+.grid-headers {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(var(--ink-primary-rgb), 0.1);
+  
+  .day-column-header {
+    min-width: 32px; /* Space for day numbers */
+    margin-right: var(--space-number-margin);
+  }
+  
+  .habit-column-header {
+    width: calc(var(--checkbox-size) + var(--space-sm));
+    margin-right: var(--space-column-gap);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px; /* Space for rotated text */
+    
+    .habit-name {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--ink-primary);
+      opacity: var(--opacity-headers);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      white-space: nowrap;
+      letter-spacing: var(--letter-spacing-normal);
+    }
+    
+    &:last-of-type {
+      margin-right: var(--space-reflection-gap);
+    }
+  }
+  
+  .reflection-column-header {
+    flex-grow: 1;
+    
+    .reflection-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--ink-primary);
+      opacity: var(--opacity-headers);
+      letter-spacing: var(--letter-spacing-normal);
+    }
+  }
+}
+
+/* Grid Rows */
+.grid-rows {
+  .day-row {
+    display: flex;
+    align-items: center;
+    min-height: calc(var(--checkbox-size) + var(--space-checkbox-gap));
+    margin-bottom: var(--space-checkbox-gap);
+    
+    &:hover {
+      background: rgba(var(--paper-mid-rgb), 0.3);
+      border-radius: 4px;
+    }
+  }
+}
+
+/* Day Numbers */
+.day-number {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--ink-primary);
+  opacity: var(--opacity-numbers);
+  min-width: 20px;
+  text-align: right;
+  margin-right: var(--space-number-margin);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Habit Checkboxes */
+.habit-checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin-right: var(--space-column-gap);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:last-of-type {
+    margin-right: var(--space-reflection-gap);
+  }
+  
+  .checkbox-wrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .checkbox-form {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .checkbox-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkbox-custom {
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    position: relative;
+    display: block;
+  }
+}
+
+/* Reflection Cells */
+.reflection-cell {
+  flex-grow: 1;
+  min-height: var(--checkbox-size);
+  font-family: var(--font-mono);
+  font-size: var(--text-reflection);
+  color: var(--ink-primary);
+  opacity: 0.8;
+  
+  /* Future: Input field styling */
+  input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    opacity: inherit;
+    
+    &:focus {
+      outline: none;
+      background: rgba(var(--paper-light-rgb), 0.5);
+      border-radius: 2px;
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-md) var(--space-lg);
+  }
+  
+  .habit-column-header .habit-name {
+    font-size: calc(var(--text-sm) * 0.9);
+  }
+  
+  .day-number {
+    min-width: 18px;
+  }
+}
