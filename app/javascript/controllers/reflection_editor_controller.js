@@ -24,10 +24,6 @@ export default class extends Controller {
     this.debouncedSave()
   }
 
-  onFocus() {
-    // Just focus, ellipsis behavior is handled by CSS
-  }
-
   onBlur() {
     // Reset scroll position to start
     setTimeout(() => {
