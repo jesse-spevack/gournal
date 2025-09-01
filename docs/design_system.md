@@ -78,21 +78,22 @@ Soft shadows that suggest paper thickness and natural lighting:
 ### Font Families
 
 ```css
---font-serif: 'Georgia', serif        /* Readable, classic serif */
---font-mono: 'Courier New', monospace /* Typewriter aesthetic */
+--font-serif: 'Special Elite', 'Georgia', serif        /* Typewriter aesthetic */
+--font-mono: 'Special Elite', 'Courier New', monospace /* Typewriter aesthetic */  
+--font-caveat: 'Caveat', 'Courier New', cursive       /* Handwritten reflections */
 ```
 
-**Georgia Serif**
-- Primary choice for body text and headers
-- Excellent readability at all sizes
-- Classical proportions complement the paper aesthetic
-- Wide character support across platforms
+**Special Elite**
+- Primary typewriter font for all UI elements
+- Headers, labels, and interface text
+- Vintage typewriter aesthetic throughout
+- Consistent character adds authenticity
 
-**Courier New Monospace**  
-- Used for labels, metadata, code
-- Evokes typewriter and technical drawing
-- Creates contrast against flowing serif text
-- Fixed-width supports aligned layouts
+**Caveat Handwritten**  
+- Used exclusively for daily reflections
+- Personal, handwritten journal feel
+- Size increased to 18px for readability
+- Creates beautiful contrast with typewriter elements
 
 ### Font Sizes & Hierarchy
 
@@ -129,9 +130,10 @@ Spacing follows a harmonious scale based on multiples of small units, creating c
 
 ### Component Spacing  
 ```css
---space-checkbox-gap: 2px      /* Between individual checkboxes */
+--space-checkbox-gap: 0px      /* No gap between checkboxes for tighter layout */
 --space-column-gap: 4px        /* Between layout columns */
 --space-number-margin: 12px    /* Between day numbers and checkboxes */
+--space-reflection-gap: 0px    /* No gap before reflection column */
 ```
 
 ### Layout Spacing
@@ -149,8 +151,9 @@ Checkboxes are central to the journaling experience, designed to feel like hand-
 
 ### Dimensions
 ```css
---checkbox-size: 24px        /* Consistent size across all variants */
+--checkbox-size: 24px        /* Slightly larger for better visibility */
 --checkbox-viewbox: 24       /* SVG viewBox dimension */
+--checkbox-gap: 0px          /* No gap between checkboxes for tighter layout */
 ```
 
 ### Visual Variants
@@ -229,6 +232,60 @@ Checkboxes are central to the journaling experience, designed to feel like hand-
 - Checkbox layouts use auto-fill grids with minimum column widths
 - Flexible layouts adapt to content and screen size
 - Grid spacing aligns with overall spacing system
+
+## Daily Reflections Component
+
+### Design Philosophy
+Daily reflections use a completely invisible contenteditable div approach to maximize the bullet journal aesthetic:
+
+```css
+.reflection-input {
+  font-family: var(--font-caveat);
+  font-size: 18px;
+  background: transparent;
+  border: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+```
+
+### Key Features
+- **Invisible Interface**: No borders, backgrounds, or scrollbars
+- **Handwritten Font**: Caveat font with Courier New fallback for personal journal feel
+- **Elegant Ellipsis**: Native CSS ellipsis truncation when unfocused
+- **Single-line Input**: Prevents line breaks, maintains clean layout
+- **Auto-save**: 500ms debounced saving
+- **Subtle Feedback**: Opacity changes for save status
+
+### Technical Implementation
+- **ContentEditable**: Uses `contenteditable="true"` div instead of textarea for proper ellipsis support
+- **Fallback Fonts**: Graceful degradation with `'Caveat', 'Courier New', cursive`
+- **Font Loading**: Optimized loading with `display=block` to prevent flickering
+
+### Interactive States
+- **Default**: Single line with ellipsis (...) when text overflows
+- **Focus**: Expands to show full content with horizontal scrolling
+- **Saving**: Slight opacity reduction (0.8)
+- **Error**: Further opacity reduction (0.6)
+
+## Layout Simplifications
+
+### Container Updates
+The container system has been simplified for maximum screen utilization:
+
+```css
+.container {
+  padding: var(--space-md);  /* Minimal padding only */
+  /* Removed: max-width, centering, background, border-radius */
+}
+```
+
+### Visual Minimalism
+- **No Hover Effects**: Removed row hover highlighting
+- **No Borders**: Removed header/content separator lines
+- **No Focus Highlights**: Textareas blend seamlessly
+- **Full Width**: Content uses entire viewport width
 
 ## Component Architecture
 
@@ -348,7 +405,16 @@ All design tokens are defined as CSS custom properties (CSS variables) for:
 ## Versioning & Updates
 
 ### Current Version
-**Design System v1.0.0** (2025-08-27)
+**Design System v1.1.0** (2025-09-01)
+
+### Recent Updates (v1.1.0)
+- Changed primary font to Special Elite (typewriter aesthetic)
+- Added Caveat font for daily reflections (handwritten feel)
+- Removed visual containers and borders for minimalism
+- Eliminated hover effects for authentic bullet journal experience
+- Increased checkbox size to 24px with 0px gap
+- Made reflection textareas completely invisible
+- Simplified container system for full-width layouts
 
 ### Versioning Scheme
 - **Major (2.0.0)**: Breaking changes to core tokens or component structure

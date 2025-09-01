@@ -9,7 +9,7 @@
       </header>
       
       <%# Grid Layout: Day numbers + Habit columns + Reflection column %>
-      <div class="habit-grid">
+      <div class="habit-grid" data-csrf-token="<%= form_authenticity_token %>">
         
         <%# Column Headers %>
         <div class="grid-headers">
@@ -42,9 +42,22 @@
                 </div>
               <% end %>
               
-              <%# Reflection Column (empty for Phase 2) %>
+              <%# Reflection Column %>
               <div class="reflection-cell">
-                <%# TODO: Add daily reflection functionality in future phase %>
+                <% reflection = @tracker_data.reflection_for(day) %>
+                <% reflection_date = Date.new(@tracker_data.year, @tracker_data.month, day) %>
+                <div 
+                  class="reflection-input"
+                  contenteditable="true"
+                  data-controller="reflection-editor"
+                  data-reflection-editor-id-value="<%= reflection&.id %>"
+                  data-reflection-editor-date-value="<%= reflection_date.iso8601 %>"
+                  data-reflection-editor-user-id-value="<%= @tracker_data.user&.id %>"
+                  data-action="input->reflection-editor#onInput blur->reflection-editor#onBlur"
+                  aria-label="Daily reflection for <%= reflection_date.strftime('%B %d, %Y') %>"
+                  role="textbox"
+                  tabindex="0"
+                  data-placeholder=""><%= reflection&.content %></div>
               </div>
               
             </div>

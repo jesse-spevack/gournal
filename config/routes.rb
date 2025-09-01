@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   # Habit entries routes
   resources :habit_entries, only: [ :index, :update ]
 
+  # Daily reflections - top level resource since they belong to users
+  resources :daily_reflections, only: [ :create, :update ]
+
   # Defines the root path route ("/")
   root "habit_entries#index"
 end#

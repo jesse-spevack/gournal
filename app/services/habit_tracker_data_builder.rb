@@ -15,6 +15,7 @@ class HabitTrackerDataBuilder
     HabitTrackerData.new(
       habits: fetch_habits,
       habit_entries_lookup: build_entries_lookup,
+      reflections_lookup: build_reflections_lookup,
       month_name: month_name,
       days_in_month: days_in_month,
       year: @year,
@@ -38,6 +39,15 @@ class HabitTrackerDataBuilder
       habit.habit_entries.each do |entry|
         lookup[[ habit.id, entry.day ]] = entry
       end
+    end
+    lookup
+  end
+
+  def build_reflections_lookup
+    lookup = {}
+    reflections = @user.daily_reflections.for_month(@year, @month)
+    reflections.each do |reflection|
+      lookup[reflection.date.day] = reflection
     end
     lookup
   end

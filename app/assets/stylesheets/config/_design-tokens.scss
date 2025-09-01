@@ -57,8 +57,9 @@
   /* ============================================ */
   
   /* Font Families - v1.0.0 */
-  --font-serif: 'Georgia', serif;        /* v1.0.0 */
-  --font-mono: 'Courier New', monospace; /* v1.0.0 */
+  --font-serif: 'Special Elite', 'Georgia', serif;        /* v1.0.3 - Typewriter aesthetic */
+  --font-mono: 'Special Elite', 'Courier New', monospace; /* v1.0.3 - Typewriter aesthetic */
+  --font-caveat: 'Caveat', 'Courier New', cursive;      /* v1.0.3 - Handwritten aesthetic */
   
   /* Font Sizes */
   --text-xs: 11px;    /* Day numbers, watermark */
@@ -95,9 +96,10 @@
   --space-sm: 4px;
   
   /* Component Spacing */
-  --space-checkbox-gap: 1px;      /* Between checkboxes - reduced for mobile fit */
+  --space-checkbox-gap: 0px;      /* Between checkboxes - no gap for tighter layout */
   --space-column-gap: 4px;         /* Between columns */
   --space-number-margin: 12px;    /* Between number and checkbox */
+  --space-reflection-gap: 0px;    /* Between last habit column and reflection - removed per user request */
   
   /* Layout Spacing */
   --space-md: 15px;
@@ -119,7 +121,7 @@
   /* ============================================ */
   
   /* Checkbox Dimensions - v1.0.0 */
-  --checkbox-size: 22px;          /* v1.0.1 - Reduced to fit 30 days on mobile */
+  --checkbox-size: 24px;          /* v1.0.2 - Slightly larger for better visibility */
   --checkbox-viewbox: 24;         /* v1.0.0 */
   
   /* Container Dimensions */

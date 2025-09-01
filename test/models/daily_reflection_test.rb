@@ -164,4 +164,36 @@ class DailyReflectionTest < ActiveSupport::TestCase
       DailyReflection.find(reflection_id)
     end
   end
+
+  # find_or_build_for_date class method tests
+  test "find_or_build_for_date should find existing reflection" do
+    existing_reflection = DailyReflection.create!(@daily_reflection_attributes)
+
+    result = DailyReflection.find_or_build_for_date(user: @user, date: @daily_reflection_attributes[:date])
+
+    assert_equal existing_reflection, result
+    refute result.new_record?
+  end
+
+  test "find_or_build_for_date should build new reflection when none exists" do
+    test_date = Date.new(2025, 10, 15)
+
+    result = DailyReflection.find_or_build_for_date(user: @user, date: test_date)
+
+    assert result.new_record?
+    assert_equal @user, result.user
+    assert_equal test_date, result.date
+    assert_nil result.content
+  end
+
+  test "find_or_build_for_date should differentiate between users" do
+    user2 = users(:two)
+    DailyReflection.create!(@daily_reflection_attributes)
+
+    result = DailyReflection.find_or_build_for_date(user: user2, date: @daily_reflection_attributes[:date])
+
+    assert result.new_record?
+    assert_equal user2, result.user
+    assert_equal @daily_reflection_attributes[:date], result.date
+  end
 end
