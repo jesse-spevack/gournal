@@ -13,7 +13,10 @@
 
 /* Component Styles */
 @use "components/checkbox";
-@use "components/habit-tracking";
+@use "components/habit-tracking-layout";
+@use "components/habit-tracking-headers";
+@use "components/habit-tracking-checkboxes";
+@use "components/habit-tracking-responsive";
 @use "components/style-guide-layout";
 @use "components/style-guide-demos";
 @use "components/style-guide-utilities";
