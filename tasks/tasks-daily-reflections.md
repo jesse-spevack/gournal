@@ -25,13 +25,13 @@ Implement inline-editable daily reflections with auto-save functionality for the
   - [x] 3.4 Add CSRF token handling for AJAX requests
   - [x] 3.5 Ensure proper form semantics and accessibility
 
-- [ ] 4.0 JavaScript Auto-Save Implementation
-  - [ ] 4.1 Create reflection_editor_controller.js Stimulus controller
-  - [ ] 4.2 Implement debounced auto-save with 500ms delay
-  - [ ] 4.3 Handle textarea auto-resize based on content
-  - [ ] 4.4 Add focus/blur state management for truncation toggle
-  - [ ] 4.5 Implement error handling and retry logic for failed saves
-  - [ ] 4.6 Add optimistic updates for smooth user experience
+- [x] 4.0 JavaScript Auto-Save Implementation
+  - [x] 4.1 Create reflection_editor_controller.js Stimulus controller
+  - [x] 4.2 Implement debounced auto-save with 500ms delay
+  - [x] 4.3 Handle textarea auto-resize based on content
+  - [x] 4.4 Add focus/blur state management for truncation toggle
+  - [x] 4.5 Implement error handling and retry logic for failed saves
+  - [x] 4.6 Add optimistic updates for smooth user experience
 
 - [ ] 5.0 CSS Styling and Visual Polish
   - [ ] 5.1 Create _reflections.scss component file
