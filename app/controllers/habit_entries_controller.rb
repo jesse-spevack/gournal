@@ -29,7 +29,7 @@ class HabitEntriesController < ApplicationController
       head :no_content
     else
       # For Turbo: respond with unprocessable entity
-      head :unprocessable_entity
+      head :unprocessable_content
     end
   end
 

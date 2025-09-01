@@ -27,7 +27,7 @@ class DailyReflectionsController < ApplicationController
       render json: {
         status: "error",
         errors: @daily_reflection.errors.full_messages
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -44,7 +44,7 @@ class DailyReflectionsController < ApplicationController
       render json: {
         status: "error",
         errors: @daily_reflection.errors.full_messages
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 

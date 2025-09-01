@@ -48,7 +48,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
       post habit_entry_daily_reflections_path(habit_entry_id: 1), params: reflection_params, as: :json
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     json_response = JSON.parse(response.body)
     assert_equal "error", json_response["status"]
     assert_includes json_response["errors"], "Date can't be blank"
@@ -74,7 +74,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
           params: { daily_reflection: { date: nil } },
           as: :json
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     json_response = JSON.parse(response.body)
     assert_equal "error", json_response["status"]
     assert_includes json_response["errors"], "Date can't be blank"
