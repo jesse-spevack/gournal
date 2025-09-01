@@ -77,7 +77,7 @@ export default class extends Controller {
 
       if (this.idValue) {
         // Update existing reflection
-        response = await fetch(`/habit_entries/1/daily_reflections/${this.idValue}`, {
+        response = await fetch(`/daily_reflections/${this.idValue}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export default class extends Controller {
         })
       } else {
         // Create new reflection
-        response = await fetch('/habit_entries/1/daily_reflections', {
+        response = await fetch('/daily_reflections', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

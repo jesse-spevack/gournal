@@ -26,7 +26,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference "DailyReflection.count", 1 do
-      post habit_entry_daily_reflections_path(habit_entry_id: 1), params: reflection_params, as: :json
+      post daily_reflections_path, params: reflection_params, as: :json
     end
 
     assert_response :success
@@ -45,7 +45,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_no_difference "DailyReflection.count" do
-      post habit_entry_daily_reflections_path(habit_entry_id: 1), params: reflection_params, as: :json
+      post daily_reflections_path, params: reflection_params, as: :json
     end
 
     assert_response :unprocessable_content
@@ -56,7 +56,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
 
 
   test "update should update existing reflection" do
-    patch habit_entry_daily_reflection_path(habit_entry_id: 1, id: @daily_reflection.id),
+    patch daily_reflection_path(@daily_reflection.id),
           params: { daily_reflection: { content: "Updated content" } },
           as: :json
 
@@ -70,7 +70,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "update should return error for invalid params" do
-    patch habit_entry_daily_reflection_path(habit_entry_id: 1, id: @daily_reflection.id),
+    patch daily_reflection_path(@daily_reflection.id),
           params: { daily_reflection: { date: nil } },
           as: :json
 
@@ -81,7 +81,7 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "update should handle record not found" do
-    patch habit_entry_daily_reflection_path(habit_entry_id: 1, id: 99999),
+    patch daily_reflection_path(99999),
           params: { daily_reflection: { content: "Content" } },
           as: :json
 

@@ -14,9 +14,10 @@ Rails.application.routes.draw do
   get "style_guide" => "style_guide#index", as: :style_guide
 
   # Habit entries routes
-  resources :habit_entries, only: [ :index, :update ] do
-    resources :daily_reflections, only: [ :create, :update ]
-  end
+  resources :habit_entries, only: [ :index, :update ]
+
+  # Daily reflections - top level resource since they belong to users
+  resources :daily_reflections, only: [ :create, :update ]
 
   # Defines the root path route ("/")
   root "habit_entries#index"
