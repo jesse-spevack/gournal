@@ -13,4 +13,9 @@ class DailyReflection < ApplicationRecord
     end_date = start_date.end_of_month
     where(date: start_date..end_date)
   }
+
+  # Class methods
+  def self.find_or_build_for_date(user:, date:)
+    find_by(user: user, date: date) || new(user: user, date: date)
+  end
 end

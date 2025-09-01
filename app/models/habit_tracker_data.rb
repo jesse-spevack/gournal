@@ -1,11 +1,12 @@
 class HabitTrackerData
-  attr_reader :habits, :habit_entries_lookup, :month_name,
+  attr_reader :habits, :habit_entries_lookup, :reflections_lookup, :month_name,
               :days_in_month, :year, :month, :user
 
-  def initialize(habits:, habit_entries_lookup:, month_name:,
+  def initialize(habits:, habit_entries_lookup:, reflections_lookup:, month_name:,
                  days_in_month:, year:, month:, user:)
     @habits = habits
     @habit_entries_lookup = habit_entries_lookup
+    @reflections_lookup = reflections_lookup
     @month_name = month_name
     @days_in_month = days_in_month
     @year = year
@@ -15,6 +16,10 @@ class HabitTrackerData
 
   def habit_entry_for(habit_id, day)
     @habit_entries_lookup[[ habit_id, day ]]
+  end
+
+  def reflection_for(day)
+    @reflections_lookup[day]
   end
 
   def empty?

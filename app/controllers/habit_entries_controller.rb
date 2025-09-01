@@ -43,6 +43,7 @@ class HabitEntriesController < ApplicationController
     @tracker_data = HabitTrackerData.new(
       habits: Habit.none,
       habit_entries_lookup: {},
+      reflections_lookup: {},
       month_name: "September",
       days_in_month: 30,
       year: 2025,
