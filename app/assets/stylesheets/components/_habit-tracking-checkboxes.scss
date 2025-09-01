@@ -11,9 +11,9 @@
   align-items: center;
   justify-content: center;
   
-  /* Target the last habit checkbox (before reflection) */
+  /* Remove right margin from last checkbox */
   &:nth-last-child(2) {
-    margin-right: var(--space-reflection-gap);
+    margin-right: 0;
   }
   
   .checkbox-wrapper {

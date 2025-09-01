@@ -1,0 +1,100 @@
+/* ============================================ */
+/* DAILY REFLECTIONS COMPONENT                */
+/* ============================================ */
+
+@use "../config/design-tokens" as *;
+
+/* Reflection Cell Container */
+.reflection-cell {
+  display: flex;
+  align-items: stretch;
+  min-height: 2em;
+  width: 300px;
+  max-width: 300px;
+  position: relative;
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 479px) {
+    width: 200px;
+    max-width: 200px;
+  }
+}
+
+.reflection-input {
+  /* Typography - Handwritten Font */
+  font-family: var(--font-caveat);
+  font-size: 18px; /* Slightly larger for Caveat readability */
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: 1.4;
+  
+  /* Layout & Sizing */
+  width: 100%;
+  min-height: 1.4em; /* Single line height */
+  border: none;
+  display: block;
+  
+  /* Invisible input - matches background */
+  background: transparent;
+  color: var(--ink-primary);
+  
+  /* Spacing */
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-xs);
+  margin: 0;
+  
+  /* Remove default styling */
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
+  
+  /* Single-line with ellipsis - this works properly on contenteditable divs */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  
+  /* Transitions */
+  transition: 
+    background-color var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+  
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  
+  /* Empty state placeholder */
+  &:empty::before {
+    content: attr(data-placeholder);
+    color: var(--ink-primary-30);
+    font-style: italic;
+  }
+  
+  /* Focused State - allow horizontal scroll while typing */
+  &:focus {
+    /* Enable scrolling while typing and remove ellipsis */
+    overflow-x: auto;
+    text-overflow: clip;
+  }
+  
+  /* Save Status Indicators - subtle opacity change only */
+  &.saving-success {
+    opacity: 0.8;
+  }
+  
+  &.saving-error {
+    opacity: 0.6;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 479px) {
+  .reflection-input {
+    font-size: 14px; /* Slightly smaller on mobile */
+    padding: var(--space-xs) var(--space-sm);
+  }
+  
+  .reflection-cell {
+    min-width: 100px;
+  }
+}

@@ -46,17 +46,18 @@
               <div class="reflection-cell">
                 <% reflection = @tracker_data.reflection_for(day) %>
                 <% reflection_date = Date.new(@tracker_data.year, @tracker_data.month, day) %>
-                <textarea 
-                  class="reflection-textarea"
+                <div 
+                  class="reflection-input"
+                  contenteditable="true"
                   data-controller="reflection-editor"
                   data-reflection-editor-id-value="<%= reflection&.id %>"
                   data-reflection-editor-date-value="<%= reflection_date.iso8601 %>"
                   data-reflection-editor-user-id-value="<%= @tracker_data.user&.id %>"
-                  rows="1"
-                  data-action="input->reflection-editor#autoResize focus->reflection-editor#onFocus blur->reflection-editor#onBlur"
+                  data-action="input->reflection-editor#onInput focus->reflection-editor#onFocus blur->reflection-editor#onBlur"
                   aria-label="Daily reflection for <%= reflection_date.strftime('%B %d, %Y') %>"
                   role="textbox"
-                  tabindex="0"><%= reflection&.content %></textarea>
+                  tabindex="0"
+                  data-placeholder=""><%= reflection&.content %></div>
               </div>
               
             </div>

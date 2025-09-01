@@ -10,7 +10,6 @@ export default class extends Controller {
 
   connect() {
     this.debounceTimer = null
-    this.element.addEventListener('input', this.debouncedSave.bind(this))
   }
 
   disconnect() {
@@ -19,22 +18,36 @@ export default class extends Controller {
     }
   }
 
-  autoResize() {
-    // Auto-resize textarea based on content
-    this.element.style.height = 'auto'
-    this.element.style.height = this.element.scrollHeight + 'px'
+  onInput() {
+    // Prevent line breaks in contenteditable
+    this.preventLineBreaks()
+    this.debouncedSave()
   }
 
   onFocus() {
-    // Expand textarea when focused (remove truncation)
-    this.element.classList.add('focused')
-    this.autoResize()
+    // Just focus, ellipsis behavior is handled by CSS
   }
 
   onBlur() {
-    // Apply truncation when unfocused
-    this.element.classList.remove('focused')
-    this.element.style.height = 'auto'
+    // Reset scroll position to start
+    setTimeout(() => {
+      this.element.scrollLeft = 0
+    }, 0)
+  }
+
+  preventLineBreaks() {
+    // Remove any line breaks from contenteditable
+    const content = this.element.textContent
+    if (content.includes('\n')) {
+      this.element.textContent = content.replace(/\n/g, ' ')
+      // Move cursor to end
+      const range = document.createRange()
+      const sel = window.getSelection()
+      range.selectNodeContents(this.element)
+      range.collapse(false)
+      sel.removeAllRanges()
+      sel.addRange(range)
+    }
   }
 
   debouncedSave() {
@@ -50,7 +63,7 @@ export default class extends Controller {
   }
 
   async saveReflection() {
-    const content = this.element.value
+    const content = this.element.textContent || ''
     const csrfToken = this.getCsrfToken()
 
     try {

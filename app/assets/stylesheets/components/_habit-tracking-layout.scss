@@ -14,11 +14,7 @@
 
 /* Container */
 .container {
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: var(--space-xl) var(--space-xxl);
+  padding: var(--space-md);
   position: relative;
 }
 
@@ -53,7 +49,6 @@
   align-items: flex-end;
   margin-bottom: var(--space-sm);
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid var(--ink-primary-10);
   
   .day-column-header {
     min-width: 20px; /* Match day number width */
@@ -85,7 +80,7 @@
     
     /* Target the last habit column (before reflection) */
     &:nth-last-child(2) {
-      margin-right: var(--space-reflection-gap);
+      margin-right: 0; /* Remove all right margin from last habit column */
     }
   }
   
@@ -94,6 +89,8 @@
     height: 60px; /* Match habit column header height */
     display: flex;
     align-items: flex-end; /* Align to bottom like habit headers */
+    justify-content: center; /* Center the label horizontally */
+    padding-right: 0; /* Remove right padding */
     
     .reflection-label {
       font-family: var(--font-mono);
@@ -112,10 +109,5 @@
     align-items: center;
     min-height: calc(var(--checkbox-size) + var(--space-checkbox-gap));
     margin-bottom: var(--space-checkbox-gap);
-    
-    &:hover {
-      background: var(--ink-primary-05);
-      border-radius: 4px;
-    }
   }
 }
