@@ -13,6 +13,17 @@ export default class extends Controller {
   toggle() {
     // Update visual when checkbox state changes
     this.updateVisual()
+    
+    // Submit the form
+    this.submitForm()
+  }
+
+  submitForm() {
+    // Find the closest form element and submit it
+    const form = this.inputTarget.closest('form')
+    if (form) {
+      form.requestSubmit()
+    }
   }
 
   updateVisual() {

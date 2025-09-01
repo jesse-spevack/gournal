@@ -3,21 +3,21 @@ class HabitEntriesController < ApplicationController
 
   def index
     # Hardcode September 2025 for Phase 2
-    # Use environment variable for demo user email
-    demo_email = ENV.fetch("DEMO_USER_EMAIL", "demo@example.com")
-    current_user = User.find_by(email_address: demo_email)
+    # Use environment variable for user email
+    user_email = ENV["FIRST_USER"]
+    @current_user = User.find_by(email_address: user_email)
 
-    # If demo user doesn't exist (like in tests), fall back to first user
-    current_user ||= User.first
+    # If user doesn't exist (like in tests), fall back to first user
+    @current_user ||= User.first
 
     @tracker_data = HabitTrackerDataBuilder.call(
-      user: current_user,
+      user: @current_user,
       year: 2025,
       month: 9
     )
 
     # If no user exists, show empty state
-    render_empty_state if current_user.nil?
+    render_empty_state if @current_user.nil?
   end
 
   def update

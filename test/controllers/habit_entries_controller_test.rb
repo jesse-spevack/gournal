@@ -21,7 +21,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
     )
 
     # Set environment variable for test
-    ENV["DEMO_USER_EMAIL"] = @user.email_address
+    ENV["FIRST_USER"] = @user.email_address
   end
 
   test "index renders successfully with habits" do

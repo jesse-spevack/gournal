@@ -58,8 +58,7 @@ class CheckboxRenderer
                        checkbox_target: "input",
                        action: "change->checkbox#toggle"
                      },
-                     style: "position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;",
-                     onchange: "this.form.submit();"
+                     style: "position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;"
                    },
                    "true", "false"
   end

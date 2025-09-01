@@ -79,7 +79,6 @@ class CheckboxRendererTest < ActiveSupport::TestCase
     assert_match 'name="_method"', result  # Rails adds hidden _method field
     assert_match 'value="patch"', result   # PATCH method via hidden field
     assert_match 'data-remote="true"', result
-    assert_match 'onchange="this.form.submit();"', result
   end
 
   test "includes stimulus controller data attributes" do
