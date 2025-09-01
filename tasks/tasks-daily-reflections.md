@@ -5,25 +5,25 @@ Implement inline-editable daily reflections with auto-save functionality for the
 
 ## Tasks
 
-- [ ] 1.0 Backend Infrastructure Setup
+- [x] 1.0 Backend Infrastructure Setup
   - [x] 1.1 Create DailyReflectionsController with create and update actions
   - [x] 1.2 Add nested routes under habit_entries for reflections
   - [x] 1.3 Update HabitTrackerDataBuilder to include reflections lookup
   - [x] 1.4 Add helper method to find or build reflection for specific date
   - [x] 1.5 Ensure proper error handling for AJAX requests
 
-- [ ] 2.0 Data Layer Enhancement  
-  - [ ] 2.1 Update DailyReflection model to handle find_or_create logic
-  - [ ] 2.2 Add scoped finder methods for efficient reflection lookup
-  - [ ] 2.3 Verify existing associations and validations are sufficient
-  - [ ] 2.4 Add any missing indexes for performance
+- [x] 2.0 Data Layer Enhancement  
+  - [x] 2.1 Update DailyReflection model to handle find_or_create logic
+  - [x] 2.2 Add scoped finder methods for efficient reflection lookup
+  - [x] 2.3 Verify existing associations and validations are sufficient
+  - [x] 2.4 Add any missing indexes for performance
 
-- [ ] 3.0 View Layer Integration
-  - [ ] 3.1 Update habit_entries/index.html.erb to include textarea in reflection cells
-  - [ ] 3.2 Add data attributes for Stimulus targeting and reflection identification
-  - [ ] 3.3 Implement proper textarea sizing and responsive behavior
-  - [ ] 3.4 Add CSRF token handling for AJAX requests
-  - [ ] 3.5 Ensure proper form semantics and accessibility
+- [x] 3.0 View Layer Integration
+  - [x] 3.1 Update habit_entries/index.html.erb to include textarea in reflection cells
+  - [x] 3.2 Add data attributes for Stimulus targeting and reflection identification
+  - [x] 3.3 Implement proper textarea sizing and responsive behavior
+  - [x] 3.4 Add CSRF token handling for AJAX requests
+  - [x] 3.5 Ensure proper form semantics and accessibility
 
 - [ ] 4.0 JavaScript Auto-Save Implementation
   - [ ] 4.1 Create reflection_editor_controller.js Stimulus controller
