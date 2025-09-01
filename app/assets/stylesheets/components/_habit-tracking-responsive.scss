@@ -1,0 +1,18 @@
+/* ============================================================================ */
+/* HABIT TRACKING RESPONSIVE - Mobile and tablet optimizations                  */
+/* ============================================================================ */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-md) var(--space-lg);
+  }
+  
+  .habit-column-header .habit-name {
+    font-size: calc(var(--text-sm) * 0.9);
+  }
+  
+  .day-number {
+    min-width: 18px;
+  }
+}

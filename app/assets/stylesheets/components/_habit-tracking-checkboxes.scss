@@ -1,0 +1,72 @@
+/* ============================================================================ */
+/* HABIT TRACKING CHECKBOXES - Checkbox styles and interactions                 */
+/* ============================================================================ */
+
+/* Habit Checkboxes */
+.habit-checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin-right: var(--space-column-gap);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Target the last habit checkbox (before reflection) */
+  &:nth-last-child(2) {
+    margin-right: var(--space-reflection-gap);
+  }
+  
+  .checkbox-wrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .checkbox-form {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .checkbox-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkbox-custom {
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    position: relative;
+    display: block;
+  }
+}
+
+/* Reflection Cells */
+.reflection-cell {
+  flex-grow: 1;
+  min-height: var(--checkbox-size);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: 0.8;
+  
+  /* Future: Input field styling */
+  input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    opacity: inherit;
+    
+    &:focus {
+      outline: none;
+      background: var(--paper-form-bg-focus);
+      border-radius: 2px;
+    }
+  }
+}

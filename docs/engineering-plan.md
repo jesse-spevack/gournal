@@ -726,488 +726,95 @@ if Rails.env.development?
 end
 ```
 
-## Phase 2: Core Features & Controllers (Week 2)
+## Phase 2: Core Habit Tracking View Implementation
 
-### Status: 🔴 Not Started (Next Phase)
-
-| Task | Status | Notes |
-|------|--------|-------|
-| 2.1 SVG Checkbox Rendering System | 🔴 | - |
-| 2.2 Habits Controller & Monthly Grid | 🔴 | - |
-| 2.3 Habit Management Features | 🔴 | - |
-
-### 2.1 SVG Checkbox Rendering System
-**TDD Tests**:
-```ruby
-# test/models/checkbox_renderer_test.rb
-test "renders correct SVG for checkbox style 1" do
-  svg = CheckboxRenderer.new(style: 1, checked: false).render
-  assert_match /M 3.3,3.8 C 3.1,3.3/, svg
-  assert_no_match /x-mark/, svg
-end
-
-test "includes X mark when checked" do
-  svg = CheckboxRenderer.new(style: 1, check_style: 3, checked: true).render
-  assert_match /x-mark show/, svg
-  assert_match /x-path-1/, svg
-end
-```
-
-**Implementation**:
-- `app/models/concerns/checkbox_renderable.rb` - generates SVG markup
-- Store 5 box path variations from design system
-- Store 5 X-mark path variations from design system
-- Helper method: `render_habit_checkbox(entry)`
-
-### 2.2 Habits Controller & Monthly Grid
-**TDD Tests**:
-```ruby
-# test/controllers/habits_controller_test.rb
-test "index shows current month by default" do
-  get root_path
-  assert_response :success
-  assert_select "h1", Date.current.strftime("%B %Y")
-end
-
-test "displays all habits for current month" do
-  get root_path
-  assert_select ".habit-column", count: 3  # fixture has 3 habits
-  assert_select ".day-row", count: 31
-end
-
-test "prevents checking future dates" do
-  tomorrow = Date.current + 1.day
-  patch habit_entry_path(@habit, day: tomorrow.day), 
-        params: { completed: true }
-  assert_response :unprocessable_entity
-end
-```
-
-**Controller Actions**:
-**HabitsController**:
-- `index` - display current month grid
-- `show` - display specific month/year  
-- `new` - form for new habit
-- `create` - add new habit to month
-- `edit` - form to edit habit
-- `update` - update habit details
-- `destroy` - remove habit from month
-
-**HabitEntriesController**:
-- `update` - toggle checkbox state (RESTful)
-
-### 2.3 Habit Management Features
-**TDD Tests**:
-```ruby
-# test/controllers/habits_controller_test.rb
-test "can create new habit" do
-  post habits_path, params: { habit: { name: "Meditation" } }
-  assert_response :redirect
-  assert_equal "Meditation", Habit.last.name
-end
-
-test "can copy habits from previous month" do
-  post habits_path, params: { 
-    habit: { copy_from_previous: true },
-    year: 2025, 
-    month: 1 
-  }
-  assert_response :redirect
-  # Verify habits were copied in controller logic
-end
-
-test "enforces habit limit" do
-  10.times { create(:habit) }
-  post habits_path, params: { habit: { name: "Too Many" } }
-  assert_response :unprocessable_entity
-end
-```
-
-**Features to Implement**:
-- Add/remove habits with Turbo Frames
-- Reorder habits by updating position
-- Copy habits from previous month
-- Enforce habit limit (3-10 based on testing)
-
-## Phase 3: Interactive Features (Week 3)
+### Goal
+Implement the core view, controller, and necessary code to enable habit tracking for September 2025 with a single user.
 
 ### Status: 🔴 Not Started
 
 | Task | Status | Notes |
 |------|--------|-------|
-| 3.1 Stimulus Controllers | 🔴 | - |
-| 3.2 Turbo Integration | 🔴 | - |
-| 3.3 Daily Reflections | 🔴 | - |
+| 2.1 Create setup script for user and habits | 🔴 | - |
+| 2.2 Document layout structure | 🔴 | - |
+| 2.3 Configure routing | 🔴 | - |
+| 2.4 Create HabitEntriesController | 🔴 | - |
+| 2.5 Implement habit tracking view | 🔴 | - |
+| 2.6 Add checkbox toggle functionality | 🔴 | - |
+| 2.7 Test complete user flow | 🔴 | - |
 
-### 3.1 Stimulus Controllers
-**TDD Approach**: Write controller tests for JavaScript endpoints
+### Implementation Steps
 
-```ruby
-# test/controllers/habit_entries_controller_test.rb  
-test "updates habit entry completion status" do
-  entry = habit_entries(:one)
-  patch habit_entry_path(entry), params: { completed: true }
-  assert_response :success
-  assert entry.reload.completed?
-end
-```
+#### 2.1 Create Setup Script for User and Habits
+Create a Ruby script that sets up the development data:
+- User with email "jspevack@gmail.com" and password "gournal"
+- Five habits for September 2025 (in order, left to right):
+  1. Run 1 mile
+  2. 20 pushups
+  3. Stretch
+  4. Track all food
+  5. Bed by 10
+- All habits use X marks as check type (not blots)
+- Create habit entries for all 30 days of September for each habit
+- Each checkbox style should be randomly selected from the 10 available box styles
+- Authentication will be temporarily unscoped (hardcoded user)
 
-**Stimulus Controllers**:
-```javascript
-// app/javascript/controllers/checkbox_controller.js
-// - Toggle checkbox state
-// - POST update to server
-// - Handle loading states
+#### 2.2 Document Layout Structure
+- Review `docs/look-at-layout-structure.html`
+- Extract the ASCII diagram
+- Create `docs/layout-structure.md` with the diagram and layout specifications
 
-// app/javascript/controllers/habit_controller.js
-// - Add/remove habit rows
-// - Handle reordering
-// - Update positions
+#### 2.3 Configure Routing
+- Change root route to `habit_entries#index`
+- Remove authentication requirements temporarily
 
-// app/javascript/controllers/reflection_controller.js
-// - Auto-save on blur
-// - Character limit enforcement
-// - Show save indicator
+#### 2.4 Create HabitEntriesController
+- Add `index` method to display September 2025 habits
+- Add `update` method for toggling checkbox state
+- Handle Turbo requests for no-refresh updates
 
-// app/javascript/controllers/month_navigator_controller.js
-// - Previous/next month navigation
-// - Update URL without full reload
-```
+#### 2.5 Implement Habit Tracking View
+Create `app/views/habit_entries/index.html.erb`:
+- Header showing "September 2025" centered at top
+- Grid layout with:
+  - Column 1: Days of month (1-30)
+  - Columns 2-6: Checkbox for each habit (5 habits)
+  - Column 7: Reflections (empty for now)
+- Use existing checkbox partials from style guide
+- Each checkbox uses random box style (0-9)
+- Checked boxes show random X mark style (0-9)
+- Follow design system precisely (no custom colors/fonts)
 
-### 3.2 Turbo Integration
-**TDD Tests**:
-```ruby
-# test/controllers/habits_controller_test.rb
-test "month navigation returns turbo frame content" do
-  get habits_path(year: 2025, month: 2), headers: { "Turbo-Frame" => "month-content" }
-  assert_response :success
-  assert_match /turbo-frame/, response.body
-end
-```
+#### 2.6 Add Checkbox Toggle Functionality
+- Leverage existing Stimulus controller from style guide
+- Click checkbox → toggle completed state
+- No page refresh (Turbo), no defensive coding / duplicative ajax posting in stimulus controller. Pure Turbo.
+- Persist state to database
+- Re-clicking toggles back
+- State persists through page refresh
+- X mark style randomizes on each check
 
-**Turbo Implementation**:
-- Wrap monthly grid in `turbo_frame_tag "month-content"`
-- Habit forms use Turbo Streams for updates
-- Reflection updates via Turbo Stream
-- Loading indicators for async operations
+#### 2.7 Manual testing - I (user) will test.
+Verify the following works:
+- Root route displays habit grid for September 2025
+- All 5 habits show with proper labels
+- 30 days × 5 habits = 150 checkboxes displayed
+- Clicking checkbox marks it complete with X
+- Clicking again removes the X
+- Refreshing page maintains state
+- Visual style matches design system
 
-### 3.3 Daily Reflections
-**TDD Tests**:
-```ruby
-# test/controllers/daily_reflections_controller_test.rb
-test "can create daily reflection" do
-  post daily_reflections_path, params: { 
-    daily_reflection: { date: Date.current, content: "Great day!" } 
-  }
-  assert_response :success
-  assert_equal "Great day!", DailyReflection.last.content
-end
+### Out of Scope for Phase 2
+- UI for creating/editing/deleting habits (using Rails console instead)
+- Month navigation
+- Daily reflections functionality
+- User authentication UI
+- Multiple users
+- Responsive mobile layout
+- Cover art section
 
-test "truncates long content in display" do
-  long_text = "a" * 300
-  reflection = create(:daily_reflection, content: long_text)
-  # Test truncation logic in helper/model methods
-end
-```
+## Future Phases (To Be Defined)
+- User creation, authentication
 
-**Implementation**:
-- Single-line input for each day
-- Auto-save on blur via Stimulus
-- CSS truncation with ellipsis
-- Store full text, display truncated
-
-## Phase 4: Visual Design & Mobile Optimization (Week 4)
-
-### Status: 🔴 Not Started
-
-| Task | Status | Notes |
-|------|--------|-------|
-| 4.1 Japanese Paper Aesthetic | 🔴 | - |
-| 4.2 Mobile-First Responsive Design | 🔴 | - |
-| 4.3 Cover Art Section | 🔴 | - |
-
-### 4.1 Japanese Paper Aesthetic
-**TDD Approach**: Test CSS helper methods and component logic
-
-```ruby
-# test/helpers/application_helper_test.rb
-test "generates correct CSS variables" do
-  css_vars = japanese_paper_css_variables
-  assert_includes css_vars, "--ink-primary: #1a2332"
-  assert_includes css_vars, "--paper-light: #fdfbf7"
-end
-
-test "checkbox renderer includes proper classes" do
-  # Test checkbox rendering logic without browser
-end
-```
-
-**SCSS Implementation**:
-```scss
-// app/assets/stylesheets/application.scss
-// Design tokens using SCSS variables
-:root {
-  --ink-primary: #1a2332;
-  --ink-hover: #0f1821;
-  --paper-light: #fdfbf7;
-  --paper-mid: #f8f5ed;
-  --paper-dark: #f3ede3;
-  --checkbox-size: 24px;
-  // ... all other design tokens
-}
-
-// Japanese paper background layers
-.paper-background {
-  background: radial-gradient(ellipse at top left, 
-    var(--paper-light) 0%, 
-    var(--paper-mid) 40%, 
-    var(--paper-dark) 100%);
-}
-
-// Kozo fiber texture
-.kozo-texture {
-  background-image: 
-    repeating-linear-gradient(87deg, 
-      var(--fiber-dark) 0px,
-      transparent 1px,
-      transparent 2px);
-}
-```
-
-### 4.2 Mobile-First Responsive Design
-**Implementation Notes**:
-- Test mobile layouts manually
-- Verify responsive breakpoints in browser dev tools
-- Use CSS Grid/Flexbox for adaptive layouts
-
-**Mobile Optimizations**:
-- Viewport meta tag: `width=device-width, initial-scale=1`
-- Flexible column sizing based on habit count
-- Touch-friendly tap targets (minimum 44px)
-- Font sizes optimized for mobile (11px days, 12px reflections)
-- No horizontal scrolling at 412px width
-
-### 4.3 Cover Art Section
-**Implementation with Tests**:
-```ruby
-# test/helpers/application_helper_test.rb
-test "formats month year for cover art" do
-  result = cover_art_month_year(Date.new(2025, 8, 15))
-  assert_equal "August 2025", result
-end
-```
-
-**Cover Design**:
-- Centered month/year display
-- Courier New typography
-- Decorative Japanese elements
-- Consistent padding from design system
-
-## Phase 5: Deployment & Performance (Week 5)
-
-### Status: 🔴 Not Started
-
-| Task | Status | Notes |
-|------|--------|-------|
-| 5.1 Performance Optimization | 🔴 | - |
-| 5.2 Kamal Deployment Configuration | 🔴 | - |
-
-### 5.1 Performance Optimization
-**Performance Testing**:
-```ruby
-# Performance testing done manually in development
-# Use browser dev tools to measure:
-# - Initial page load time < 2 seconds
-# - Checkbox interaction < 100ms response
-# - No layout shifts on mobile viewport
-```
-
-**Optimizations**:
-- Optimize SVG paths (minimize coordinates)
-- Enable Solid Cache for fragment caching
-- Use Solid Queue for background jobs
-- Compress assets with Rails defaults
-- Lazy load non-critical styles
-- Minimize Stimulus controller size
-
-**Solid Cache Configuration**:
-```ruby
-# config/environments/production.rb
-config.cache_store = :solid_cache_store
-
-# config/solid_cache.yml
-production:
-  database: cache
-  store_options:
-    max_size: 256.megabytes
-    max_age: 1.week
-```
-
-**Solid Queue Configuration**:
-```ruby
-# config/environments/production.rb
-config.active_job.queue_adapter = :solid_queue
-
-# config/solid_queue.yml
-production:
-  workers:
-    - queues: [default, mailers]
-      threads: 3
-      polling_interval: 1
-```
-
-### 5.2 Kamal Deployment Configuration
-**Configuration Files**:
-```yaml
-# config/deploy.yml
-service: habit-tracker
-image: habit-tracker
-
-servers:
-  web:
-    - your-server.com
-
-registry:
-  username: your-username
-  password:
-    - KAMAL_REGISTRY_PASSWORD
-
-env:
-  clear:
-    RAILS_LOG_TO_STDOUT: true
-  secret:
-    - RAILS_MASTER_KEY
-    - HTTP_AUTH_USERNAME
-    - HTTP_AUTH_PASSWORD
-
-accessories:
-  db:
-    image: postgres:15
-    host: your-server.com
-    directories:
-      - data:/var/lib/postgresql/data
-```
-
-**Basic HTTP Authentication for MVP**:
-```ruby
-# app/controllers/application_controller.rb
-class ApplicationController < ActionController::Base
-  before_action :authenticate if Rails.env.production?
-
-  private
-
-  def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == ENV['HTTP_AUTH_USERNAME'] && 
-      password == ENV['HTTP_AUTH_PASSWORD']
-    end
-  end
-end
-```
-
-**Deployment Checklist**:
-- Configure production database (SQLite for MVP)
-- Set up environment variables
-- Configure health check endpoint
-- Asset precompilation settings
-- Error monitoring setup (optional)
-
-## Key Technical Decisions
-
-### Database Design
-- **Checkbox variations stored**: Each `HabitEntry` stores `checkbox_style` (1-5) and `check_style` (1-5) to mimic handwriting variance
-- **User authentication**: Rails 8 built-in authentication generator with session-based auth
-- **Soft deletes**: Use `active` flag on habits instead of destroying
-- **Cross-month habits**: Habits can span multiple months or be tracked year-round
-- **Flexible tracking**: Users can mark any habit complete on any day (past or present)
-
-### Frontend Architecture  
-- **Turbo Frames**: Month content wrapped in frame for seamless navigation
-- **Turbo Streams**: Checkbox updates and reflection saves
-- **Stimulus**: Thin controllers for interactions only
-- **No React/Vue**: Stick to Rails defaults
-
-### Testing Strategy
-- **Model tests**: Validation, associations, business logic
-- **Controller tests**: Request/response, authorization
-- **Integration tests**: Request/response workflows
-- **Performance tests**: Load times, interaction speed (manual)
-- **Fixtures**: Comprehensive test data scenarios
-
-### Mobile Considerations
-- **Habit limit**: Start with 5 habits, test up to 10
-- **Touch targets**: Minimum 44px for all interactive elements
-- **Font scaling**: Prevent zoom on input focus
-- **Viewport**: Fixed 412px optimization with flexible scaling
-
-## Success Metrics
-
-### Status: 🟡 Partially Achieved
-
-| Metric | Status | Current | Target |
-|--------|--------|---------|--------|
-| All tests passing | 🟢 | 89 tests, 536 assertions, 0 failures | 100% coverage |
-| Page load time (3G) | 🔴 | N/A | < 2 seconds |
-| Checkbox interaction | 🔴 | N/A | < 100ms |
-| Mobile viewport | 🔴 | N/A | Zero horizontal scroll at 412px |
-| Kamal deployment | 🔴 | N/A | Successful deployment |
-| Browser compatibility | 🔴 | N/A | iOS Safari & Chrome mobile |
-
-## Risk Mitigation
-
-### Performance Risks
-- **SVG rendering**: Pre-optimize paths, use CSS transforms for animations
-- **Database growth**: Implement database backups and monitoring
-- **Memory usage**: Limit habits per month, paginate historical data
-
-### Technical Risks  
-- **Browser compatibility**: Test on real devices early
-- **SQLite in production**: Plan migration path to PostgreSQL if needed
-- **Touch accuracy**: Increase tap target sizes if testing shows issues
-
-### UX Risks
-- **Habit limit frustration**: Clear messaging about limits
-- **Lost data**: Auto-save with visual feedback
-- **Accidental deletions**: Users can simply re-check deleted entries
-
-## Development Workflow
-
-### Daily TDD Cycle
-1. Write failing test for next feature
-2. Implement minimum code to pass
-3. Refactor while keeping tests green
-4. Commit with descriptive message
-5. Push to feature branch
-
-### Branch Strategy
-- `main` - stable, deployable code
-- `feature/*` - individual features
-- `fix/*` - bug fixes
-- Deploy from `main` only
-
-### Code Review Checklist
-- [ ] Tests written and passing
-- [ ] Mobile responsive at 412px
-- [ ] Follows Rails conventions
-- [ ] No unnecessary dependencies
-- [ ] Performance benchmarks met
-
-## Next Steps After MVP
-
-### Phase 6 Enhancements (Post-MVP)
-- Multiple device sync
-- Export to PDF/image
-- Habit templates/presets
-- Analytics and progress tracking
-- Sound effects for interactions
-- AI-generated cover art
-- Custom color themes
-
-## Data Retention & Privacy
-
-- **Data persistence**: All habit data retained indefinitely
-- **No data deletion**: Users can deactivate but not delete habits
-- **Privacy**: Basic HTTP auth ensures single-user privacy for MVP
-- **Future considerations**: GDPR compliance when adding multi-user support
-
-This plan provides a comprehensive TDD-based approach to building the Habit Tracker MVP, with tests driving the implementation at every step.
+## P2's (polish to add later)
+- route /august-2025 or /aug-2025 or /8-2025 or /08-2025 or /082025 or /82025 to the habit entries for aug for the logged in user

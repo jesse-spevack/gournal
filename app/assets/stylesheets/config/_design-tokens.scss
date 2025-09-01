@@ -95,7 +95,7 @@
   --space-sm: 4px;
   
   /* Component Spacing */
-  --space-checkbox-gap: 2px;      /* Between checkboxes */
+  --space-checkbox-gap: 1px;      /* Between checkboxes - reduced for mobile fit */
   --space-column-gap: 4px;         /* Between columns */
   --space-number-margin: 12px;    /* Between number and checkbox */
   
@@ -119,7 +119,7 @@
   /* ============================================ */
   
   /* Checkbox Dimensions - v1.0.0 */
-  --checkbox-size: 24px;          /* v1.0.0 - Core component size */
+  --checkbox-size: 22px;          /* v1.0.1 - Reduced to fit 30 days on mobile */
   --checkbox-viewbox: 24;         /* v1.0.0 */
   
   /* Container Dimensions */
@@ -127,7 +127,7 @@
   --container-min-height: 100vh;
   
   /* Reflection Column Spacing */
-  --space-reflection-gap: 8px;     /* Gap before reflection column */
+  --space-reflection-gap: 50px;     /* Empty column space before reflection */
   
   /* Grid Pattern */
   --grid-dot-size: 1.2px;

@@ -1,0 +1,58 @@
+<%# Japanese Paper Background with Container %>
+<div class="paper-background">
+  <div class="container">
+    <div class="dot-grid-overlay">
+      
+      <%# Header - Simple "September 2025" for Phase 2 %>
+      <header class="month-header">
+        <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %></h1>
+      </header>
+      
+      <%# Grid Layout: Day numbers + Habit columns + Reflection column %>
+      <div class="habit-grid">
+        
+        <%# Column Headers %>
+        <div class="grid-headers">
+          <div class="day-column-header"></div>
+          <% @tracker_data.habits.each do |habit| %>
+            <div class="habit-column-header">
+              <span class="habit-name"><%= habit.name %></span>
+            </div>
+          <% end %>
+          <div class="reflection-column-header">
+            <span class="reflection-label">Reflection</span>
+          </div>
+        </div>
+        
+        <%# Grid Rows: One row per day %>
+        <div class="grid-rows">
+          <% @tracker_data.days.each do |day| %>
+            <div class="day-row" data-day="<%= day %>">
+              
+              <%# Day Number %>
+              <div class="day-number"><%= day %></div>
+              
+              <%# Habit Checkboxes %>
+              <% @tracker_data.habits.each do |habit| %>
+                <div class="habit-checkbox">
+                  <% entry = @tracker_data.habit_entry_for(habit.id, day) %>
+                  <% if entry %>
+                    <%= render_habit_checkbox(entry) %>
+                  <% end %>
+                </div>
+              <% end %>
+              
+              <%# Reflection Column (empty for Phase 2) %>
+              <div class="reflection-cell">
+                <%# TODO: Add daily reflection functionality in future phase %>
+              </div>
+              
+            </div>
+          <% end %>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
