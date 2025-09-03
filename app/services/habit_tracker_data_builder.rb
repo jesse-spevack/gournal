@@ -29,7 +29,7 @@ class HabitTrackerDataBuilder
   def fetch_habits
     @habits ||= @user.habits
       .includes(:habit_entries)
-      .where(year: @year, month: @month)
+      .where(year: @year, month: @month, active: true)
       .ordered
   end
 

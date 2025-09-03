@@ -16,6 +16,10 @@ Rails.application.routes.draw do
 
   # Settings (authenticated)
   get "settings" => "settings#index", as: :settings
+  get "settings/help" => "settings#help", as: :settings_help
+
+  # Habits management (authenticated)
+  resources :habits, only: [ :create, :update, :destroy ]
 
   # Habit entries routes
   resources :habit_entries, only: [ :index, :update ]

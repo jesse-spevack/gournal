@@ -4,6 +4,12 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
 
+    # Sign in the user
+    post session_url, params: {
+      email_address: @user.email_address,
+      password: "password"
+    }
+
     # Create test habit and habit entry
     @habit = Habit.create!(
       user: @user,
@@ -19,9 +25,6 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
       day: 1,
       completed: false
     )
-
-    # Set environment variable for test
-    ENV["FIRST_USER"] = @user.email_address
   end
 
   test "index renders successfully with habits" do

@@ -1,14 +1,7 @@
 class HabitEntriesController < ApplicationController
-  allow_unauthenticated_access
-
   def index
-    # Hardcode September 2025 for Phase 2
-    # Use environment variable for user email
-    user_email = ENV["FIRST_USER"]
-    @current_user = User.find_by(email_address: user_email)
-
-    # If user doesn't exist (like in tests), fall back to first user
-    @current_user ||= User.first
+    # Use the authenticated user instead of hardcoded ENV["FIRST_USER"]
+    @current_user = Current.user
 
     @tracker_data = HabitTrackerDataBuilder.call(
       user: @current_user,

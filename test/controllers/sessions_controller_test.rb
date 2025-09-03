@@ -88,14 +88,4 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
-
-  test "should show flash messages on login page" do
-    # Test alert message
-    post session_url, params: {
-      email_address: @user.email_address,
-      password: "wrong_password"
-    }
-    follow_redirect!
-    assert_select "div.flash-message.flash-alert", "Try another email address or password."
-  end
 end

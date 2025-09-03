@@ -15,14 +15,37 @@
   }
 }
 
+/* Section header with help button */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
 .settings-section-title {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-primary);
   opacity: var(--opacity-headers);
   letter-spacing: var(--letter-spacing-wide);
-  margin: 0 0 var(--space-md) 0;
-  text-transform: uppercase;
+  margin: 0;
+}
+
+.help-button {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: var(--opacity-secondary);
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--ease-standard);
+  
+  &:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 2px;
+  }
 }
 
 .settings-description {
@@ -36,8 +59,190 @@
 }
 
 .section-content {
-  border-left: 1px solid var(--ink-primary);
-  border-opacity: var(--opacity-faint);
-  padding-left: var(--space-md);
-  margin-left: var(--space-xs);
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* ============================================================================ */
+/* HABIT LIST - Bullet journal style habit management                           */
+/* ============================================================================ */
+
+.habit-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0;
+}
+
+.habit-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  position: relative;
+  transition: all var(--duration-fast) var(--ease-standard);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &:hover {
+    background: var(--paper-form-bg);
+    border-radius: 2px;
+    padding: var(--space-xs) var(--space-sm);
+    margin: var(--space-xs) calc(-1 * var(--space-sm));
+    
+    .drag-handle {
+      opacity: 1;
+    }
+  }
+  
+  &.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+    cursor: grabbing;
+    z-index: 1000;
+  }
+  
+  &--new {
+    &:hover {
+      background: none;
+      padding: 0;
+      margin: 0 0 var(--space-sm) 0;
+    }
+  }
+}
+
+.bullet {
+  font-family: var(--font-caveat);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  opacity: 0.8;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.habit-name {
+  font-family: var(--font-caveat);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  line-height: 1.4;
+  flex: 1;
+  
+  &:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 2px;
+  }
+}
+
+.drag-handle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-primary);
+  opacity: 0;
+  cursor: grab;
+  transition: all var(--duration-fast) var(--ease-standard);
+  user-select: none;
+  
+  &:hover {
+    opacity: 1;
+  }
+  
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+/* Inline editing input */
+.habit-input {
+  font-family: var(--font-caveat);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--ink-primary-30);
+  padding: 0;
+  margin: 0;
+  line-height: 1.4;
+  width: 100%;
+  
+  &:focus {
+    outline: none;
+    border-bottom-color: var(--ink-primary);
+    border-bottom-style: solid;
+  }
+  
+  &--inline {
+    flex: 1;
+  }
+  
+  &--new {
+    &::placeholder {
+      color: var(--ink-primary-30);
+      font-style: italic;
+    }
+  }
+}
+
+/* New habit form */
+.new-habit-form {
+  flex: 1;
+  display: flex;
+}
+
+.habit-item--new {
+  .bullet {
+    opacity: 0.4;
+  }
+  
+  .habit-input {
+    border-bottom-style: dotted;
+  }
+}
+
+/* ============================================================================ */
+/* HELP PAGE - Documentation styling with typewriter font                      */
+/* ============================================================================ */
+
+.help-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.help-section {
+  margin-bottom: var(--space-xl);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.help-section-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: var(--opacity-headers);
+  letter-spacing: var(--letter-spacing-wide);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.help-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  line-height: 1.6;
+  
+  p {
+    margin: 0 0 var(--space-sm) 0;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

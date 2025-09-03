@@ -1,0 +1,37 @@
+<%# Bullet journal style habit list %>
+<div data-controller="inline-habit-editor">
+  <ul class="habit-list">
+    <% @habits.each do |habit| %>
+      <li class="habit-item" data-habit-id="<%= habit.id %>">
+        <span class="bullet">•</span>
+        <span class="habit-name" 
+              data-inline-habit-editor-target="name"
+              data-action="click->inline-habit-editor#edit"
+              data-habit-id="<%= habit.id %>">
+          <%= habit.name %>
+        </span>
+        <span class="drag-handle">⋮⋮</span>
+      </li>
+    <% end %>
+  </ul>
+  
+  <%# New habit form - separated from the draggable list %>
+  <div class="habit-item habit-item--new">
+    <span class="bullet">•</span>
+    <%= form_with url: habits_path, 
+                  method: :post,
+                  data: { 
+                    inline_habit_editor_target: "newForm",
+                    action: "submit->inline-habit-editor#createHabit"
+                  },
+                  class: "new-habit-form" do |form| %>
+      <%= form.text_field :name, 
+                          placeholder: "Add new habit", 
+                          class: "habit-input habit-input--new",
+                          data: { 
+                            inline_habit_editor_target: "newInput",
+                            action: "blur->inline-habit-editor#cancelNew keydown.esc->inline-habit-editor#cancelNew"
+                          } %>
+    <% end %>
+  </div>
+</div>

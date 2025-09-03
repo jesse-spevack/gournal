@@ -18,10 +18,12 @@
         
         <%# Section 1: Manage Habits %>
         <section class="settings-section habits-management">
-          <h2 class="settings-section-title">Manage Habits</h2>
+          <div class="section-header">
+            <h2 class="settings-section-title">Manage Habits</h2>
+            <%= link_to "(?)", settings_help_path, class: "help-button" %>
+          </div>
           <div class="section-content">
-            <p class="settings-description">Add, edit, delete, and reorder your habits</p>
-            <%# Habit management interface will go here %>
+            <%= render "habit_list", habits: @habits %>
           </div>
         </section>
         
@@ -29,7 +31,6 @@
         <section class="settings-section month-setup">
           <h2 class="settings-section-title">Set Up Next Month</h2>
           <div class="section-content">
-            <p class="settings-description">Copy habits from current month or start fresh</p>
             <%# Month setup interface will go here %>
           </div>
         </section>
@@ -38,7 +39,6 @@
         <section class="settings-section profile-sharing">
           <h2 class="settings-section-title">Profile & Sharing</h2>
           <div class="section-content">
-            <p class="settings-description">Set your public profile URL and privacy settings</p>
             <%# Profile and sharing settings will go here %>
           </div>
         </section>

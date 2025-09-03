@@ -5,7 +5,7 @@ Implementation tasks for comprehensive habit management system including setting
 
 ## Tasks
 
-- [ ] 1.0 Basic Settings Page Access
+- [x] 1.0 Basic Settings Page Access
   - [x] 1.1 Generate SettingsController (`bin/rails generate controller Settings`)
   - [x] 1.2 Add authenticated route for settings
   - [x] 1.3 Create basic settings/index.html.erb with three section placeholders
@@ -15,74 +15,73 @@ Implementation tasks for comprehensive habit management system including setting
   - [x] 1.7 Write controller test for authentication
   - [x] 1.8 Manual test settings access on mobile (412x915px)
   
-- [ ] 2.0 Add New Habits Feature
-  - [ ] 2.1 Generate HabitsController with create action
-  - [ ] 2.2 Add route for creating habits
-  - [ ] 2.3 Add "Add Habit" form to settings page (name input + button)
-  - [ ] 2.4 Implement create action with auto-position and HabitEntry generation
-  - [ ] 2.5 Create add_habit Stimulus controller for form submission
-  - [ ] 2.6 Style the add habit form with journal aesthetic
-  - [ ] 2.7 Write tests for habit creation
-  - [ ] 2.8 Manual test: create habit and verify it appears in tracker
+- [x] 2.0 Bullet Journal Style Habits Management
+  - [x] 2.1 Generate HabitsController with create action
+  - [x] 2.2 Add route for creating habits
+  - [x] 2.3 Add "Add Habit" form to settings page (name input + button) - REPLACED
+  - [x] 2.4 Implement create action with auto-position and HabitEntry generation
+  - [x] 2.5 Create add_habit Stimulus controller for form submission - REPLACED
+  - [x] 2.6 Style the add habit form with journal aesthetic - REPLACED
+  - [x] 2.7 Write tests for habit creation
+  - [x] 2.8 Manual test: create habit and verify it appears in tracker
+  - [x] 2.9 Refactor to bullet journal list-style interface
+  - [x] 2.10 Update SettingsController to fetch existing habits
+  - [x] 2.11 Create _habit_list.html.erb partial with bullet points
+  - [x] 2.12 Replace add_habit Stimulus with inline_habit_editor controller
+  - [x] 2.13 Style habit list with bullet journal aesthetic
+  - [x] 2.14 Add update and destroy routes for habits
+  - [x] 2.15 Implement inline editing for existing habits
+  - [x] 2.16 Implement soft delete (set active: false)
+  - [x] 2.17 Update tests for new interface
+  - [x] 2.18 Manual test: bullet journal workflow on mobile
   
-- [ ] 3.0 Edit and Delete Habits Feature
-  - [ ] 3.1 Add update and destroy actions to HabitsController
-  - [ ] 3.2 Add routes for updating and soft-deleting habits
-  - [ ] 3.3 Create _habit_item.html.erb partial with inline edit and delete
-  - [ ] 3.4 List existing habits in settings page using partial
-  - [ ] 3.5 Create habit_management Stimulus controller for inline editing
-  - [ ] 3.6 Implement soft delete (set active: false)
-  - [ ] 3.7 Style edit/delete controls with checkbox aesthetic
-  - [ ] 3.8 Write tests for edit and delete
-  - [ ] 3.9 Manual test edit/delete on mobile
+- [x] 3.0 Reorder Habits Feature
+  - [x] 3.1 Add reorder action to HabitsController (integrated into update action)
+  - [x] 3.2 Add route for reordering habits (uses existing PATCH /habits/:id)
+  - [x] 3.3 Enhance habit_management controller with drag-and-drop (Stimulus)
+  - [x] 3.4 Add drag handles to habit items
+  - [x] 3.5 Implement position update logic (HabitPositionUpdater service)
+  - [x] 3.6 Add visual feedback during drag
+  - [x] 3.7 Write tests for reordering (HabitPositionUpdater service tests)
+  - [x] 3.8 Manual test drag-and-drop on mobile touch
   
-- [ ] 4.0 Reorder Habits Feature
-  - [ ] 4.1 Add reorder action to HabitsController
-  - [ ] 4.2 Add route for reordering habits
-  - [ ] 4.3 Enhance habit_management controller with drag-and-drop (Stimulus)
-  - [ ] 4.4 Add drag handles to habit items
-  - [ ] 4.5 Implement position update logic
-  - [ ] 4.6 Add visual feedback during drag
-  - [ ] 4.7 Write tests for reordering
-  - [ ] 4.8 Manual test drag-and-drop on mobile touch
+- [ ] 4.0 "Set Up Next Month" Feature
+  - [ ] 4.1 Create HabitCopyService with self.call pattern
+  - [ ] 4.2 Generate MonthSetupsController
+  - [ ] 4.3 Add routes for month setup actions
+  - [ ] 4.4 Add "Set up next month" section to settings
+  - [ ] 4.5 Create modal/dropdown with "Copy" and "Start fresh" options
+  - [ ] 4.6 Implement copy_from_current using HabitCopyService
+  - [ ] 4.7 Implement start_fresh action
+  - [ ] 4.8 Add future month validation
+  - [ ] 4.9 Create month_setup Stimulus controller
+  - [ ] 4.10 Style month setup UI
+  - [ ] 4.11 Write tests for service and controller
+  - [ ] 4.12 Manual test month setup flow
   
-- [ ] 5.0 "Set Up Next Month" Feature
-  - [ ] 5.1 Create HabitCopyService with self.call pattern
-  - [ ] 5.2 Generate MonthSetupsController
-  - [ ] 5.3 Add routes for month setup actions
-  - [ ] 5.4 Add "Set up next month" section to settings
-  - [ ] 5.5 Create modal/dropdown with "Copy" and "Start fresh" options
-  - [ ] 5.6 Implement copy_from_current using HabitCopyService
-  - [ ] 5.7 Implement start_fresh action
-  - [ ] 5.8 Add future month validation
-  - [ ] 5.9 Create month_setup Stimulus controller
-  - [ ] 5.10 Style month setup UI
-  - [ ] 5.11 Write tests for service and controller
-  - [ ] 5.12 Manual test month setup flow
+- [ ] 5.0 Public Profile Sharing Feature
+  - [ ] 5.1 Generate migration for slug and privacy fields
+  - [ ] 5.2 Update User model with slug/privacy validations
+  - [ ] 5.3 Generate PublicProfilesController
+  - [ ] 5.4 Add catch-all route for /:slug
+  - [ ] 5.5 Add slug input to settings profile section
+  - [ ] 5.6 Add privacy toggles (habits/reflections) to settings
+  - [ ] 5.7 Create privacy_settings Stimulus controller
+  - [ ] 5.8 Implement public profile show action with privacy checks
+  - [ ] 5.9 Create public_profiles/show.html.erb (read-only view)
+  - [ ] 5.10 Add "Create Account" button for non-auth users
+  - [ ] 5.11 Remove ENV["FIRST_USER"] hardcoding
+  - [ ] 5.12 Write tests for privacy and public access
+  - [ ] 5.13 Manual test sharing flow end-to-end
   
-- [ ] 6.0 Public Profile Sharing Feature
-  - [ ] 6.1 Generate migration for slug and privacy fields
-  - [ ] 6.2 Update User model with slug/privacy validations
-  - [ ] 6.3 Generate PublicProfilesController
-  - [ ] 6.4 Add catch-all route for /:slug
-  - [ ] 6.5 Add slug input to settings profile section
-  - [ ] 6.6 Add privacy toggles (habits/reflections) to settings
-  - [ ] 6.7 Create privacy_settings Stimulus controller
-  - [ ] 6.8 Implement public profile show action with privacy checks
-  - [ ] 6.9 Create public_profiles/show.html.erb (read-only view)
-  - [ ] 6.10 Add "Create Account" button for non-auth users
-  - [ ] 6.11 Remove ENV["FIRST_USER"] hardcoding
-  - [ ] 6.12 Write tests for privacy and public access
-  - [ ] 6.13 Manual test sharing flow end-to-end
-  
-- [ ] 7.0 Polish and Integration
-  - [ ] 7.1 Create consistent hand-drawn icon set
-  - [ ] 7.2 Add loading states for all async operations
-  - [ ] 7.3 Implement comprehensive error handling
-  - [ ] 7.4 Write end-to-end integration tests
-  - [ ] 7.5 Performance testing (<500ms load)
-  - [ ] 7.6 Accessibility audit
-  - [ ] 7.7 Final rubocop -A and full test suite
+- [ ] 6.0 Polish and Integration
+  - [ ] 6.1 Create consistent hand-drawn icon set
+  - [ ] 6.2 Add loading states for all async operations
+  - [ ] 6.3 Implement comprehensive error handling
+  - [ ] 6.4 Write end-to-end integration tests
+  - [ ] 6.5 Performance testing (<500ms load)
+  - [ ] 6.6 Accessibility audit
+  - [ ] 6.7 Final rubocop -A and full test suite
 
 ## Relevant Files
 
