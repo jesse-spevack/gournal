@@ -3,6 +3,9 @@
   <div class="container">
     <div class="dot-grid-overlay">
       
+      <%# Settings button in top-right %>
+      <%= render "shared/settings_button" %>
+      
       <%# Header - Simple "September 2025" for Phase 2 %>
       <header class="month-header">
         <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %></h1>

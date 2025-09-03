@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   # Style guide
   get "style_guide" => "style_guide#index", as: :style_guide
 
+  # Settings (authenticated)
+  get "settings" => "settings#index", as: :settings
+
   # Habit entries routes
   resources :habit_entries, only: [ :index, :update ]
 

@@ -1,0 +1,50 @@
+<%# Settings Page with Three Main Sections %>
+<div class="paper-background">
+  <div class="container">
+    <div class="dot-grid-overlay">
+      
+      <%# Back button in top-right %>
+      <div class="settings-link-container">
+        <%= link_to "<", root_path, class: "settings-link" %>
+      </div>
+      
+      <%# Header - using same class as habit tracker %>
+      <header class="month-header">
+        <h1>Settings</h1>
+      </header>
+      
+      <%# Main Settings Content %>
+      <div class="settings-content">
+        
+        <%# Section 1: Manage Habits %>
+        <section class="settings-section habits-management">
+          <h2 class="settings-section-title">Manage Habits</h2>
+          <div class="section-content">
+            <p class="settings-description">Add, edit, delete, and reorder your habits</p>
+            <%# Habit management interface will go here %>
+          </div>
+        </section>
+        
+        <%# Section 2: Month Setup %>
+        <section class="settings-section month-setup">
+          <h2 class="settings-section-title">Set Up Next Month</h2>
+          <div class="section-content">
+            <p class="settings-description">Copy habits from current month or start fresh</p>
+            <%# Month setup interface will go here %>
+          </div>
+        </section>
+        
+        <%# Section 3: Profile & Sharing %>
+        <section class="settings-section profile-sharing">
+          <h2 class="settings-section-title">Profile & Sharing</h2>
+          <div class="section-content">
+            <p class="settings-description">Set your public profile URL and privacy settings</p>
+            <%# Profile and sharing settings will go here %>
+          </div>
+        </section>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
