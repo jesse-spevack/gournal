@@ -16,25 +16,41 @@ export default class extends Controller {
       const dragHandle = item.querySelector('.drag-handle')
       
       if (dragHandle) {
-        // Make drag handle draggable
-        dragHandle.draggable = true
+        // For desktop: Make the entire habit item draggable
+        item.draggable = true
         
-        // Desktop drag events
-        dragHandle.addEventListener('dragstart', this.handleDragStart.bind(this))
-        item.addEventListener('dragover', this.handleDragOver.bind(this))
-        item.addEventListener('drop', this.handleDrop.bind(this))
-        dragHandle.addEventListener('dragend', this.handleDragEnd.bind(this))
+        // Desktop drag events - attach to the habit item
+        item.addEventListener('dragstart', this.handleDragStart.bind(this))
+        item.addEventListener('dragend', this.handleDragEnd.bind(this))
         
-        // Mobile touch events
+        // Prevent dragging unless initiated from drag handle
+        item.addEventListener('mousedown', (event) => {
+          if (!event.target.closest('.drag-handle')) {
+            // Temporarily disable dragging if not starting from drag handle
+            item.draggable = false
+            // Re-enable dragging after a short delay
+            setTimeout(() => { item.draggable = true }, 10)
+          }
+        })
+        
+        
+        // Mobile touch events - keep on drag handle for precise touch control
         dragHandle.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false })
         dragHandle.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false })
         dragHandle.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: false })
       }
     })
+    
+    // Add dragover and drop events to ALL habit items for desktop drag and drop
+    habitItems.forEach((item) => {
+      item.addEventListener('dragover', this.handleDragOver.bind(this))
+      item.addEventListener('drop', this.handleDrop.bind(this))
+    })
   }
 
   handleDragStart(event) {
-    this.draggedElement = event.target.closest('.habit-item')
+    // For desktop drag: event.target is the habit-item itself
+    this.draggedElement = event.target.classList.contains('habit-item') ? event.target : event.target.closest('.habit-item')
     this.draggedElement.classList.add('dragging')
     event.dataTransfer.effectAllowed = 'move'
     event.dataTransfer.setData('text/html', this.draggedElement.outerHTML)
@@ -46,17 +62,18 @@ export default class extends Controller {
     
     const afterElement = this.getDragAfterElement(event.clientY)
     const draggingElement = this.element.querySelector('.dragging')
+    const habitList = this.element.querySelector('.habit-list')
     
     if (afterElement == null) {
-      this.element.appendChild(draggingElement)
+      habitList.appendChild(draggingElement)
     } else {
-      this.element.insertBefore(draggingElement, afterElement)
+      habitList.insertBefore(draggingElement, afterElement)
     }
   }
 
-  handleDrop(event) {
+  async handleDrop(event) {
     event.preventDefault()
-    this.updateHabitOrder()
+    await this.updateHabitOrder()
   }
 
   handleDragEnd(event) {
@@ -66,7 +83,10 @@ export default class extends Controller {
 
   // Touch event handlers for mobile support
   handleTouchStart(event) {
-    event.preventDefault()
+    // Only prevent default if the event is cancelable
+    if (event.cancelable) {
+      event.preventDefault()
+    }
     
     this.draggedElement = event.target.closest('.habit-item')
     this.draggedElement.classList.add('dragging')
@@ -77,7 +97,9 @@ export default class extends Controller {
   }
 
   handleTouchMove(event) {
-    event.preventDefault()
+    if (event.cancelable) {
+      event.preventDefault()
+    }
     
     if (!this.draggedElement) return
     
@@ -98,8 +120,10 @@ export default class extends Controller {
     }
   }
 
-  handleTouchEnd(event) {
-    event.preventDefault()
+  async handleTouchEnd(event) {
+    if (event.cancelable) {
+      event.preventDefault()
+    }
     
     if (!this.draggedElement) return
     
@@ -108,7 +132,7 @@ export default class extends Controller {
     this.draggedElement.classList.remove('dragging')
     
     // Update habit order
-    this.updateHabitOrder()
+    await this.updateHabitOrder()
     
     this.draggedElement = null
     this.initialTouchY = null
@@ -130,7 +154,7 @@ export default class extends Controller {
     }, { offset: Number.NEGATIVE_INFINITY }).element
   }
 
-  updateHabitOrder() {
+  async updateHabitOrder() {
     const habitItems = [...this.element.querySelectorAll('.habit-item:not(.habit-item--new)')]
     
     // Build array of positions for batch update
@@ -149,23 +173,33 @@ export default class extends Controller {
     // Send single batch request to update all positions
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content
     
-    fetch('/habits/positions', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken,
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        positions: positions
+    // Get target year and month from data attributes
+    const targetYear = this.element.dataset.targetYear
+    const targetMonth = this.element.dataset.targetMonth
+    
+    try {
+      const response = await fetch('/habits/positions', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          positions: positions,
+          target_year: targetYear,
+          target_month: targetMonth
+        }),
+        // Keep request alive even if user navigates away
+        keepalive: true
       })
-    }).then(response => {
+      
       if (!response.ok) {
         console.error('Failed to update habit positions:', response.statusText)
       }
-    }).catch(error => {
+    } catch (error) {
       console.error('Error updating habit positions:', error)
-    })
+    }
   }
 
   edit(event) {
@@ -191,9 +225,9 @@ export default class extends Controller {
     this.editingHabitId = habitId
     this.originalName = currentName
     
-    // Replace span with input
+    // Insert input after the habit name span, then hide the span
+    nameElement.parentElement.insertBefore(input, nameElement.nextSibling)
     nameElement.style.display = "none"
-    nameElement.parentElement.appendChild(input)
     
     // Focus and select text
     input.focus()
