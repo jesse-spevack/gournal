@@ -1,6 +1,5 @@
 class HabitEntriesController < ApplicationController
   def index
-    # Use the authenticated user instead of hardcoded ENV["FIRST_USER"]
     @current_user = Current.user
 
     @tracker_data = HabitTrackerDataBuilder.call(
