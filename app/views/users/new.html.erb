@@ -1,16 +1,4 @@
 <div class="auth-container">
-  <% if flash[:alert] %>
-    <div class="flash-message flash-alert" data-turbo-temporary>
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
-  
-  <% if flash[:notice] %>
-    <div class="flash-message flash-notice" data-turbo-temporary>
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
-
   <div class="auth-form">
     <h1>Create your Gournal account</h1>
     
@@ -37,9 +25,7 @@
         <%= form.password_field :password, 
             required: true, 
             autocomplete: "new-password",
-            placeholder: "••••••••",
-            minlength: 8,
-            maxlength: 72 %>
+            placeholder: "••••••••" %>
       </div>
       
       <div class="form-field">
@@ -47,9 +33,7 @@
         <%= form.password_field :password_confirmation, 
             required: true, 
             autocomplete: "new-password",
-            placeholder: "••••••••",
-            minlength: 8,
-            maxlength: 72 %>
+            placeholder: "••••••••" %>
       </div>
       
       <div class="form-submit">

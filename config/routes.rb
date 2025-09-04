@@ -14,6 +14,18 @@ Rails.application.routes.draw do
   # Style guide
   get "style_guide" => "style_guide#index", as: :style_guide
 
+  # Settings (authenticated)
+  get "settings" => "settings#index", as: :settings
+  get "settings/help" => "settings#help", as: :settings_help
+
+  # Batch position updates for habits (must come before generic :habits routes)
+  namespace :habits do
+    resource :positions, only: [ :update ]
+  end
+
+  # Habits management (authenticated)
+  resources :habits, only: [ :create, :update, :destroy ]
+
   # Habit entries routes
   resources :habit_entries, only: [ :index, :update ]
 

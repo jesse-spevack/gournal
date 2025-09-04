@@ -60,6 +60,73 @@
   background: var(--paper-light);
   border-radius: 4px;
   border-left: 3px solid var(--ink-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.type-description {
+  font-family: var(--font-mono);
+  font-size: var(--text-xxs);
+  color: var(--ink-primary);
+  opacity: 0.6;
+  margin-bottom: var(--space-sm);
+  font-style: italic;
+}
+
+/* Design Principles Styles */
+.principle-item {
+  margin-bottom: var(--space-lg);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.principle-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-primary);
+  margin: 0 0 var(--space-sm) 0;
+  font-weight: 600;
+}
+
+.principle-example {
+  padding: var(--space-md);
+  border-radius: 4px;
+  margin-bottom: var(--space-sm);
+  
+  &.good {
+    background: #f0f9f0;
+    border-left: 3px solid #22c55e;
+  }
+  
+  &.bad {
+    background: #fef2f2;
+    border-left: 3px solid #ef4444;
+  }
+  
+  &.neutral {
+    background: var(--paper-light);
+    border-left: 3px solid var(--ink-primary-30);
+  }
+}
+
+.example-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-primary);
+  margin-bottom: var(--space-xs);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.principle-description {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: 0.7;
+  line-height: 1.5;
 }
 
 /* Spacing Grid */

@@ -1,0 +1,6 @@
+<%# Settings link - only visible to authenticated users %>
+<% if authenticated? %>
+  <div class="settings-link-container">
+    <%= link_to "*", settings_path, class: "settings-link" %>
+  </div>
+<% end %>

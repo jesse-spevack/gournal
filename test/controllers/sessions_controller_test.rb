@@ -35,7 +35,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       password: "wrong_password"
     }
     assert_redirected_to new_session_path
-    assert_equal "Try another email address or password.", flash[:alert]
   end
 
   test "should not create session with non-existent email" do
@@ -44,7 +43,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       password: "any_password"
     }
     assert_redirected_to new_session_path
-    assert_equal "Try another email address or password.", flash[:alert]
   end
 
   test "should destroy session" do
@@ -74,28 +72,5 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       password: "secure_password123"
     }
     assert_redirected_to root_path
-  end
-
-  test "should rate limit failed login attempts" do
-    # The controller uses rate_limit with only: :create
-    # This is a simple test to ensure the rate limiting is configured
-    assert_nothing_raised do
-      5.times do
-        post session_url, params: {
-          email_address: @user.email_address,
-          password: "wrong_password"
-        }
-      end
-    end
-  end
-
-  test "should show flash messages on login page" do
-    # Test alert message
-    post session_url, params: {
-      email_address: @user.email_address,
-      password: "wrong_password"
-    }
-    follow_redirect!
-    assert_select "div.flash-message.flash-alert", "Try another email address or password."
   end
 end

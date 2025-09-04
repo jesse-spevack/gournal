@@ -1,0 +1,29 @@
+/* ============================================================================ */
+/* SETTINGS BUTTON - Top-right positioned settings link                         */
+/* ============================================================================ */
+
+.settings-link-container {
+  position: fixed;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 100;
+}
+
+.settings-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: var(--opacity-headers);
+  text-decoration: none !important;
+  letter-spacing: var(--letter-spacing-wide);
+  transition: opacity var(--duration-fast) var(--ease-standard);
+  
+  &:hover {
+    opacity: 1;
+    text-decoration: none !important;
+  }
+  
+  &:active {
+    transform: translateY(1px);
+  }
+}
