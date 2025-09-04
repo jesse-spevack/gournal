@@ -12,40 +12,10 @@ class HabitsController < ApplicationController
   end
 
   def update
-    # Handle position-only updates (from drag-and-drop AJAX)
-    if habit_params.key?(:position) && habit_params.keys == [ "position" ]
-      positions_data = [ { "id" => @habit.id, "position" => habit_params[:position] } ]
-      result = HabitPositionUpdater.call(user: Current.user, positions: positions_data)
-
-      if result[:success]
-        head :ok
-      else
-        render json: { error: "Failed to update habit position" }, status: :unprocessable_content
-      end
+    if position_only_update?
+      handle_position_update
     else
-      # Handle name updates or mixed updates with redirect
-      if habit_params.key?(:position)
-        # First update the name, then handle position separately
-        name_params = habit_params.except(:position)
-        success = name_params.empty? || @habit.update(name_params)
-
-        if success
-          positions_data = [ { "id" => @habit.id, "position" => habit_params[:position] } ]
-          result = HabitPositionUpdater.call(user: Current.user, positions: positions_data)
-
-          if result[:success]
-            redirect_to settings_path, notice: "Habit updated successfully!"
-          else
-            redirect_to settings_path, alert: "Failed to update habit"
-          end
-        else
-          redirect_to settings_path, alert: "Failed to update habit"
-        end
-      elsif @habit.update(habit_params)
-        redirect_to settings_path, notice: "Habit updated successfully!"
-      else
-        redirect_to settings_path, alert: "Failed to update habit: #{@habit.errors.full_messages.join(', ')}"
-      end
+      handle_name_update
     end
   end
 
@@ -67,5 +37,28 @@ class HabitsController < ApplicationController
 
   def habit_params
     params.require(:habit).permit(:name, :position)
+  end
+
+  def position_only_update?
+    habit_params.key?(:position) && habit_params.keys == [ "position" ]
+  end
+
+  def handle_position_update
+    positions_data = [ { "id" => @habit.id, "position" => habit_params[:position] } ]
+    result = HabitPositionUpdater.call(user: Current.user, positions: positions_data)
+
+    if result[:success]
+      head :ok
+    else
+      render json: { error: "Failed to update habit position" }, status: :unprocessable_content
+    end
+  end
+
+  def handle_name_update
+    if @habit.update(habit_params)
+      redirect_to settings_path, notice: "Habit updated successfully!"
+    else
+      redirect_to settings_path, alert: "Failed to update habit: #{@habit.errors.full_messages.join(', ')}"
+    end
   end
 end

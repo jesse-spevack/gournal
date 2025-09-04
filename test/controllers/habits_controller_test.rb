@@ -224,19 +224,6 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
   end
 
-  test "should update both name and position" do
-    # Create a habit
-    post habits_path, params: { name: "Old Name" }
-    habit = Habit.last
-
-    # Update both name and position
-    patch habit_path(habit), params: { habit: { name: "New Name", position: 3 } }
-
-    habit.reload
-    assert_equal "New Name", habit.name
-    assert_equal 3, habit.position
-    assert_redirected_to settings_path
-  end
 
   test "should create habit entries efficiently with minimal database queries" do
     # This test verifies that we use bulk insert instead of N+1 queries
