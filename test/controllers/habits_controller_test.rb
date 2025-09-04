@@ -16,17 +16,16 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
       post habits_path, params: { name: "Test Habit" }
     end
 
-    habit = Habit.last
     current_date = Date.current
 
     # Check habit attributes
-    assert_equal "Test Habit", habit.name
-    assert_equal @user, habit.user
-    assert_equal current_date.year, habit.year
-    assert_equal current_date.month, habit.month
-    assert_equal 1, habit.position
-    assert_equal "x_marks", habit.check_type
-    assert habit.active
+    assert_equal "Test Habit", Habit.last.name
+    assert_equal @user, Habit.last.user
+    assert_equal current_date.year, Habit.last.year
+    assert_equal current_date.month, Habit.last.month
+    assert_equal 1, Habit.last.position
+    assert_equal "x_marks", Habit.last.check_type
+    assert Habit.last.active
 
     # Check redirect
     assert_redirected_to settings_path
@@ -40,11 +39,9 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
       post habits_path, params: { name: "Test Habit" }
     end
 
-    habit = Habit.last
-
     # Check that entries exist for each day
     (1..days_in_month).each do |day|
-      entry = habit.habit_entries.find_by(day: day)
+      entry = Habit.last.habit_entries.find_by(day: day)
       assert entry, "Entry for day #{day} should exist"
       assert_not entry.completed, "Entry should start as not completed"
     end
@@ -53,18 +50,15 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
   test "should auto-increment position for new habits" do
     # Create first habit
     post habits_path, params: { name: "First Habit" }
-    first_habit = Habit.last
-    assert_equal 1, first_habit.position
+    assert_equal 1, Habit.last.position
 
     # Create second habit
     post habits_path, params: { name: "Second Habit" }
-    second_habit = Habit.last
-    assert_equal 2, second_habit.position
+    assert_equal 2, Habit.last.position
 
     # Create third habit
     post habits_path, params: { name: "Third Habit" }
-    third_habit = Habit.last
-    assert_equal 3, third_habit.position
+    assert_equal 3, Habit.last.position
   end
 
   test "should handle empty name" do
@@ -113,8 +107,7 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
     # Update the habit
     patch habit_path(habit), params: { habit: { name: "Updated Name" } }
 
-    habit.reload
-    assert_equal "Updated Name", habit.name
+    assert_equal "Updated Name", habit.reload.name
     assert_redirected_to settings_path
   end
 
@@ -126,8 +119,7 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
     # Try to update with empty name
     patch habit_path(habit), params: { habit: { name: "" } }
 
-    habit.reload
-    assert_equal "Original Name", habit.name
+    assert_equal "Original Name", habit.reload.name
     assert_redirected_to settings_path
   end
 
@@ -141,12 +133,11 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
       delete habit_path(habit)
     end
 
-    habit.reload
-    assert_not habit.active
+    assert_not habit.reload.active
     assert_redirected_to settings_path
   end
 
-  test "should require authentication for update" do
+  test "should require authentication for update and destroy" do
     # Create a habit while authenticated
     post habits_path, params: { name: "Test Habit" }
     habit = Habit.last
@@ -156,25 +147,12 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
 
     # Try to update
     patch habit_path(habit), params: { habit: { name: "New Name" } }
-
-    habit.reload
-    assert_equal "Test Habit", habit.name  # Name should not change
+    assert_equal "Test Habit", habit.reload.name  # Name should not change
     assert_redirected_to new_session_path
-  end
-
-  test "should require authentication for destroy" do
-    # Create a habit while authenticated
-    post habits_path, params: { name: "Test Habit" }
-    habit = Habit.last
-
-    # Sign out
-    delete session_url
 
     # Try to delete
     delete habit_path(habit)
-
-    habit.reload
-    assert habit.active  # Should still be active
+    assert habit.reload.active  # Should still be active
     assert_redirected_to new_session_path
   end
 

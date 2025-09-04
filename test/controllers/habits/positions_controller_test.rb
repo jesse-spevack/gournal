@@ -54,19 +54,6 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, @habit2.position
   end
 
-  test "should return error with invalid positions data" do
-    # Missing position data
-    invalid_positions = [
-      { id: @habit1.id }  # Missing position
-    ]
-
-    patch habits_positions_path, params: { positions: invalid_positions }
-
-    assert_response :unprocessable_content
-
-    response_data = JSON.parse(response.body)
-    assert_equal "Invalid positions data", response_data["error"]
-  end
 
   # Note: Empty positions array test removed due to test environment complexity
   # The functionality is verified to work correctly in manual testing
@@ -136,19 +123,6 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
   # Note: Parameter missing test removed - ActionController::ParameterMissing
   # handling varies by Rails configuration. Core functionality is tested elsewhere.
 
-  test "should handle service errors gracefully" do
-    # Test with invalid positions data to trigger service error
-    positions_data = [
-      { id: @habit1.id }  # Missing position field
-    ]
-
-    patch habits_positions_path, params: { positions: positions_data }
-
-    assert_response :unprocessable_content
-
-    response_data = JSON.parse(response.body)
-    assert_equal "Invalid positions data", response_data["error"]
-  end
 
   test "should handle concurrent position updates atomically" do
     # This test verifies that the batch update is atomic
@@ -169,18 +143,8 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal [ 1, 2, 3, 4 ], positions  # Should have no gaps or duplicates
   end
 
-  test "should use JSON content type for responses" do
-    positions_data = [
-      { id: @habit1.id, position: 1 }
-    ]
 
-    patch habits_positions_path, params: { positions: positions_data }
-
-    assert_response :ok
-    # For head :ok, there's no content-type header set
-  end
-
-  test "should return JSON error format" do
+  test "should handle invalid positions data and return proper error format" do
     invalid_positions = [
       { id: @habit1.id }  # Missing position
     ]
@@ -191,6 +155,6 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "application/json; charset=utf-8", response.content_type
 
     response_data = JSON.parse(response.body)
-    assert response_data.key?("error")
+    assert_equal "Invalid positions data", response_data["error"]
   end
 end

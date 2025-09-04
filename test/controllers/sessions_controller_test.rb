@@ -75,17 +75,4 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     }
     assert_redirected_to root_path
   end
-
-  test "should rate limit failed login attempts" do
-    # The controller uses rate_limit with only: :create
-    # This is a simple test to ensure the rate limiting is configured
-    assert_nothing_raised do
-      5.times do
-        post session_url, params: {
-          email_address: @user.email_address,
-          password: "wrong_password"
-        }
-      end
-    end
-  end
 end
