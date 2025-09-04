@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
-  rate_limit to: 5, within: 3.minutes, only: :create, with: -> { redirect_to new_user_url, alert: "Try again later." }
+  rate_limit to: 5, within: 3.minutes, only: :create, with: -> { redirect_to new_user_url }
 
   def new
     @user = User.new
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     if @user.save
       start_new_session_for @user
-      redirect_to after_authentication_url, notice: "Welcome to Gournal!"
+      redirect_to after_authentication_url
     else
       render :new, status: :unprocessable_content
     end

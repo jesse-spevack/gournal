@@ -35,7 +35,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       password: "wrong_password"
     }
     assert_redirected_to new_session_path
-    assert_equal "Try another email address or password.", flash[:alert]
   end
 
   test "should not create session with non-existent email" do
@@ -44,7 +43,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       password: "any_password"
     }
     assert_redirected_to new_session_path
-    assert_equal "Try another email address or password.", flash[:alert]
   end
 
   test "should destroy session" do

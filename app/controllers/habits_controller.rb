@@ -5,26 +5,26 @@ class HabitsController < ApplicationController
     result = HabitCreator.call(user: Current.user, name: params[:name])
 
     if result[:success]
-      redirect_to settings_path, notice: "Habit '#{result[:habit].name}' added successfully!"
+      redirect_to settings_path
     else
-      redirect_to settings_path, alert: "Failed to create habit: #{result[:errors].join(', ')}"
+      redirect_to settings_path
     end
   end
 
   def update
     if @habit.update(habit_params)
-      redirect_to settings_path, notice: "Habit updated successfully!"
+      redirect_to settings_path
     else
-      redirect_to settings_path, alert: "Failed to update habit: #{@habit.errors.full_messages.join(', ')}"
+      redirect_to settings_path
     end
   end
 
   def destroy
     # Soft delete - set active to false
     if @habit.update(active: false)
-      redirect_to settings_path, notice: "Habit removed successfully!"
+      redirect_to settings_path
     else
-      redirect_to settings_path, alert: "Failed to remove habit"
+      redirect_to settings_path
     end
   end
 
