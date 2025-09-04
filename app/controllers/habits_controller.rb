@@ -12,10 +12,10 @@ class HabitsController < ApplicationController
   end
 
   def update
-    if position_only_update?
-      handle_position_update
+    if @habit.update(habit_params)
+      redirect_to settings_path, notice: "Habit updated successfully!"
     else
-      handle_name_update
+      redirect_to settings_path, alert: "Failed to update habit: #{@habit.errors.full_messages.join(', ')}"
     end
   end
 
@@ -36,29 +36,6 @@ class HabitsController < ApplicationController
   end
 
   def habit_params
-    params.require(:habit).permit(:name, :position)
-  end
-
-  def position_only_update?
-    habit_params.key?(:position) && habit_params.keys == [ "position" ]
-  end
-
-  def handle_position_update
-    positions_data = [ { "id" => @habit.id, "position" => habit_params[:position] } ]
-    result = HabitPositionUpdater.call(user: Current.user, positions: positions_data)
-
-    if result[:success]
-      head :ok
-    else
-      render json: { error: "Failed to update habit position" }, status: :unprocessable_content
-    end
-  end
-
-  def handle_name_update
-    if @habit.update(habit_params)
-      redirect_to settings_path, notice: "Habit updated successfully!"
-    else
-      redirect_to settings_path, alert: "Failed to update habit: #{@habit.errors.full_messages.join(', ')}"
-    end
+    params.require(:habit).permit(:name)
   end
 end

@@ -210,19 +210,6 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
     assert habit1.active  # Should still be active
   end
 
-  test "should update habit position" do
-    # Create a habit
-    post habits_path, params: { name: "Test Habit" }
-    habit = Habit.last
-    assert_equal 1, habit.position
-
-    # Update position - expect 200 OK for AJAX request
-    patch habit_path(habit), params: { habit: { position: 5 } }
-
-    habit.reload
-    assert_equal 5, habit.position
-    assert_response :ok
-  end
 
 
   test "should create habit entries efficiently with minimal database queries" do
