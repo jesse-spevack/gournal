@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       start_new_session_for @user
       redirect_to after_authentication_url, notice: "Welcome to Gournal!"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

@@ -53,7 +53,7 @@ class HabitsController < ApplicationController
       if result[:success]
         head :ok
       else
-        render json: { error: "Failed to update habit position" }, status: :unprocessable_entity
+        render json: { error: "Failed to update habit position" }, status: :unprocessable_content
       end
     else
       # Handle name updates or mixed updates with redirect

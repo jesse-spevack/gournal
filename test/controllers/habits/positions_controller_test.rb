@@ -62,7 +62,7 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
 
     patch habits_positions_path, params: { positions: invalid_positions }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
 
     response_data = JSON.parse(response.body)
     assert_equal "Invalid positions data", response_data["error"]
@@ -74,7 +74,7 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
   test "should return error with non-array positions" do
     patch habits_positions_path, params: { positions: "invalid" }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
 
     response_data = JSON.parse(response.body)
     assert_equal "Invalid positions data", response_data["error"]
@@ -144,7 +144,7 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
 
     patch habits_positions_path, params: { positions: positions_data }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
 
     response_data = JSON.parse(response.body)
     assert_equal "Invalid positions data", response_data["error"]
@@ -187,7 +187,7 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
 
     patch habits_positions_path, params: { positions: invalid_positions }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     assert_equal "application/json; charset=utf-8", response.content_type
 
     response_data = JSON.parse(response.body)
