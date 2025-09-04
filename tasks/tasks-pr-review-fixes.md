@@ -11,19 +11,19 @@
   - [x] 1.6 Write controller tests for new positions controller
   - [x] 1.7 Write service tests for refactored HabitPositionUpdater
   
-- [ ] 2.0 Optimize N+1 Query in Habit Creation
-  - [ ] 2.1 Replace individual `create!` calls with `insert_all` in HabitsController#create
-  - [ ] 2.2 Ensure timestamps (created_at, updated_at) are properly set in bulk insert
-  - [ ] 2.3 Verify habit_entries are created correctly for all days of month
-  - [ ] 2.4 Update existing controller tests to verify bulk creation
-  - [ ] 2.5 Add performance test to confirm N+1 is resolved
+- [x] 2.0 Optimize N+1 Query in Habit Creation
+  - [x] 2.1 Replace individual `create!` calls with `insert_all` in HabitsController#create
+  - [x] 2.2 Ensure timestamps (created_at, updated_at) are properly set in bulk insert
+  - [x] 2.3 Verify habit_entries are created correctly for all days of month
+  - [x] 2.4 Update existing controller tests to verify bulk creation
+  - [x] 2.5 Add performance test to confirm N+1 is resolved
   
-- [ ] 3.0 Testing and Documentation
-  - [ ] 3.1 Run full test suite with `bin/rails test`
-  - [ ] 3.2 Run rubocop and fix any style issues with `rubocop -A`
-  - [ ] 3.3 Test drag-and-drop manually with multiple habits
-  - [ ] 3.4 Test habit creation for months with different day counts (28, 30, 31 days)
-  - [ ] 3.5 Verify database integrity after batch position updates
+- [x] 3.0 Testing and Documentation
+  - [x] 3.1 Run full test suite with `bin/rails test`
+  - [x] 3.2 Run rubocop and fix any style issues with `rubocop -A`
+  - [x] 3.3 Test drag-and-drop manually with multiple habits
+  - [x] 3.4 Test habit creation for months with different day counts (28, 30, 31 days)
+  - [x] 3.5 Verify database integrity after batch position updates
   
 ## Relevant Files
 

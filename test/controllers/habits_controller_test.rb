@@ -259,4 +259,42 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, habit.position
     assert_redirected_to settings_path
   end
+
+  test "should create habit entries efficiently with minimal database queries" do
+    # This test verifies that we use bulk insert instead of N+1 queries
+    current_date = Date.current
+    days_in_month = Date.new(current_date.year, current_date.month, -1).day
+
+    # Track SQL queries during habit creation
+    queries = []
+    callback = ->(name, start, finish, id, payload) do
+      queries << payload[:sql] if payload[:sql] && !payload[:sql].include?("SCHEMA")
+    end
+
+    ActiveSupport::Notifications.subscribed(callback, "sql.active_record") do
+      post habits_path, params: { name: "Performance Test Habit" }
+    end
+
+    # Verify habit and entries were created
+    habit = Habit.last
+    assert_equal "Performance Test Habit", habit.name
+    assert_equal days_in_month, habit.habit_entries.count
+
+    # Check that we have reasonable number of queries (not N+1)
+    # Expected: User lookup, Habit position query, Habit insert, bulk HabitEntry insert
+    # Should be around 4-5 queries, definitely not 30+ (one per day)
+    insert_all_queries = queries.select { |q| q.include?("INSERT INTO \"habit_entries\"") }
+    individual_insert_queries = queries.count { |q| q.include?("INSERT INTO \"habit_entries\"") && q.include?("VALUES") }
+
+    # Should have exactly 1 bulk insert query for habit entries, not multiple individual inserts
+    assert_equal 1, insert_all_queries.length, "Expected 1 bulk insert query, but got #{insert_all_queries.length}"
+
+    # Verify all entries have proper attributes set (including styles from bulk insert)
+    habit.habit_entries.each do |entry|
+      assert_not_nil entry.checkbox_style, "Checkbox style should be set"
+      assert_not_nil entry.check_style, "Check style should be set"
+      assert_not_nil entry.created_at, "Created timestamp should be set"
+      assert_not_nil entry.updated_at, "Updated timestamp should be set"
+    end
+  end
 end
