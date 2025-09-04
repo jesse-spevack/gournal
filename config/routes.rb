@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   get "settings" => "settings#index", as: :settings
   get "settings/help" => "settings#help", as: :settings_help
 
+  # Batch position updates for habits (must come before generic :habits routes)
+  namespace :habits do
+    resource :positions, only: [ :update ]
+  end
+
   # Habits management (authenticated)
   resources :habits, only: [ :create, :update, :destroy ]
 

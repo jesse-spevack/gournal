@@ -63,6 +63,15 @@ end
 
 This allows for cleaner usage: `MyService.call(param1: value1, param2: value2)` instead of `MyService.new(param1: value1, param2: value2).call`.
 
+## RESTful Routing
+
+**ALWAYS use RESTful routing patterns** - Controllers should follow REST conventions:
+- Use standard actions: `index`, `show`, `new`, `create`, `edit`, `update`, `destroy`
+- For nested resources, use `module:` option to organize controllers
+- Avoid custom action names when a RESTful action would work
+- Use singular `resource` for single resources (e.g., positions for a habit)
+- Use plural `resources` for collections
+
 ## Testing Strategy
 
 **DO NOT implement system tests** - Focus on unit tests and integration tests only.

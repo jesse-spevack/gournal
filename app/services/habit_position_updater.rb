@@ -1,65 +1,57 @@
 class HabitPositionUpdater
-  def self.call(habit:, new_position:)
-    new(habit: habit, new_position: new_position).call
+  def self.call(user:, positions:)
+    new(user: user, positions: positions).call
   end
 
-  def initialize(habit:, new_position:)
-    @habit = habit
-    @new_position = new_position.to_i
+  def initialize(user:, positions:)
+    @user = user
+    @positions = positions
   end
 
   def call
-    return true if habit.position == new_position
+    return { success: false, error: "Invalid positions data" } unless valid_positions_data?
 
     Habit.transaction do
-      reorder_habits_with_new_position
+      # Get current date for scope
+      current_date = Date.current
+
+      # Get all habits in scope
+      habits_scope = @user.habits
+                          .where(year: current_date.year, month: current_date.month, active: true)
+
+      # Step 1: Move all habits to negative positions to avoid uniqueness conflicts
+      habits_scope.each_with_index do |habit, index|
+        habit.update_column(:position, -(index + 1))
+      end
+
+      # Step 2: Apply the new positions from the request
+      @positions.each do |position_data|
+        habit_id = position_data["id"] || position_data[:id]
+        new_position = position_data["position"] || position_data[:position]
+
+        next unless habit_id && new_position
+
+        habit = habits_scope.find_by(id: habit_id)
+        next unless habit
+
+        habit.update_column(:position, new_position.to_i)
+      end
+
+      { success: true }
     end
-    true
   rescue => e
     Rails.logger.error "HabitPositionUpdater failed: #{e.message}"
-    false
+    { success: false, error: "Failed to update positions" }
   end
 
   private
 
-  attr_reader :habit, :new_position
+  def valid_positions_data?
+    return false unless @positions.is_a?(Array)
+    return false if @positions.empty?
 
-  def reorder_habits_with_new_position
-    # First, temporarily move all habits to negative positions to avoid
-    # uniqueness constraint conflicts during reorganization
-    habits_to_reposition = all_habits_in_scope.to_a
-
-    # Step 1: Move all habits to negative positions temporarily
-    habits_to_reposition.each_with_index do |h, index|
-      h.update_column(:position, -(index + 1))
+    @positions.all? do |item|
+      (item["id"] || item[:id]) && (item["position"] || item[:position])
     end
-
-    # Step 2: Calculate the new order
-    target_habit_index = habits_to_reposition.index(habit)
-    habits_to_reposition.delete_at(target_habit_index)
-
-    # Step 3: Assign final positions
-    if new_position > habits_to_reposition.length + 1
-      # Position beyond range - put at the exact position requested
-      habits_to_reposition.each_with_index do |h, index|
-        h.update_column(:position, index + 1)
-      end
-      habit.update_column(:position, new_position)
-    else
-      # Normal reordering within range
-      insert_index = [ new_position - 1, 0 ].max
-      insert_index = [ insert_index, habits_to_reposition.length ].min
-      habits_to_reposition.insert(insert_index, habit)
-
-      habits_to_reposition.each_with_index do |h, index|
-        h.update_column(:position, index + 1)
-      end
-    end
-  end
-
-  def all_habits_in_scope
-    @all_habits_in_scope ||= habit.user.habits
-                                 .where(year: habit.year, month: habit.month, active: true)
-                                 .order(:position)
   end
 end

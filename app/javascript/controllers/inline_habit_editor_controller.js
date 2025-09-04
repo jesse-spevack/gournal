@@ -133,35 +133,38 @@ export default class extends Controller {
   updateHabitOrder() {
     const habitItems = [...this.element.querySelectorAll('.habit-item:not(.habit-item--new)')]
     
-    // Update each habit's position individually using AJAX
-    habitItems.forEach((item, index) => {
+    // Build array of positions for batch update
+    const positions = habitItems.map((item, index) => {
       const habitId = item.dataset.habitId
-      if (!habitId) return
+      if (!habitId) return null
       
-      const newPosition = index + 1
-      
-      // Use fetch to send AJAX request
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').content
-      
-      fetch(`/habits/${habitId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken,
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          habit: {
-            position: newPosition
-          }
-        })
-      }).then(response => {
-        if (!response.ok) {
-          console.error(`Failed to update habit ${habitId} position:`, response.statusText)
-        }
-      }).catch(error => {
-        console.error(`Error updating habit ${habitId} position:`, error)
+      return {
+        id: habitId,
+        position: index + 1
+      }
+    }).filter(item => item !== null)
+    
+    if (positions.length === 0) return
+    
+    // Send single batch request to update all positions
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+    
+    fetch('/habits/positions', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        positions: positions
       })
+    }).then(response => {
+      if (!response.ok) {
+        console.error('Failed to update habit positions:', response.statusText)
+      }
+    }).catch(error => {
+      console.error('Error updating habit positions:', error)
     })
   }
 

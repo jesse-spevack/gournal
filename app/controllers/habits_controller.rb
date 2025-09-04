@@ -39,7 +39,10 @@ class HabitsController < ApplicationController
   def update
     # Handle position-only updates (from drag-and-drop AJAX)
     if habit_params.key?(:position) && habit_params.keys == [ "position" ]
-      if HabitPositionUpdater.call(habit: @habit, new_position: habit_params[:position])
+      positions_data = [ { "id" => @habit.id, "position" => habit_params[:position] } ]
+      result = HabitPositionUpdater.call(user: Current.user, positions: positions_data)
+
+      if result[:success]
         head :ok
       else
         render json: { error: "Failed to update habit position" }, status: :unprocessable_entity
@@ -51,8 +54,15 @@ class HabitsController < ApplicationController
         name_params = habit_params.except(:position)
         success = name_params.empty? || @habit.update(name_params)
 
-        if success && HabitPositionUpdater.call(habit: @habit, new_position: habit_params[:position])
-          redirect_to settings_path, notice: "Habit updated successfully!"
+        if success
+          positions_data = [ { "id" => @habit.id, "position" => habit_params[:position] } ]
+          result = HabitPositionUpdater.call(user: Current.user, positions: positions_data)
+
+          if result[:success]
+            redirect_to settings_path, notice: "Habit updated successfully!"
+          else
+            redirect_to settings_path, alert: "Failed to update habit"
+          end
         else
           redirect_to settings_path, alert: "Failed to update habit"
         end
