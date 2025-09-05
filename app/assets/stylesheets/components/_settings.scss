@@ -86,11 +86,6 @@
   }
   
   &:hover {
-    background: var(--paper-form-bg);
-    border-radius: 2px;
-    padding: var(--space-xs) var(--space-sm);
-    margin: var(--space-xs) calc(-1 * var(--space-sm));
-    
     .drag-handle {
       opacity: 1;
     }
@@ -156,30 +151,56 @@
 }
 
 /* Inline editing input */
-.habit-input {
+.habit-input,
+input.habit-input,
+input[data-habit-id] {
   font-family: var(--font-caveat);
   font-size: 18px;
   font-weight: 500;
   color: var(--ink-primary);
-  background: transparent;
-  border: none;
-  border-bottom: 1px dashed var(--ink-primary-30);
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
   padding: 0;
   margin: 0;
   line-height: 1.4;
   width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-shadow: none !important;
   
-  &:focus {
-    outline: none;
-    border-bottom-color: var(--ink-primary);
-    border-bottom-style: solid;
+  &:focus,
+  &:active {
+    outline: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
   }
   
-  &--inline {
+  &.habit-input--inline {
     flex: 1;
+    background: transparent !important;
+    background-color: transparent !important;
+    
+    &:focus,
+    &:active {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
   }
   
-  &--new {
+  &.habit-input--new {
+    background: transparent !important;
+    background-color: transparent !important;
+    
+    &:focus,
+    &:active {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+    
     &::placeholder {
       color: var(--ink-primary-30);
       font-style: italic;
@@ -197,29 +218,42 @@
   .bullet {
     opacity: 0.4;
   }
-  
-  .habit-input {
-    border-bottom-style: dotted;
-  }
 }
 
 /* ============================================================================ */
 /* MONTH SETUP - Next month setup with exclusive checkboxes                    */
 /* ============================================================================ */
 
+/* Remove all browser default focus/active styling */
+.month-setup * {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+.month-setup *:focus,
+.month-setup *:active {
+  background-color: inherit !important;
+  color: inherit !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .month-setup-form {
   margin: 0;
 }
 
 .month-setup-options {
-  margin: var(--space-md) 0;
+  margin: 0;
 }
 
 .month-setup-option {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-sm);
   
   &:last-child {
-    margin-bottom: var(--space-md);
+    margin-bottom: 0;
   }
 }
 
@@ -227,7 +261,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 0;
+  
+  /* Prevent any blue highlighting */
+  &:focus,
+  &:active {
+    background: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
 }
 
 .month-setup-label {
@@ -248,26 +290,48 @@
 }
 
 .month-setup-submit {
+  width: 50%;
+  padding: 12px 24px;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--ink-primary);
-  background: var(--paper-form-bg);
-  border: 1px solid var(--ink-primary-30);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--paper-light);
+  background: var(--ink-primary);
+  border: none;
   border-radius: 2px;
-  padding: var(--space-sm) var(--space-md);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-  margin-top: var(--space-md);
-  letter-spacing: var(--letter-spacing-tight);
+  transition: all var(--duration-normal) var(--ease-standard);
+  box-sizing: border-box;
+  margin-top: var(--space-lg);
+  
+  /* Subtle rotation for handwritten feel */
+  transform: rotate(-0.5deg);
+  
+  /* Remove browser defaults */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   
   &:hover:not(:disabled) {
-    background: var(--ink-primary-10);
-    border-color: var(--ink-primary);
+    background: var(--ink-hover);
+    color: var(--paper-light);
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.3);
+  }
+  
+  &:active:not(:disabled) {
+    transform: rotate(0deg) scale(0.98);
+  }
+  
+  &:focus {
+    outline: none;
   }
   
   &:disabled {
     opacity: var(--opacity-disabled);
     cursor: not-allowed;
+    transform: none;
   }
 }
 

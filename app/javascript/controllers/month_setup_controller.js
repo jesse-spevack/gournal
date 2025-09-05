@@ -18,6 +18,17 @@ export default class extends Controller {
   connect() {
     this.currentSelection = null
     this.markIndex = 0
+    
+    // Default to "copy" option being selected
+    this.selectDefaultOption()
+  }
+  
+  selectDefaultOption() {
+    // Set copy as the default selection
+    this.currentSelection = 'copy'
+    this.checkOption('copy')
+    this.submitButtonTarget.disabled = false
+    this.strategyFieldTarget.value = 'copy'
   }
 
   selectOption(event) {
@@ -32,6 +43,14 @@ export default class extends Controller {
       this.uncheckOption(option)
       this.currentSelection = null
       this.submitButtonTarget.disabled = true
+      
+      // If unchecking "copy", automatically check "fresh"
+      if (option === 'copy') {
+        this.checkOption('fresh')
+        this.currentSelection = 'fresh'
+        this.submitButtonTarget.disabled = false
+        this.strategyFieldTarget.value = 'fresh'
+      }
     } else {
       // Uncheck any previous selection
       if (this.currentSelection) {
@@ -42,6 +61,7 @@ export default class extends Controller {
       this.checkOption(option)
       this.currentSelection = option
       this.submitButtonTarget.disabled = false
+      this.strategyFieldTarget.value = option
     }
   }
 
