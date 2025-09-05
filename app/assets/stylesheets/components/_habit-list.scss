@@ -86,9 +86,9 @@
 }
 
 /* Inline editing input */
-.settings-section .habit-input,
-.settings-section input.habit-input,
-.settings-section input[data-habit-id] {
+.habit-input,
+input.habit-input,
+input[data-habit-id] {
   font-family: var(--font-caveat);
   font-size: 18px;
   font-weight: 500;
