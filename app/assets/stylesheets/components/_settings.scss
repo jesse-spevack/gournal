@@ -231,12 +231,12 @@
 }
 
 .month-setup-label {
-  font-family: var(--font-caveat);
-  font-size: 18px;
-  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: var(--ink-primary);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
+  letter-spacing: var(--letter-spacing-tight);
   
   &:hover {
     opacity: 0.7;
@@ -244,18 +244,12 @@
 }
 
 .month-setup-description {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-primary);
-  opacity: var(--opacity-secondary);
-  margin: 0 0 0 calc(var(--checkbox-size) + var(--space-sm));
-  line-height: 1.4;
+  display: none; /* Remove sub-labels */
 }
 
 .month-setup-submit {
-  font-family: var(--font-caveat);
-  font-size: 18px;
-  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: var(--ink-primary);
   background: var(--paper-form-bg);
   border: 1px solid var(--ink-primary-30);
@@ -264,6 +258,8 @@
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
   margin-top: var(--space-md);
+  letter-spacing: var(--letter-spacing-tight);
+  text-transform: uppercase;
   
   &:hover:not(:disabled) {
     background: var(--ink-primary-10);

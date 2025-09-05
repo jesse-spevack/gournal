@@ -36,6 +36,39 @@ Then: guard against real crashes.
 
 MAKE IT WORK FIRST.
 
+## Typography & Font Usage
+
+**CRITICAL DESIGN PRINCIPLE**: Fonts communicate the nature of content.
+
+### Font Rules:
+- **Typewriter Font (var(--font-mono))**: System-generated UI elements
+  - Labels, buttons, headers, navigation
+  - Settings options, form labels
+  - Help text, instructions
+  - Any static text that guides the user
+  - System messages and prompts
+
+- **Script Font (var(--font-caveat))**: User-generated content
+  - Habit names (user typed)
+  - Daily reflections (user typed)
+  - Any text that represents user input
+  - Handwritten aesthetic elements
+
+### Examples:
+```scss
+// System UI - Typewriter font
+.settings-section-title { font-family: var(--font-mono); }
+.month-setup-label { font-family: var(--font-mono); }
+.month-setup-submit { font-family: var(--font-mono); }
+
+// User content - Script font  
+.habit-name { font-family: var(--font-caveat); }
+.reflection-text { font-family: var(--font-caveat); }
+.habit-input { font-family: var(--font-caveat); }
+```
+
+This distinction creates a clear visual hierarchy: the system speaks in typewriter, the user writes in script.
+
 ## Service Object Pattern
 
 When creating service objects, use the following pattern:
