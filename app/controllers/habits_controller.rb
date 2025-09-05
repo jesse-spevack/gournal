@@ -1,8 +1,9 @@
 class HabitsController < ApplicationController
   before_action :set_habit, only: [ :update, :destroy ]
+  include ApplicationHelper
 
   def new
-    @year_month = params[:year_month] || "#{Date.current.year}-#{Date.current.month.to_s.rjust(2, '0')}"
+    @year_month = params[:year_month] || format_year_month_param(Date.current)
     year, month = @year_month.split("-").map(&:to_i)
     @target_year = year
     @target_month = month

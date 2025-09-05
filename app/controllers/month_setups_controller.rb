@@ -1,5 +1,6 @@
 class MonthSetupsController < ApplicationController
   before_action :require_authentication
+  include ApplicationHelper
 
   def create
     strategy = params[:strategy]
@@ -14,7 +15,7 @@ class MonthSetupsController < ApplicationController
       )
       redirect_to habit_entries_path(year: target_year, month: target_month)
     elsif strategy == "fresh"
-      redirect_to new_habit_path(year_month: "#{target_year}-#{target_month.to_s.rjust(2, '0')}")
+      redirect_to new_habit_path(year_month: format_year_month_param(target_year, target_month))
     else
       redirect_to settings_path
     end

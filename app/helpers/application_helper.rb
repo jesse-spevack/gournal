@@ -35,4 +35,18 @@ module ApplicationHelper
   def format_full_date(date)
     date.strftime("%B %d, %Y")
   end
+
+  # Format as YYYY-MM string for URL parameters (e.g., "2024-10")
+  def format_year_month_param(year, month = nil)
+    if year.respond_to?(:strftime)
+      # Handle Date/DateTime objects
+      year.strftime("%Y-%m")
+    elsif month
+      # Handle separate year and month integers
+      "#{year}-#{month.to_s.rjust(2, '0')}"
+    else
+      # year must be a Date-like object if month is nil
+      raise ArgumentError, "Invalid arguments: expected Date object or year/month integers"
+    end
+  end
 end
