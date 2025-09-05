@@ -56,7 +56,15 @@
   /* TYPOGRAPHY SCALE - v1.0.0                   */
   /* ============================================ */
   
-  /* Font Families - v1.0.0 */
+  /* Font Families - v1.0.0 
+   * DESIGN PRINCIPLE: Fonts communicate content nature
+   * - Typewriter (mono): System UI, labels, buttons, instructions
+   * - Script (Caveat): User-generated content, handwritten text
+   * 
+   * CAPITALIZATION: Always use sentence case
+   * - "Manage habits" not "Manage Habits" or "MANAGE HABITS"
+   * - Applies to all UI elements: buttons, labels, headers
+   */
   --font-serif: 'Special Elite', 'Georgia', serif;        /* v1.0.3 - Typewriter aesthetic */
   --font-mono: 'Special Elite', 'Courier New', monospace; /* v1.0.3 - Typewriter aesthetic */
   --font-caveat: 'Caveat', 'Courier New', cursive;      /* v1.0.3 - Handwritten aesthetic */

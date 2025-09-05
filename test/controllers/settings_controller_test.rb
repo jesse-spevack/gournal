@@ -72,23 +72,4 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     # Check that the session has the return URL stored
     assert_equal settings_url, session[:return_to_after_authenticating]
   end
-
-  test "should render help page when authenticated" do
-    # Sign in
-    post session_url, params: {
-      email_address: @user.email_address,
-      password: "secure_password123"
-    }
-
-    get settings_help_path
-    assert_response :success
-    assert_select "h1", text: "Habit Management Help"
-    assert_select ".help-section", minimum: 4
-    assert_select "a[href='#{settings_path}'].settings-link", text: "<"
-  end
-
-  test "should redirect help page to login when not authenticated" do
-    get settings_help_path
-    assert_redirected_to new_session_path
-  end
 end

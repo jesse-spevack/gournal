@@ -20,7 +20,7 @@
         <section class="settings-section habits-management">
           <div class="section-header">
             <h2 class="settings-section-title">Manage habits</h2>
-            <%= link_to "(?)", settings_help_path, class: "help-button" %>
+            <%= link_to "(?)", help_manage_habits_path, class: "help-button" %>
           </div>
           <div class="section-content">
             <%= render "habit_list", habits: @habits %>
@@ -29,9 +29,12 @@
         
         <%# Section 2: Month Setup %>
         <section class="settings-section month-setup">
-          <h2 class="settings-section-title">Set up next month</h2>
+          <div class="section-header">
+            <h2 class="settings-section-title">Set up next month</h2>
+            <%= link_to "(?)", help_next_month_setup_path, class: "help-button" %>
+          </div>
           <div class="section-content">
-            <%# Month setup interface will go here %>
+            <%= render "month_setup_section" %>
           </div>
         </section>
         

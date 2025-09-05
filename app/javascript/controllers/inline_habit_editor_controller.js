@@ -224,6 +224,13 @@ export default class extends Controller {
     input.className = "habit-input habit-input--inline"
     input.dataset.habitId = habitId
     
+    // Force transparent background directly on the element
+    input.style.background = "transparent"
+    input.style.backgroundColor = "transparent"
+    input.style.border = "none"
+    input.style.outline = "none"
+    input.style.boxShadow = "none"
+    
     // Store original values
     this.editingHabitId = habitId
     this.originalName = currentName

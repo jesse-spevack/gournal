@@ -6,8 +6,4 @@ class SettingsController < ApplicationController
                      .where(year: current_date.year, month: current_date.month, active: true)
                      .order(:position)
   end
-
-  def help
-    # Help page for habit management
-  end
 end

@@ -16,15 +16,21 @@ Rails.application.routes.draw do
 
   # Settings (authenticated)
   get "settings" => "settings#index", as: :settings
-  get "settings/help" => "settings#help", as: :settings_help
+
+  # Help system (authenticated)
+  get "help/manage-habits" => "help#manage_habits", as: :help_manage_habits
+  get "help/next-month-setup" => "help#next_month_setup", as: :help_next_month_setup
 
   # Batch position updates for habits (must come before generic :habits routes)
   namespace :habits do
     resource :positions, only: [ :update ]
   end
 
+  # Month setup actions (authenticated)
+  resources :month_setups, only: [ :create ]
+
   # Habits management (authenticated)
-  resources :habits, only: [ :create, :update, :destroy ]
+  resources :habits, only: [ :new, :create, :update, :destroy ]
 
   # Habit entries routes
   resources :habit_entries, only: [ :index, :update ]

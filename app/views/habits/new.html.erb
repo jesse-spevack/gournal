@@ -1,0 +1,27 @@
+<%# Habit creation page for new month setup %>
+<div class="paper-background">
+  <div class="container">
+    <div class="dot-grid-overlay">
+      
+      <%# Back button in top-right %>
+      <div class="settings-link-container">
+        <%= link_to "<", settings_path, class: "settings-link" %>
+      </div>
+      
+      <%# Header - using same class as habit tracker %>
+      <header class="month-header">
+        <h1>Add habits for <%= format_month_year(@target_year, @target_month) %></h1>
+      </header>
+      
+      <%# Habits management content %>
+      <div class="settings-content">
+        <section class="settings-section habits-management">
+          <div class="section-content">
+            <%= render "settings/habit_list", habits: @habits %>
+          </div>
+        </section>
+      </div>
+      
+    </div>
+  </div>
+</div>
