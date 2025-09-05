@@ -9,9 +9,10 @@ export default class extends Controller {
   
   static targets = [
     "form",
-    "copyStrategy", 
-    "freshStrategy",
-    "submitButton"
+    "strategyField",
+    "submitButton",
+    "copyCheckbox",
+    "freshCheckbox"
   ]
 
   connect() {
@@ -21,6 +22,7 @@ export default class extends Controller {
 
   selectOption(event) {
     event.preventDefault()
+    event.stopPropagation()
     
     const option = event.currentTarget.dataset.option
     const isCurrentlySelected = this.currentSelection === option
@@ -44,35 +46,37 @@ export default class extends Controller {
   }
 
   checkOption(option) {
-    const container = this.getCheckboxContainer(option)
-    const checkboxContainer = container.querySelector('.checkbox-container')
+    // Get the checkbox container for this option
+    const checkboxContainer = option === 'copy' ? this.copyCheckboxTarget : this.freshCheckboxTarget
     
-    // Get next X mark variant
+    // Get next X mark variant from the randomized array
     const xVariant = this.xMarksValue[this.markIndex]
     this.markIndex = (this.markIndex + 1) % this.xMarksValue.length
     
-    // Add X mark to checkbox
-    if (!checkboxContainer.querySelector('.x-mark')) {
-      const xMark = document.createElement('div')
-      xMark.className = 'x-mark'
-      xMark.innerHTML = `<svg class="x-mark-${xVariant}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>`
-      checkboxContainer.appendChild(xMark)
+    // Hide all X marks first
+    checkboxContainer.querySelectorAll('.checkbox-x-wrapper').forEach(wrapper => {
+      wrapper.style.display = 'none'
+    })
+    
+    // Show the selected X mark variant
+    const selectedWrapper = checkboxContainer.querySelector(`[data-x-variant="${xVariant}"]`)
+    if (selectedWrapper) {
+      selectedWrapper.style.display = 'block'
     }
   }
 
   uncheckOption(option) {
-    const container = this.getCheckboxContainer(option)
-    const xMark = container.querySelector('.x-mark')
-    if (xMark) {
-      xMark.remove()
-    }
+    // Get the checkbox container for this option
+    const checkboxContainer = option === 'copy' ? this.copyCheckboxTarget : this.freshCheckboxTarget
+    
+    // Hide all X marks
+    checkboxContainer.querySelectorAll('.checkbox-x-wrapper').forEach(wrapper => {
+      wrapper.style.display = 'none'
+    })
   }
 
   getCheckboxContainer(option) {
-    return this.element.querySelector(`[data-option="${option}"]`).closest('.month-setup-option')
+    return this.element.querySelector(`[data-option="${option}"]`)
   }
 
   handleSubmit(event) {
@@ -82,12 +86,6 @@ export default class extends Controller {
     }
     
     // Set the strategy value in the form
-    if (this.currentSelection === "copy") {
-      this.copyStrategyTarget.disabled = false
-      this.freshStrategyTarget.disabled = true
-    } else {
-      this.freshStrategyTarget.disabled = false
-      this.copyStrategyTarget.disabled = true
-    }
+    this.strategyFieldTarget.value = this.currentSelection
   }
 }
