@@ -45,19 +45,51 @@ Implementation tasks for comprehensive habit management system including setting
   - [x] 3.7 Write tests for reordering (HabitPositionUpdater service tests)
   - [x] 3.8 Manual test drag-and-drop on mobile touch
   
-- [ ] 4.0 "Set Up Next Month" Feature *(Backend complete, UI needs implementation)*
+- [x] 4.0 "Set Up Next Month" Feature
   - [x] 4.1 Create HabitCopyService with self.call pattern
-  - [ ] 4.2 Generate MonthSetupsController *(Started but not complete)*
-  - [ ] 4.3 Add routes for month setup actions
-  - [x] 4.4 Add "Set up next month" section to settings *(Placeholder exists)*
-  - [ ] 4.5 Create modal/dropdown with "Copy" and "Start fresh" options
+  - [x] 4.2 Generate MonthSetupsController
+    - [x] 4.2.1 Create controller with create action
+    - [x] 4.2.2 Handle "copy" strategy → redirect to habit tracker for target month
+    - [x] 4.2.3 Handle "fresh" strategy → redirect to habits/new/:year_month
+    - [x] 4.2.4 Add month setup parameter validation
+  - [x] 4.3 Add routes for month setup actions
+    - [x] 4.3.1 POST /month_setups route to MonthSetupsController#create
+    - [x] 4.3.2 Verify habits/new/:year_month route exists (from task 5.1)
+  - [x] 4.4 Add "Set up next month" section to settings
+  - [x] 4.5 Create month setup UI with exclusive checkboxes
+    - [x] 4.5.1 Replace placeholder with checkbox form using checkbox_helper
+    - [x] 4.5.2 "Copy current habits" checkbox with description
+    - [x] 4.5.3 "Start fresh" checkbox with description  
+    - [x] 4.5.4 Dynamic month name (e.g., "Set up October")
+    - [ ] 4.5.5 Conditional rendering if target month already has habits
+    - [x] 4.5.6 Add help button (?) linking to /help/next-month-setup
   - [x] 4.6 Implement copy_from_current using HabitCopyService
-  - [ ] 4.7 Implement start_fresh action (implemented in MonthSetupService)
-  - [ ] 4.8 Add future month validation
-  - [ ] 4.9 Create month_setup Stimulus controller
-  - [ ] 4.10 Style month setup UI
-  - [x] 4.11 Write tests for service and controller (HabitCopyService tested)
+  - [x] 4.7 Implement start_fresh redirect logic (no service needed)
+  - [x] 4.8 Help System Restructuring
+    - [x] 4.8.1 Move /settings/help to /help/manage-habits
+    - [x] 4.8.2 Create /help/next-month-setup route and controller action
+    - [x] 4.8.3 Update existing help button link in manage habits section
+    - [x] 4.8.4 Create comprehensive next-month-setup help content
+    - [x] 4.8.5 Maintain bullet journal aesthetic in help pages
+  - [x] 4.9 Create month_setup Stimulus controller
+    - [x] 4.9.1 Handle exclusive checkbox behavior (checking one unchecks other)
+    - [x] 4.9.2 Trigger randomized X marks on checkbox interactions  
+    - [x] 4.9.3 Form validation before submission
+  - [x] 4.10 Style month setup UI
+    - [x] 4.10.1 Integrate with existing settings page styling
+    - [x] 4.10.2 Consistent spacing and typography
+    - [x] 4.10.3 Proper checkbox alignment and descriptions
+    - [x] 4.10.4 Submit button styling matching settings aesthetic
+  - [x] 4.11 Write tests for service and controller
+    - [x] 4.11.1 MonthSetupsController tests for both strategies
+    - [x] 4.11.2 Help controller tests for new routes
+    - [x] 4.11.3 Integration tests for complete flow
   - [ ] 4.12 Manual test month setup flow
+    - [ ] 4.12.1 Test copy flow: settings → copy → target month tracker
+    - [ ] 4.12.2 Test fresh flow: settings → fresh → habits/new → add habits → tracker
+    - [ ] 4.12.3 Test help system: both help buttons work correctly
+    - [ ] 4.12.4 Test edge cases: existing target month habits, validation errors
+    - [ ] 4.12.5 Cross-browser testing of checkbox interactions
   
 - [x] 5.0 Habit Management Flow Improvements
   - [x] 5.1 Add route for habits/new/:year_month (e.g. habits/new/2025-10)
@@ -112,7 +144,9 @@ Implementation tasks for comprehensive habit management system including setting
 - `app/views/settings/_habit_item.html.erb` - Individual habit row partial (Created)
 - `app/views/settings/_settings_button.html.erb` - Settings button partial (Created)
 - `app/views/help/manage_habits.html.erb` - Help page for habit management (Created)
-- `app/views/help/month_setup.html.erb` - Help page for month setup (Created)
+- `app/views/help/next_month_setup.html.erb` - Help page for next month setup (Created)
+- `app/views/settings/_month_setup_section.html.erb` - Month setup form partial (Created)
+- `app/views/habits/new.html.erb` - Habit creation page for new months (Created)
 - `app/views/public_profiles/show.html.erb` - Public profile view
 - `app/javascript/controllers/habit_management_controller.js` - Inline editing and reordering (Created)
 - `app/javascript/controllers/month_setup_controller.js` - Month setup interactions (Created)
@@ -121,7 +155,8 @@ Implementation tasks for comprehensive habit management system including setting
 - `app/assets/stylesheets/components/_settings-button.scss` - Button styles (Created)
 - `test/controllers/settings_controller_test.rb` - Settings controller tests (Created)
 - `test/controllers/habits_controller_test.rb` - Habits CRUD tests (Created)
-- `test/controllers/month_setups_controller_test.rb` - Month setup tests
+- `test/controllers/month_setups_controller_test.rb` - Month setup tests (Created)
+- `test/controllers/help_controller_test.rb` - Help controller tests (Created)
 - `test/controllers/public_profiles_controller_test.rb` - Public profile tests
 - `test/services/habit_copy_service_test.rb` - Service unit tests (Created)
 - `test/services/month_setup_service_test.rb` - Month setup service tests (Created)
@@ -134,7 +169,7 @@ Implementation tasks for comprehensive habit management system including setting
 - `app/controllers/habit_entries_controller.rb` - Remove ENV["FIRST_USER"] hardcoding (Modified)
 - `app/views/habit_entries/index.html.erb` - Add settings button (Modified)
 - `app/assets/stylesheets/application.scss` - Import new component styles (Modified)
-- `config/routes.rb` - Add settings, habits, and public profile routes (Modified)
+- `config/routes.rb` - Add settings, habits, month_setups, help, and public profile routes (Modified)
 - `test/test_helper.rb` - Add helper methods for new features (Modified)
 - `app/helpers/checkbox_helper.rb` - Added X marks JSON helper (Modified)
 

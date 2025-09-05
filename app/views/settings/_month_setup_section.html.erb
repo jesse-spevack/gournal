@@ -1,0 +1,70 @@
+<%# Month setup section with exclusive checkboxes %>
+<%
+  next_month_date = Date.current.next_month
+  target_year = next_month_date.year
+  target_month = next_month_date.month
+  month_name = next_month_date.strftime("%B")
+%>
+
+<div data-controller="month-setup" 
+     data-month-setup-x-marks-value="<%= random_x_marks_json %>"
+     data-month-setup-target-year-value="<%= target_year %>"
+     data-month-setup-target-month-value="<%= target_month %>">
+  
+  <%= form_with url: month_setups_path, 
+                method: :post,
+                data: { 
+                  month_setup_target: "form",
+                  action: "submit->month-setup#handleSubmit"
+                },
+                class: "month-setup-form" do |form| %>
+    
+    <%= form.hidden_field :target_year, value: target_year %>
+    <%= form.hidden_field :target_month, value: target_month %>
+    
+    <div class="month-setup-options">
+      
+      <div class="month-setup-option">
+        <div class="checkbox-label-container">
+          <%= habit_checkbox(box_variant: 0) %>
+          <%= form.hidden_field :strategy, value: "copy", data: { month_setup_target: "copyStrategy" } %>
+          <label for="copy_current_habits" 
+                 data-action="click->month-setup#selectOption"
+                 data-option="copy"
+                 class="month-setup-label">
+            Copy current habits
+          </label>
+        </div>
+        <p class="month-setup-description">
+          Use the same habits you have this month for <%= month_name %>
+        </p>
+      </div>
+      
+      <div class="month-setup-option">
+        <div class="checkbox-label-container">
+          <%= habit_checkbox(box_variant: 0) %>
+          <%= form.hidden_field :strategy, value: "fresh", data: { month_setup_target: "freshStrategy" } %>
+          <label for="start_fresh" 
+                 data-action="click->month-setup#selectOption"
+                 data-option="fresh"
+                 class="month-setup-label">
+            Start fresh
+          </label>
+        </div>
+        <p class="month-setup-description">
+          Begin <%= month_name %> with a clean slate - add habits as needed
+        </p>
+      </div>
+      
+    </div>
+    
+    <button type="submit" 
+            class="month-setup-submit"
+            data-month-setup-target="submitButton"
+            disabled>
+      Set up <%= month_name %>
+    </button>
+    
+  <% end %>
+  
+</div>

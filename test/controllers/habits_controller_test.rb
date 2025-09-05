@@ -212,6 +212,78 @@ class HabitsControllerTest < ActionDispatch::IntegrationTest
 
 
 
+  test "should render new habit page with current month by default" do
+    get new_habit_path
+    assert_response :success
+
+    current_date = Date.current
+    expected_month = current_date.strftime("%B %Y")
+    assert_select "h1", text: "Add habits for #{expected_month}"
+  end
+
+  test "should render new habit page with specified year_month" do
+    get new_habit_path(year_month: "2025-10")
+    assert_response :success
+    assert_select "h1", text: "Add habits for October 2025"
+  end
+
+  test "should show existing habits for specified month" do
+    # Create habits for October 2025
+    @user.habits.create!(
+      name: "October Habit 1",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: "x_marks"
+    )
+    @user.habits.create!(
+      name: "October Habit 2",
+      year: 2025,
+      month: 10,
+      position: 2,
+      active: true,
+      check_type: "x_marks"
+    )
+
+    get new_habit_path(year_month: "2025-10")
+    assert_response :success
+    assert_select ".habit-name", text: "October Habit 1"
+    assert_select ".habit-name", text: "October Habit 2"
+  end
+
+  test "should not show inactive habits on new page" do
+    # Create active and inactive habits
+    @user.habits.create!(
+      name: "Active Habit",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: "x_marks"
+    )
+    @user.habits.create!(
+      name: "Inactive Habit",
+      year: 2025,
+      month: 10,
+      position: 2,
+      active: false,
+      check_type: "x_marks"
+    )
+
+    get new_habit_path(year_month: "2025-10")
+    assert_response :success
+    assert_select ".habit-name", text: "Active Habit"
+    assert_select ".habit-name", text: "Inactive Habit", count: 0
+  end
+
+  test "should require authentication for new habit page" do
+    delete session_url
+
+    get new_habit_path
+    assert_redirected_to new_session_path
+  end
+
   test "should create habit entries efficiently with minimal database queries" do
     # This test verifies that we use bulk insert instead of N+1 queries
     current_date = Date.current

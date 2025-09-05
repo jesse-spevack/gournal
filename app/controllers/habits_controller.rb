@@ -1,6 +1,14 @@
 class HabitsController < ApplicationController
   before_action :set_habit, only: [ :update, :destroy ]
 
+  def new
+    @year_month = params[:year_month] || "#{Date.current.year}-#{Date.current.month.to_s.rjust(2, '0')}"
+    year, month = @year_month.split("-").map(&:to_i)
+    @target_year = year
+    @target_month = month
+    @habits = Current.user.habits.where(year: year, month: month, active: true).order(:position)
+  end
+
   def create
     result = HabitCreator.call(user: Current.user, name: params[:name])
 

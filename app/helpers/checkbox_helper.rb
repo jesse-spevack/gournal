@@ -43,4 +43,8 @@ module CheckboxHelper
     partial_prefix = VALID_FILL_STYLES[style]
     render("checkboxes/#{partial_prefix}_#{variant}")
   end
+
+  def random_x_marks_json
+    (0..9).to_a.shuffle.to_json
+  end
 end
