@@ -239,9 +239,8 @@ export default class extends Controller {
     nameElement.parentElement.insertBefore(input, nameElement.nextSibling)
     nameElement.style.display = "none"
     
-    // Focus and select text
+    // Focus without selecting text
     input.focus()
-    input.select()
     
     // Add event listeners
     input.addEventListener("blur", () => this.saveEdit(input))
