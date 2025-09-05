@@ -1,12 +1,8 @@
 class DailyReflectionsController < ApplicationController
-  allow_unauthenticated_access
-
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def create
-    user_email = ENV["FIRST_USER"]
-    @current_user = User.find_by(email_address: user_email)
-    @current_user ||= User.first
+    @current_user = Current.user
 
     unless @current_user
       return render json: {
