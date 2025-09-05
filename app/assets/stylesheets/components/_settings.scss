@@ -259,7 +259,6 @@
   transition: all var(--duration-fast) var(--ease-standard);
   margin-top: var(--space-md);
   letter-spacing: var(--letter-spacing-tight);
-  text-transform: uppercase;
   
   &:hover:not(:disabled) {
     background: var(--ink-primary-10);

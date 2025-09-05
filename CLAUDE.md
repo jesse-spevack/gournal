@@ -54,6 +54,14 @@ MAKE IT WORK FIRST.
   - Any text that represents user input
   - Handwritten aesthetic elements
 
+### Capitalization Rules:
+- **ALWAYS use sentence case** throughout the application
+  - Headers: "Manage habits" not "Manage Habits"
+  - Buttons: "Set up next month" not "Set Up Next Month"
+  - Labels: "Copy current habits" not "Copy Current Habits"
+  - Never use UPPERCASE for UI elements (except acronyms)
+  - Title case is reserved for proper nouns only
+
 ### Examples:
 ```scss
 // System UI - Typewriter font
