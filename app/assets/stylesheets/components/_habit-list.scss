@@ -1,0 +1,156 @@
+/* ============================================================================ */
+/* HABIT LIST - Bullet journal style habit management                           */
+/* ============================================================================ */
+
+.habit-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0;
+}
+
+.habit-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  position: relative;
+  transition: all var(--duration-fast) var(--ease-standard);
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &:hover {
+    .drag-handle {
+      opacity: 1;
+    }
+  }
+  
+  &.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+    cursor: grabbing;
+    z-index: 1000;
+  }
+  
+  &--new {
+    &:hover {
+      background: none;
+      padding: 0;
+      margin: 0 0 var(--space-sm) 0;
+    }
+  }
+}
+
+.bullet {
+  font-family: var(--font-caveat);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  opacity: 0.8;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.habit-name {
+  font-family: var(--font-caveat);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  line-height: 1.4;
+  flex: 1;
+  
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.drag-handle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-primary);
+  opacity: 0.6;
+  cursor: grab;
+  transition: all var(--duration-fast) var(--ease-standard);
+  user-select: none;
+  
+  &:hover {
+    opacity: 1;
+  }
+  
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+/* Inline editing input */
+.settings-section .habit-input,
+.settings-section input.habit-input,
+.settings-section input[data-habit-id] {
+  font-family: var(--font-caveat);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.4;
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  
+  &:focus,
+  &:active {
+    outline: none;
+    background: transparent;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+  }
+  
+  &.habit-input--inline {
+    flex: 1;
+    background: transparent;
+    background-color: transparent;
+    
+    &:focus,
+    &:active {
+      background: transparent;
+      background-color: transparent;
+    }
+  }
+  
+  &.habit-input--new {
+    background: transparent;
+    background-color: transparent;
+    
+    &:focus,
+    &:active {
+      background: transparent;
+      background-color: transparent;
+    }
+    
+    &::placeholder {
+      color: var(--ink-primary-30);
+      font-style: italic;
+    }
+  }
+}
+
+/* New habit form */
+.new-habit-form {
+  flex: 1;
+  display: flex;
+}
+
+.habit-item--new {
+  .bullet {
+    opacity: 0.4;
+  }
+}

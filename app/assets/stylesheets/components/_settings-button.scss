@@ -14,13 +14,13 @@
   font-size: var(--text-xs);
   color: var(--ink-primary);
   opacity: var(--opacity-headers);
-  text-decoration: none !important;
+  text-decoration: none;
   letter-spacing: var(--letter-spacing-wide);
   transition: opacity var(--duration-fast) var(--ease-standard);
   
   &:hover {
     opacity: 1;
-    text-decoration: none !important;
+    text-decoration: none;
   }
   
   &:active {

@@ -69,12 +69,12 @@
   --font-mono: 'Special Elite', 'Courier New', monospace; /* v1.0.3 - Typewriter aesthetic */
   --font-caveat: 'Caveat', 'Courier New', cursive;      /* v1.0.3 - Handwritten aesthetic */
   
-  /* Font Sizes */
-  --text-xs: 11px;    /* Day numbers, watermark */
+  /* Font Sizes - Standardized to --text-* pattern */
+  --text-xs: 11px;        /* Day numbers, watermark */
   --text-reflection: 12px;  /* Reflection text */
-  --text-sm: 16px;    /* Headers */
-  --font-size-small: 0.85rem;  /* Small labels */
-  --font-size-form: 14px;  /* Form inputs and buttons */
+  --text-sm: 16px;        /* Headers */
+  --text-small: 0.85rem;  /* Small labels - standardized from --font-size-small */
+  --text-form: 14px;      /* Form inputs and buttons - standardized from --font-size-form */
   
   /* Font Weights */
   --weight-normal: normal;
@@ -93,6 +93,8 @@
   --opacity-headers: 0.8;
   --opacity-checkbox: 0.85;
   --opacity-checkbox-hover: 0.95;
+  --opacity-secondary: 0.6;          /* Added - referenced in _settings.scss */
+  --opacity-disabled: 0.4;           /* Added - referenced in _settings.scss */
   
   /* ============================================ */
   /* SPACING SYSTEM                               */
@@ -136,8 +138,13 @@
   --container-max-width: 1200px;
   --container-min-height: 100vh;
   
+  /* Style Guide Component Dimensions */
+  --swatch-height: 80px;        /* Color swatch display height */
+  --swatch-width: 120px;        /* Minimum swatch container width */
+  --card-padding: 12px;          /* Standard card padding */
+  
   /* Reflection Column Spacing */
-  --space-reflection-gap: 50px;     /* Empty column space before reflection */
+  --space-reflection-large: 50px;   /* Large empty column space - renamed from duplicate --space-reflection-gap */
   
   /* Grid Pattern */
   --grid-dot-size: 1.2px;
