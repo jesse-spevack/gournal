@@ -3,14 +3,16 @@
   next_month_date = Date.current.next_month
   target_year = next_month_date.year
   target_month = next_month_date.month
-  month_name = next_month_date.strftime("%B")
+  month_name = format_month_name(next_month_date)
   x_marks = JSON.parse(random_x_marks_json)
 %>
 
 <div data-controller="month-setup" 
      data-month-setup-x-marks-value="<%= random_x_marks_json %>"
      data-month-setup-target-year-value="<%= target_year %>"
-     data-month-setup-target-month-value="<%= target_month %>">
+     data-month-setup-target-month-value="<%= target_month %>"
+     data-month-setup-default-option-value="copy"
+     data-month-setup-fallback-option-value="fresh">
   
   <%= form_with url: month_setups_path, 
                 method: :post,
@@ -26,11 +28,13 @@
     
     <div class="month-setup-options">
       
-      <div class="month-setup-option">
+      <div class="month-setup-option" 
+           data-month-setup-target="option"
+           data-option-value="copy">
         <div class="checkbox-label-container"
              data-action="click->month-setup#selectOption"
              data-option="copy">
-          <div class="checkbox-container" data-month-setup-target="copyCheckbox">
+          <div class="checkbox-container">
             <%= render "checkboxes/box_0" %>
             <% x_marks.each do |variant| %>
               <div class="checkbox-x-wrapper" data-x-variant="<%= variant %>" style="display: none;">
@@ -42,16 +46,15 @@
             Copy current habits
           </label>
         </div>
-        <p class="month-setup-description">
-          Use the same habits you have this month for <%= month_name %>
-        </p>
       </div>
       
-      <div class="month-setup-option">
+      <div class="month-setup-option"
+           data-month-setup-target="option"
+           data-option-value="fresh">
         <div class="checkbox-label-container"
              data-action="click->month-setup#selectOption"
              data-option="fresh">
-          <div class="checkbox-container" data-month-setup-target="freshCheckbox">
+          <div class="checkbox-container">
             <%= render "checkboxes/box_0" %>
             <% x_marks.each do |variant| %>
               <div class="checkbox-x-wrapper" data-x-variant="<%= variant %>" style="display: none;">
@@ -63,9 +66,6 @@
             Start fresh
           </label>
         </div>
-        <p class="month-setup-description">
-          Begin <%= month_name %> with a clean slate - add habits as needed
-        </p>
       </div>
       
     </div>

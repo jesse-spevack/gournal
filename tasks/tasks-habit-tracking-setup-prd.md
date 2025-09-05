@@ -90,6 +90,8 @@ Implementation tasks for comprehensive habit management system including setting
     - [ ] 4.12.3 Test help system: both help buttons work correctly
     - [ ] 4.12.4 Test edge cases: existing target month habits, validation errors
     - [ ] 4.12.5 Cross-browser testing of checkbox interactions
+
+- [ ] CSS Audit - It should be dead simple to identify where all visual behaviors originate. It should be dead simple to make simple, atomic changes. Excessive use of !important declarations indicates specificity issues in the CSS cascade. Consider restructuring the CSS hierarchy to avoid forcing overrides, which makes the stylesheet harder to maintain and debug.
   
 - [x] 5.0 Habit Management Flow Improvements
   - [x] 5.1 Add route for habits/new/:year_month (e.g. habits/new/2025-10)
@@ -103,8 +105,9 @@ Implementation tasks for comprehensive habit management system including setting
   - [x] 5.9 Manual test the complete flow: start fresh → habits/new → add habits → view tracker
   - [x] 5.10 **CRITICAL**: Fixed drag-and-drop functionality - resolved desktop HTML5 drag API implementation and race condition causing position updates to not persist when navigating quickly. Both mobile touch and desktop drag now work reliably.
   - [x] 5.11 **UI FIXES**: Complete drag-and-drop UI restoration - made drag handles always visible, removed habit name underlines on hover, added missing data attributes for year/month targeting, fixed test capitalization to use sentence case consistently.
-  - [x] 5.12 **WORKFLOW**: Added git workflow guidelines to CLAUDE.md - require feature branches, frequent commits, and atomic changes with ~100 line commit limit.
-  
+  - [x] 5.12 **WORKFLOW**: Added git workflow guidelines to CLAUDE.md - require feature branches, frequent commits, and atomic changes with ~100 line commit limit.  
+
+
 - [ ] 6.0 Public Profile Sharing Feature
   - [ ] 6.1 Generate migration for slug and privacy fields
   - [ ] 6.2 Update User model with slug/privacy validations

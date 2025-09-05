@@ -10,7 +10,7 @@
       
       <%# Header - using same class as habit tracker %>
       <header class="month-header">
-        <h1>Add habits for <%= Date.new(@target_year, @target_month, 1).strftime("%B %Y") %></h1>
+        <h1>Add habits for <%= format_month_year(@target_year, @target_month) %></h1>
       </header>
       
       <%# Habits management content %>

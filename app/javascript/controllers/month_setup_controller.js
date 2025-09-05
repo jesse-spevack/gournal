@@ -4,38 +4,51 @@ export default class extends Controller {
   static values = { 
     xMarks: Array,
     targetYear: Number,
-    targetMonth: Number
+    targetMonth: Number,
+    defaultOption: String,
+    fallbackOption: String
   }
   
   static targets = [
     "form",
     "strategyField",
     "submitButton",
-    "copyCheckbox",
-    "freshCheckbox"
+    "option"
   ]
 
   connect() {
     this.currentSelection = null
     this.markIndex = 0
     
-    // Default to "copy" option being selected
+    // Use default option from data attribute or fall back to first option
     this.selectDefaultOption()
   }
   
   selectDefaultOption() {
-    // Set copy as the default selection
-    this.currentSelection = 'copy'
-    this.checkOption('copy')
-    this.submitButtonTarget.disabled = false
-    this.strategyFieldTarget.value = 'copy'
+    const defaultOption = this.hasDefaultOptionValue ? this.defaultOptionValue : this.getFirstOption()
+    if (defaultOption) {
+      this.currentSelection = defaultOption
+      this.checkOption(defaultOption)
+      this.submitButtonTarget.disabled = false
+      this.strategyFieldTarget.value = defaultOption
+    }
+  }
+  
+  getFirstOption() {
+    const firstOption = this.optionTargets[0]
+    return firstOption ? firstOption.dataset.optionValue : null
+  }
+  
+  getAllOptions() {
+    return this.optionTargets.map(target => target.dataset.optionValue)
   }
 
   selectOption(event) {
     event.preventDefault()
     event.stopPropagation()
     
-    const option = event.currentTarget.dataset.option
+    const clickedElement = event.currentTarget
+    const option = clickedElement.dataset.option || clickedElement.dataset.optionValue
     const isCurrentlySelected = this.currentSelection === option
     
     if (isCurrentlySelected) {
@@ -44,12 +57,13 @@ export default class extends Controller {
       this.currentSelection = null
       this.submitButtonTarget.disabled = true
       
-      // If unchecking "copy", automatically check "fresh"
-      if (option === 'copy') {
-        this.checkOption('fresh')
-        this.currentSelection = 'fresh'
+      // Check for fallback behavior
+      const fallbackOption = clickedElement.dataset.fallbackTo || this.getFallbackForOption(option)
+      if (fallbackOption) {
+        this.checkOption(fallbackOption)
+        this.currentSelection = fallbackOption
         this.submitButtonTarget.disabled = false
-        this.strategyFieldTarget.value = 'fresh'
+        this.strategyFieldTarget.value = fallbackOption
       }
     } else {
       // Uncheck any previous selection
@@ -64,10 +78,26 @@ export default class extends Controller {
       this.strategyFieldTarget.value = option
     }
   }
+  
+  getFallbackForOption(option) {
+    // Use global fallback value if set, otherwise find next option
+    if (this.hasFallbackOptionValue && option === this.defaultOptionValue) {
+      return this.fallbackOptionValue
+    }
+    
+    // Find next option in the list
+    const options = this.getAllOptions()
+    const currentIndex = options.indexOf(option)
+    if (currentIndex >= 0 && options.length > 1) {
+      return options[(currentIndex + 1) % options.length]
+    }
+    
+    return null
+  }
 
   checkOption(option) {
-    // Get the checkbox container for this option
-    const checkboxContainer = option === 'copy' ? this.copyCheckboxTarget : this.freshCheckboxTarget
+    const checkboxContainer = this.getCheckboxContainerForOption(option)
+    if (!checkboxContainer) return
     
     // Get next X mark variant from the randomized array
     const xVariant = this.xMarksValue[this.markIndex]
@@ -86,17 +116,29 @@ export default class extends Controller {
   }
 
   uncheckOption(option) {
-    // Get the checkbox container for this option
-    const checkboxContainer = option === 'copy' ? this.copyCheckboxTarget : this.freshCheckboxTarget
+    const checkboxContainer = this.getCheckboxContainerForOption(option)
+    if (!checkboxContainer) return
     
     // Hide all X marks
     checkboxContainer.querySelectorAll('.checkbox-x-wrapper').forEach(wrapper => {
       wrapper.style.display = 'none'
     })
   }
-
-  getCheckboxContainer(option) {
-    return this.element.querySelector(`[data-option="${option}"]`)
+  
+  getCheckboxContainerForOption(option) {
+    // Find the option target that matches this option value
+    const optionElement = this.optionTargets.find(target => 
+      target.dataset.optionValue === option || target.dataset.option === option
+    )
+    
+    if (optionElement) {
+      // Find checkbox container within this option element
+      return optionElement.querySelector('.checkbox-container')
+    }
+    
+    // Fallback to data-option selector
+    const element = this.element.querySelector(`[data-option="${option}"]`)
+    return element ? element.querySelector('.checkbox-container') : null
   }
 
   handleSubmit(event) {

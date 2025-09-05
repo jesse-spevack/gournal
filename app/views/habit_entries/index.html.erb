@@ -57,7 +57,7 @@
                   data-reflection-editor-date-value="<%= reflection_date.iso8601 %>"
                   data-reflection-editor-user-id-value="<%= @tracker_data.user&.id %>"
                   data-action="input->reflection-editor#onInput blur->reflection-editor#onBlur"
-                  aria-label="Daily reflection for <%= reflection_date.strftime('%B %d, %Y') %>"
+                  aria-label="Daily reflection for <%= format_full_date(reflection_date) %>"
                   role="textbox"
                   tabindex="0"
                   data-placeholder=""><%= reflection&.content %></div>
