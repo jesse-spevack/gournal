@@ -47,8 +47,8 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # Month setup section should be visible since user has no habits in next month yet
     assert_select ".settings-section.month-setup", count: 1
-    # Check for dynamic month setup title (should contain "Set up")
-    assert_select "h2.settings-section-title", text: /Set up \w+ \d{4}/
+    # Check for month setup title
+    assert_select "h2.settings-section-title", text: "Set up next month"
   end
 
   test "should show back button when authenticated" do

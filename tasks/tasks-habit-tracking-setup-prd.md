@@ -45,19 +45,19 @@ Implementation tasks for comprehensive habit management system including setting
   - [x] 3.7 Write tests for reordering (HabitPositionUpdater service tests)
   - [x] 3.8 Manual test drag-and-drop on mobile touch
   
-- [x] 4.0 "Set Up Next Month" Feature
+- [ ] 4.0 "Set Up Next Month" Feature *(Backend complete, UI needs implementation)*
   - [x] 4.1 Create HabitCopyService with self.call pattern
-  - [x] 4.2 Generate MonthSetupsController
-  - [x] 4.3 Add routes for month setup actions
-  - [x] 4.4 Add "Set up next month" section to settings
-  - [x] 4.5 Create modal/dropdown with "Copy" and "Start fresh" options
+  - [ ] 4.2 Generate MonthSetupsController *(Started but not complete)*
+  - [ ] 4.3 Add routes for month setup actions
+  - [x] 4.4 Add "Set up next month" section to settings *(Placeholder exists)*
+  - [ ] 4.5 Create modal/dropdown with "Copy" and "Start fresh" options
   - [x] 4.6 Implement copy_from_current using HabitCopyService
-  - [x] 4.7 Implement start_fresh action (implemented in MonthSetupService)
-  - [x] 4.8 Add future month validation
-  - [x] 4.9 Create month_setup Stimulus controller (already exists and working)
-  - [x] 4.10 Style month setup UI (completed with checkbox styling and layout)
-  - [x] 4.11 Write tests for service and controller (MonthSetupService fully tested)
-  - [x] 4.12 Manual test month setup flow
+  - [ ] 4.7 Implement start_fresh action (implemented in MonthSetupService)
+  - [ ] 4.8 Add future month validation
+  - [ ] 4.9 Create month_setup Stimulus controller
+  - [ ] 4.10 Style month setup UI
+  - [x] 4.11 Write tests for service and controller (HabitCopyService tested)
+  - [ ] 4.12 Manual test month setup flow
   
 - [x] 5.0 Habit Management Flow Improvements
   - [x] 5.1 Add route for habits/new/:year_month (e.g. habits/new/2025-10)
@@ -70,6 +70,8 @@ Implementation tasks for comprehensive habit management system including setting
   - [x] 5.8 Write tests for new routing and redirect logic
   - [x] 5.9 Manual test the complete flow: start fresh → habits/new → add habits → view tracker
   - [x] 5.10 **CRITICAL**: Fixed drag-and-drop functionality - resolved desktop HTML5 drag API implementation and race condition causing position updates to not persist when navigating quickly. Both mobile touch and desktop drag now work reliably.
+  - [x] 5.11 **UI FIXES**: Complete drag-and-drop UI restoration - made drag handles always visible, removed habit name underlines on hover, added missing data attributes for year/month targeting, fixed test capitalization to use sentence case consistently.
+  - [x] 5.12 **WORKFLOW**: Added git workflow guidelines to CLAUDE.md - require feature branches, frequent commits, and atomic changes with ~100 line commit limit.
   
 - [ ] 6.0 Public Profile Sharing Feature
   - [ ] 6.1 Generate migration for slug and privacy fields
