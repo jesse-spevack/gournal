@@ -44,7 +44,7 @@
 
 .bullet {
   font-family: var(--font-caveat);
-  font-size: 20px;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--ink-primary);
   opacity: 0.8;
@@ -54,7 +54,7 @@
 
 .habit-name {
   font-family: var(--font-caveat);
-  font-size: 18px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--ink-primary);
   cursor: pointer;
@@ -69,7 +69,7 @@
 
 .drag-handle {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-xxs);
   color: var(--ink-primary);
   opacity: 0.6;
   cursor: grab;
@@ -90,7 +90,7 @@
 input.habit-input,
 input[data-habit-id] {
   font-family: var(--font-caveat);
-  font-size: 18px;
+  font-size: var(--text-md);
   font-weight: 500;
   color: var(--ink-primary);
   background: transparent;
