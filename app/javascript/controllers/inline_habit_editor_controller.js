@@ -3,6 +3,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["name", "newInput", "newForm"]
 
+  // Constants for drag and drop behavior
+  static DRAG_ENABLE_DELAY = 10 // milliseconds
+
   connect() {
     this.editingHabitId = null
     this.originalName = null
@@ -29,7 +32,7 @@ export default class extends Controller {
             // Temporarily disable dragging if not starting from drag handle
             item.draggable = false
             // Re-enable dragging after a short delay
-            setTimeout(() => { item.draggable = true }, 10)
+            setTimeout(() => { item.draggable = true }, this.constructor.DRAG_ENABLE_DELAY)
           }
         })
         
@@ -83,10 +86,7 @@ export default class extends Controller {
 
   // Touch event handlers for mobile support
   handleTouchStart(event) {
-    // Only prevent default if the event is cancelable
-    if (event.cancelable) {
-      event.preventDefault()
-    }
+    this.preventDefaultIfCancelable(event)
     
     this.draggedElement = event.target.closest('.habit-item')
     this.draggedElement.classList.add('dragging')
@@ -97,9 +97,7 @@ export default class extends Controller {
   }
 
   handleTouchMove(event) {
-    if (event.cancelable) {
-      event.preventDefault()
-    }
+    this.preventDefaultIfCancelable(event)
     
     if (!this.draggedElement) return
     
@@ -121,9 +119,7 @@ export default class extends Controller {
   }
 
   async handleTouchEnd(event) {
-    if (event.cancelable) {
-      event.preventDefault()
-    }
+    this.preventDefaultIfCancelable(event)
     
     if (!this.draggedElement) return
     
@@ -152,6 +148,13 @@ export default class extends Controller {
         return closest
       }
     }, { offset: Number.NEGATIVE_INFINITY }).element
+  }
+
+  // Helper method to prevent default only if event is cancelable
+  preventDefaultIfCancelable(event) {
+    if (event.cancelable) {
+      event.preventDefault()
+    }
   }
 
   async updateHabitOrder() {
