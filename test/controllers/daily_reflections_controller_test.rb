@@ -9,12 +9,11 @@ class DailyReflectionsControllerTest < ActionDispatch::IntegrationTest
       content: "Test reflection"
     )
 
-    # Mock ENV variable for user
-    ENV["FIRST_USER"] = @user.email_address
-  end
-
-  teardown do
-    ENV.delete("FIRST_USER")
+    # Sign in the user
+    post session_url, params: {
+      email_address: @user.email_address,
+      password: "password"  # Fixture password
+    }
   end
 
   test "create should create new reflection with valid params" do
