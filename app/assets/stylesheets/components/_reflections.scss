@@ -23,7 +23,7 @@
 .reflection-input {
   /* Typography - Handwritten Font */
   font-family: var(--font-caveat);
-  font-size: 18px; /* Slightly larger for Caveat readability */
+  font-size: var(--text-md); /* User content size for Caveat readability */
   font-weight: 500;
   letter-spacing: var(--letter-spacing-normal);
   line-height: 1.4;
@@ -90,7 +90,7 @@
 /* Mobile-specific adjustments */
 @media (max-width: 479px) {
   .reflection-input {
-    font-size: 14px; /* Slightly smaller on mobile */
+    font-size: var(--text-form); /* Slightly smaller on mobile */
     padding: var(--space-xs) var(--space-sm);
   }
   
