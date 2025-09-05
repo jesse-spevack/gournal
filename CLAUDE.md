@@ -63,6 +63,42 @@ end
 
 This allows for cleaner usage: `MyService.call(param1: value1, param2: value2)` instead of `MyService.new(param1: value1, param2: value2).call`.
 
+## Git Workflow Guidelines
+
+**NEVER do significant feature work directly on main** - Always work on feature branches:
+- Create feature branches for all work: `git checkout -b feature/feature-name`
+- Use descriptive branch names that clearly indicate the work being done
+- Keep main branch stable and deployable at all times
+
+**Commit frequently and atomically**:
+- Commit after completing each discrete task or subtask
+- If your changeset exceeds ~100 lines, strongly consider committing
+- Each commit should represent a single, complete unit of work
+- Write clear, descriptive commit messages that explain the "why"
+
+**Branch naming conventions**:
+- `feature/feature-name` - New features
+- `fix/issue-description` - Bug fixes  
+- `refactor/component-name` - Code refactoring
+- `chore/task-description` - Maintenance tasks
+
+**Commit message format**:
+```
+type: brief description of change
+
+Longer explanation if needed explaining the why and what this
+enables or fixes.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+**Integration workflow**:
+- Create pull requests for all feature branches
+- Review changes before merging to main
+- Delete feature branches after successful merge
+
 ## RESTful Routing
 
 **ALWAYS use RESTful routing patterns** - Controllers should follow REST conventions:

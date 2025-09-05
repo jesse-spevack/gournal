@@ -39,13 +39,16 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # Check for the three main sections
     assert_select ".settings-section.habits-management", count: 1
-    assert_select ".settings-section.month-setup", count: 1
     assert_select ".settings-section.profile-sharing", count: 1
 
     # Check section titles
-    assert_select "h2.settings-section-title", text: "Manage Habits"
-    assert_select "h2.settings-section-title", text: "Set Up Next Month"
+    assert_select "h2.settings-section-title", text: "Manage habits"
     assert_select "h2.settings-section-title", text: "Profile & Sharing"
+
+    # Month setup section should be visible since user has no habits in next month yet
+    assert_select ".settings-section.month-setup", count: 1
+    # Check for month setup title
+    assert_select "h2.settings-section-title", text: "Set up next month"
   end
 
   test "should show back button when authenticated" do

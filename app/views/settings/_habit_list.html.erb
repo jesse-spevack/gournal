@@ -1,5 +1,5 @@
 <%# Bullet journal style habit list %>
-<div data-controller="inline-habit-editor">
+<div data-controller="inline-habit-editor" data-target-year="<%= Date.current.year %>" data-target-month="<%= Date.current.month %>">
   <ul class="habit-list">
     <% @habits.each do |habit| %>
       <li class="habit-item" data-habit-id="<%= habit.id %>">

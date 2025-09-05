@@ -6,6 +6,17 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
       email_address: "test@example.com",
       password: "secure_password123"
     )
+
+    # Create a habit for the current month so user doesn't get redirected to habits setup
+    current_date = Date.current
+    @user.habits.create!(
+      name: "Test Habit",
+      month: current_date.month,
+      year: current_date.year,
+      position: 1,
+      active: true,
+      check_type: "x_marks"
+    )
   end
 
   test "should get new" do
