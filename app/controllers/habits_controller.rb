@@ -11,12 +11,43 @@ class HabitsController < ApplicationController
   end
 
   def create
-    result = HabitCreator.call(user: Current.user, name: params[:name])
-
-    if result[:success]
-      redirect_to settings_path
+    # Extract year and month from year_month parameter if available
+    year_month = params[:year_month]
+    target_year, target_month = if year_month.present?
+                                  year_month.split("-").map(&:to_i)
     else
-      redirect_to settings_path
+                                  [ nil, nil ]
+    end
+
+    result = HabitCreator.call(
+      user: Current.user,
+      name: params[:name],
+      year: target_year,
+      month: target_month
+    )
+
+    respond_to do |format|
+      if result[:success]
+        format.html do
+          # Redirect back to the habit creation page to stay in the flow
+          if year_month.present?
+            redirect_to new_habit_path(year_month: year_month)
+          else
+            redirect_to settings_path
+          end
+        end
+        format.json { render json: { success: true, habit: result[:habit] } }
+      else
+        format.html do
+          # Redirect back to the habit creation page to stay in the flow
+          if year_month.present?
+            redirect_to new_habit_path(year_month: year_month)
+          else
+            redirect_to settings_path
+          end
+        end
+        format.json { render json: { success: false, errors: result[:errors] }, status: :unprocessable_entity }
+      end
     end
   end
 

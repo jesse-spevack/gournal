@@ -1,31 +1,34 @@
 class HabitCreator
-  def self.call(user:, name:)
-    new(user: user, name: name).call
+  def self.call(user:, name:, year: nil, month: nil)
+    new(user: user, name: name, year: year, month: month).call
   end
 
-  def initialize(user:, name:)
+  def initialize(user:, name:, year: nil, month: nil)
     @user = user
     @name = name
+    @target_date = if year && month
+                     Date.new(year.to_i, month.to_i, 1)
+    else
+                     Date.current
+    end
   end
 
   def call
-    current_date = Date.current
-
     max_position = @user.habits
-                        .where(year: current_date.year, month: current_date.month)
+                        .where(year: @target_date.year, month: @target_date.month)
                         .maximum(:position) || 0
 
     habit = @user.habits.build(
       name: @name,
-      year: current_date.year,
-      month: current_date.month,
+      year: @target_date.year,
+      month: @target_date.month,
       position: max_position + 1,
       check_type: :x_marks,
       active: true
     )
 
     if habit.save
-      create_habit_entries(habit, current_date)
+      create_habit_entries(habit, @target_date)
       { success: true, habit: habit }
     else
       { success: false, errors: habit.errors.full_messages }
@@ -34,8 +37,8 @@ class HabitCreator
 
   private
 
-  def create_habit_entries(habit, current_date)
-    days_in_month = Date.new(current_date.year, current_date.month, -1).day
+  def create_habit_entries(habit, target_date)
+    days_in_month = Date.new(target_date.year, target_date.month, -1).day
     now = Time.current
 
     habit_entries_data = (1..days_in_month).map do |day|
