@@ -44,14 +44,8 @@
   font-size: var(--text-md);
   font-weight: 500;
   color: var(--ink-primary);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
   line-height: 1.4;
   flex: 1;
-  
-  &:hover {
-    opacity: 0.7;
-  }
 }
 
 /* Inline editing input */

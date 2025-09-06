@@ -16,7 +16,7 @@
   - [x] 2.4 Implement backdrop element for modal overlay
   - [x] 2.5 Add data attributes to track selected habit
   
-- [ ] 3.0 Implement interaction triggers
+- [x] 3.0 Implement interaction triggers
   - [x] 3.1 Add long-press detection for mobile (touch events with 500ms threshold)
   - [x] 3.2 Add right-click detection for desktop (contextmenu event)
   - [x] 3.3 Prevent default browser context menu
@@ -24,11 +24,11 @@
   - [x] 3.5 Position menu appropriately (bottom sheet mobile, near cursor desktop)
   
 - [ ] 4.0 Wire up context menu actions
-  - [ ] 4.1 Implement "Edit Name" action to trigger inline edit mode
-  - [ ] 4.2 Implement "Move Up" action using existing position update endpoint
-  - [ ] 4.3 Implement "Move Down" action using existing position update endpoint  
-  - [ ] 4.4 Implement "Delete Habit" action with immediate deletion
-  - [ ] 4.5 Implement "Cancel" action and backdrop tap to close menu
+  - [x] 4.1 Implement "Edit Name" action to trigger inline edit mode
+  - [x] 4.2 Implement "Move Up" action using existing position update endpoint
+  - [x] 4.3 Implement "Move Down" action using existing position update endpoint  
+  - [x] 4.4 Implement "Delete Habit" action with immediate deletion
+  - [x] 4.5 Implement "Cancel" action and backdrop tap to close menu
   
 - [ ] 5.0 Style context menu for mobile and desktop
   - [ ] 5.1 Create new _context-menu.scss component file

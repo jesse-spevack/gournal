@@ -34,6 +34,9 @@ export default class extends Controller {
 
   showMenu() {
     if (this.hasMenuTarget && this.hasBackdropTarget) {
+      // Use display style for now until CSS is implemented
+      this.menuTarget.style.display = "block"
+      this.backdropTarget.style.display = "block"
       this.menuTarget.classList.add("context-menu--visible")
       this.backdropTarget.classList.add("context-menu-backdrop--visible")
       this.menuVisible = true
@@ -50,6 +53,9 @@ export default class extends Controller {
 
   hideMenu() {
     if (this.hasMenuTarget && this.hasBackdropTarget) {
+      // Use display style for now until CSS is implemented
+      this.menuTarget.style.display = "none"
+      this.backdropTarget.style.display = "none"
       this.menuTarget.classList.remove("context-menu--visible")
       this.backdropTarget.classList.remove("context-menu-backdrop--visible")
       this.menuVisible = false
@@ -99,10 +105,14 @@ export default class extends Controller {
   positionMenuForMobile() {
     if (!this.hasMenuTarget) return
     
-    // Reset desktop positioning
+    // Position as bottom sheet for mobile
     const menu = this.menuTarget
-    menu.style.left = ""
+    menu.style.left = "20px"
+    menu.style.right = "20px"
+    menu.style.bottom = "20px"
     menu.style.top = ""
+    menu.style.width = "auto"
+    menu.style.borderRadius = "12px"
   }
 
   isDesktop() {
@@ -123,10 +133,7 @@ export default class extends Controller {
   }
 
   handleTouchStart(event) {
-    // Don't interfere with inline editing
-    if (event.target.matches('[data-inline-habit-editor-target="name"]')) {
-      return
-    }
+    // No conflicts to worry about now that inline editing is removed
     
     const habitItem = event.currentTarget
     const habitId = parseInt(habitItem.dataset.habitId)
@@ -196,11 +203,6 @@ export default class extends Controller {
     // Prevent default browser context menu
     event.preventDefault()
     
-    // Don't interfere with inline editing
-    if (event.target.matches('[data-inline-habit-editor-target="name"]')) {
-      return
-    }
-    
     const habitItem = event.currentTarget
     const habitId = parseInt(habitItem.dataset.habitId)
     const habitName = habitItem.dataset.habitName
@@ -218,16 +220,52 @@ export default class extends Controller {
   editName() {
     if (!this.selectedHabitIdValue) return
     
-    // Find the habit name element and trigger inline edit
-    const habitItem = document.querySelector(`[data-habit-id="${this.selectedHabitIdValue}"]`)
-    if (habitItem) {
-      const nameElement = habitItem.querySelector('[data-inline-habit-editor-target="name"]')
-      if (nameElement) {
-        nameElement.click()
-      }
+    // Use a simple prompt for now - in a real app you might want a modal
+    const currentName = this.selectedHabitNameValue || ""
+    const newName = prompt("Edit habit name:", currentName)
+    
+    if (newName && newName.trim() !== "" && newName.trim() !== currentName) {
+      this.updateHabitName(this.selectedHabitIdValue, newName.trim())
     }
     
     this.hideMenu()
+  }
+
+  async updateHabitName(habitId, newName) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+    
+    try {
+      const response = await fetch(`/habits/${habitId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          habit: { name: newName }
+        })
+      })
+      
+      if (response.ok) {
+        // Update the DOM
+        const habitItem = document.querySelector(`[data-habit-id="${habitId}"]`)
+        if (habitItem) {
+          const nameElement = habitItem.querySelector('.habit-name')
+          if (nameElement) {
+            nameElement.textContent = newName
+          }
+          // Update the data attribute too
+          habitItem.dataset.habitName = newName
+        }
+      } else {
+        console.error('Failed to update habit name:', response.statusText)
+        alert('Failed to update habit name. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error updating habit name:', error)
+      alert('Failed to update habit name. Please try again.')
+    }
   }
 
   moveUp() {
