@@ -230,17 +230,22 @@ export default class extends Controller {
     const habitItem = this.element.querySelector(`[data-habit-id="${this.selectedHabitIdValue}"]`)
     const habitNameElement = habitItem?.querySelector('.habit-name')
     
-    if (!habitNameElement) return
+    if (!habitNameElement || !habitItem) return
     
-    this.startInlineEdit(habitNameElement)
+    // Store the habit ID from the DOM element to ensure it's correct
+    const habitId = parseInt(habitItem.dataset.habitId)
+    if (!habitId || isNaN(habitId)) return
+    
+    this.startInlineEdit(habitNameElement, habitId)
     this.hideMenu()
   }
 
-  startInlineEdit(habitNameElement) {
-    // Store original name for cancellation
+  startInlineEdit(habitNameElement, habitId) {
+    // Store editing state
     const originalName = habitNameElement.textContent.trim()
     this.originalHabitName = originalName
     this.editingElement = habitNameElement
+    this.editingHabitId = habitId
     
     // Make element editable
     habitNameElement.contentEditable = true
@@ -282,13 +287,13 @@ export default class extends Controller {
   }
 
   saveEdit() {
-    if (!this.editingElement) return
+    if (!this.editingElement || !this.editingHabitId) return
     
     const newName = this.editingElement.textContent.trim()
     const originalName = this.originalHabitName
     
     if (newName && newName !== originalName) {
-      this.updateHabitName(this.selectedHabitIdValue, newName)
+      this.updateHabitName(this.editingHabitId, newName)
     }
     
     this.finishEdit()
@@ -305,20 +310,30 @@ export default class extends Controller {
   finishEdit() {
     if (!this.editingElement) return
     
-    // Remove editing state
-    this.editingElement.contentEditable = false
-    this.editingElement.classList.remove('habit-name--editing')
-    this.editingElement.blur()
+    // Store reference before cleanup to avoid race conditions
+    const element = this.editingElement
+    const keydownHandler = this.boundKeydownHandler
+    const blurHandler = this.boundBlurHandler
     
-    // Remove event listeners
-    this.editingElement.removeEventListener('keydown', this.boundKeydownHandler)
-    this.editingElement.removeEventListener('blur', this.boundBlurHandler)
-    
-    // Clean up
+    // Clean up state first to prevent re-entry
     this.editingElement = null
     this.originalHabitName = null
+    this.editingHabitId = null
     this.boundKeydownHandler = null
     this.boundBlurHandler = null
+    
+    // Remove editing state from DOM
+    element.contentEditable = false
+    element.classList.remove('habit-name--editing')
+    element.blur()
+    
+    // Remove event listeners
+    if (keydownHandler) {
+      element.removeEventListener('keydown', keydownHandler)
+    }
+    if (blurHandler) {
+      element.removeEventListener('blur', blurHandler)
+    }
   }
 
   async updateHabitName(habitId, newName) {
