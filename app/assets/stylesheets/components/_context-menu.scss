@@ -34,7 +34,7 @@
     0 8px 32px var(--shadow-subtle);
   min-width: 180px;
   font-family: var(--font-mono);
-  font-size: var(--text-form);
+  font-size: var(--text-xs);
   
   /* Hidden by default */
   opacity: 0;
@@ -132,7 +132,7 @@
 @media (max-width: 767px) {
   .context-menu__item {
     padding: 16px 20px;
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     min-height: 48px; /* Ensure proper touch target size */
     display: flex;
     align-items: center;

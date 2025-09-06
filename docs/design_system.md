@@ -98,10 +98,16 @@ Soft shadows that suggest paper thickness and natural lighting:
 ### Font Sizes & Hierarchy
 
 ```css
---text-xs: 11px          /* Day numbers, watermarks, fine print */
+--text-xs: 11px          /* STANDARD UI SIZE - All typewriter interface text */
 --text-reflection: 12px  /* Reflection text, captions */
 --text-sm: 16px          /* Headers, emphasis text */
 ```
+
+**Standard Typewriter UI Font Size**
+- `--text-xs` (11px) is the **default size for all typewriter UI elements**
+- Used for: headers, labels, buttons, settings, context menus, navigation
+- Creates consistent visual hierarchy across all system-generated content
+- Matches the "Settings" header size throughout the application
 
 **Size Strategy**
 - Limited scale maintains cohesion

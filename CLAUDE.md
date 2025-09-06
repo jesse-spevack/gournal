@@ -43,10 +43,11 @@ MAKE IT WORK FIRST.
 ### Font Rules:
 - **Typewriter Font (var(--font-mono))**: System-generated UI elements
   - Labels, buttons, headers, navigation
-  - Settings options, form labels
+  - Settings options, form labels, context menus
   - Help text, instructions
   - Any static text that guides the user
   - System messages and prompts
+  - **Standard size: var(--text-xs) (11px)** for all typewriter UI elements
 
 - **Script Font (var(--font-caveat))**: User-generated content
   - Habit names (user typed)
@@ -64,10 +65,19 @@ MAKE IT WORK FIRST.
 
 ### Examples:
 ```scss
-// System UI - Typewriter font
-.settings-section-title { font-family: var(--font-mono); }
-.month-setup-label { font-family: var(--font-mono); }
-.month-setup-submit { font-family: var(--font-mono); }
+// System UI - Typewriter font with standard size
+.settings-section-title { 
+  font-family: var(--font-mono); 
+  font-size: var(--text-xs); 
+}
+.month-setup-label { 
+  font-family: var(--font-mono); 
+  font-size: var(--text-xs); 
+}
+.context-menu { 
+  font-family: var(--font-mono); 
+  font-size: var(--text-xs); 
+}
 
 // User content - Script font  
 .habit-name { font-family: var(--font-caveat); }
