@@ -1,8 +1,13 @@
 <%# Bullet journal style habit list %>
-<div data-controller="inline-habit-editor" data-target-year="<%= @target_year || Date.current.year %>" data-target-month="<%= @target_month || Date.current.month %>">
+<div data-controller="inline-habit-editor context-menu" 
+     data-target-year="<%= @target_year || Date.current.year %>" 
+     data-target-month="<%= @target_month || Date.current.month %>">
   <ul class="habit-list">
     <% @habits.each do |habit| %>
-      <li class="habit-item" data-habit-id="<%= habit.id %>">
+      <li class="habit-item" 
+          data-habit-id="<%= habit.id %>"
+          data-habit-name="<%= habit.name %>"
+          data-context-menu-target="habitItem">
         <span class="bullet">•</span>
         <span class="habit-name" 
               data-inline-habit-editor-target="name"
@@ -35,5 +40,26 @@
                             action: "blur->inline-habit-editor#createHabit keydown.esc->inline-habit-editor#cancelNew"
                           } %>
     <% end %>
+  </div>
+  
+  <%# Context menu structure %>
+  <div class="context-menu-backdrop" data-context-menu-target="backdrop" data-action="click->context-menu#hideMenu"></div>
+  
+  <div class="context-menu" data-context-menu-target="menu">
+    <div class="context-menu__item" data-action="click->context-menu#editName">
+      Edit name
+    </div>
+    <div class="context-menu__item" data-action="click->context-menu#moveUp">
+      Move up
+    </div>
+    <div class="context-menu__item" data-action="click->context-menu#moveDown">
+      Move down
+    </div>
+    <div class="context-menu__item context-menu__item--danger" data-action="click->context-menu#deleteHabit">
+      Delete habit
+    </div>
+    <div class="context-menu__item context-menu__item--cancel" data-action="click->context-menu#hideMenu">
+      Cancel
+    </div>
   </div>
 </div>

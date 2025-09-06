@@ -2,7 +2,7 @@
 
 ## Tasks
 
-- [ ] 1.0 Remove drag-and-drop UI elements
+- [x] 1.0 Remove drag-and-drop UI elements
   - [x] 1.1 Remove drag handle elements from habit list view (_habit_list.html.erb)
   - [x] 1.2 Remove drag-and-drop JavaScript functionality from inline_habit_editor_controller.js
   - [x] 1.3 Clean up CSS by removing drag handle styles and drag states from _habit-list.scss
@@ -10,11 +10,11 @@
   - [x] 1.5 Test that habit list displays cleanly without drag handles
   
 - [ ] 2.0 Create context menu component
-  - [ ] 2.1 Create new Stimulus controller context_menu_controller.js
-  - [ ] 2.2 Add context menu HTML structure to _habit_list.html.erb
-  - [ ] 2.3 Define menu actions array (Edit Name, Move Up, Move Down, Delete Habit, Cancel)
-  - [ ] 2.4 Implement backdrop element for modal overlay
-  - [ ] 2.5 Add data attributes to track selected habit
+  - [x] 2.1 Create new Stimulus controller context_menu_controller.js
+  - [x] 2.2 Add context menu HTML structure to _habit_list.html.erb
+  - [x] 2.3 Define menu actions array (Edit Name, Move Up, Move Down, Delete Habit, Cancel)
+  - [x] 2.4 Implement backdrop element for modal overlay
+  - [x] 2.5 Add data attributes to track selected habit
   
 - [ ] 3.0 Implement interaction triggers
   - [ ] 3.1 Add long-press detection for mobile (touch events with 500ms threshold)
