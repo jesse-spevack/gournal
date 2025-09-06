@@ -10,12 +10,11 @@
               data-habit-id="<%= habit.id %>">
           <%= habit.name %>
         </span>
-        <span class="drag-handle">⋮⋮</span>
       </li>
     <% end %>
   </ul>
   
-  <%# New habit form - separated from the draggable list %>
+  <%# New habit form %>
   <div class="habit-item habit-item--new">
     <span class="bullet">•</span>
     <%= form_with url: habits_path, 

@@ -20,19 +20,6 @@
     margin-bottom: 0;
   }
   
-  &:hover {
-    .drag-handle {
-      opacity: 1;
-    }
-  }
-  
-  &.dragging {
-    opacity: 0.5;
-    transform: rotate(2deg);
-    cursor: grabbing;
-    z-index: 1000;
-  }
-  
   &--new {
     &:hover {
       background: none;
@@ -64,24 +51,6 @@
   
   &:hover {
     opacity: 0.7;
-  }
-}
-
-.drag-handle {
-  font-family: var(--font-mono);
-  font-size: var(--text-xxs);
-  color: var(--ink-primary);
-  opacity: 0.6;
-  cursor: grab;
-  transition: all var(--duration-fast) var(--ease-standard);
-  user-select: none;
-  
-  &:hover {
-    opacity: 1;
-  }
-  
-  &:active {
-    cursor: grabbing;
   }
 }
 
