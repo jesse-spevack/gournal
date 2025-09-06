@@ -9,7 +9,7 @@
   - [x] 1.4 Remove draggable attributes and cursor styles
   - [x] 1.5 Test that habit list displays cleanly without drag handles
   
-- [ ] 2.0 Create context menu component
+- [x] 2.0 Create context menu component
   - [x] 2.1 Create new Stimulus controller context_menu_controller.js
   - [x] 2.2 Add context menu HTML structure to _habit_list.html.erb
   - [x] 2.3 Define menu actions array (Edit Name, Move Up, Move Down, Delete Habit, Cancel)
@@ -17,11 +17,11 @@
   - [x] 2.5 Add data attributes to track selected habit
   
 - [ ] 3.0 Implement interaction triggers
-  - [ ] 3.1 Add long-press detection for mobile (touch events with 500ms threshold)
-  - [ ] 3.2 Add right-click detection for desktop (contextmenu event)
-  - [ ] 3.3 Prevent default browser context menu
-  - [ ] 3.4 Store reference to selected habit when menu triggered
-  - [ ] 3.5 Position menu appropriately (bottom sheet mobile, near cursor desktop)
+  - [x] 3.1 Add long-press detection for mobile (touch events with 500ms threshold)
+  - [x] 3.2 Add right-click detection for desktop (contextmenu event)
+  - [x] 3.3 Prevent default browser context menu
+  - [x] 3.4 Store reference to selected habit when menu triggered
+  - [x] 3.5 Position menu appropriately (bottom sheet mobile, near cursor desktop)
   
 - [ ] 4.0 Wire up context menu actions
   - [ ] 4.1 Implement "Edit Name" action to trigger inline edit mode

@@ -13,6 +13,12 @@ export default class extends Controller {
     this.longPressThreshold = 500 // milliseconds
     this.touchStartPosition = null
     this.menuVisible = false
+    
+    // Bind touch events to habit items
+    this.bindTouchEvents()
+    
+    // Bind right-click event for desktop
+    this.bindContextMenuEvents()
   }
 
   disconnect() {
@@ -101,6 +107,111 @@ export default class extends Controller {
 
   isDesktop() {
     return window.matchMedia("(hover: hover) and (pointer: fine)").matches
+  }
+
+  // Touch event handling for mobile
+  bindTouchEvents() {
+    if (!this.hasHabitItemTarget) return
+    
+    this.habitItemTargets.forEach(item => {
+      // Touch events for long-press detection
+      item.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false })
+      item.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false })
+      item.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: false })
+      item.addEventListener('touchcancel', this.handleTouchCancel.bind(this), { passive: false })
+    })
+  }
+
+  handleTouchStart(event) {
+    // Don't interfere with inline editing
+    if (event.target.matches('[data-inline-habit-editor-target="name"]')) {
+      return
+    }
+    
+    const habitItem = event.currentTarget
+    const habitId = parseInt(habitItem.dataset.habitId)
+    const habitName = habitItem.dataset.habitName
+    
+    // Store touch position to detect movement
+    this.touchStartPosition = {
+      x: event.touches[0].clientX,
+      y: event.touches[0].clientY
+    }
+    
+    // Start long press timer
+    this.longPressTimer = setTimeout(() => {
+      // Trigger haptic feedback if available
+      if (navigator.vibrate) {
+        navigator.vibrate(10)
+      }
+      
+      // Set selected habit
+      this.selectedHabitIdValue = habitId
+      this.selectedHabitNameValue = habitName
+      
+      // Position and show menu for mobile
+      this.positionMenuForMobile()
+      this.showMenu()
+      
+      // Clear the timer
+      this.longPressTimer = null
+    }, this.longPressThreshold)
+  }
+
+  handleTouchMove(event) {
+    if (!this.longPressTimer || !this.touchStartPosition) return
+    
+    // Calculate movement distance
+    const moveThreshold = 10 // pixels
+    const deltaX = Math.abs(event.touches[0].clientX - this.touchStartPosition.x)
+    const deltaY = Math.abs(event.touches[0].clientY - this.touchStartPosition.y)
+    
+    // Cancel long press if user moved finger too much
+    if (deltaX > moveThreshold || deltaY > moveThreshold) {
+      this.clearLongPressTimer()
+      this.touchStartPosition = null
+    }
+  }
+
+  handleTouchEnd(event) {
+    this.clearLongPressTimer()
+    this.touchStartPosition = null
+  }
+
+  handleTouchCancel(event) {
+    this.clearLongPressTimer()
+    this.touchStartPosition = null
+  }
+
+  // Right-click handling for desktop
+  bindContextMenuEvents() {
+    if (!this.hasHabitItemTarget) return
+    
+    this.habitItemTargets.forEach(item => {
+      item.addEventListener('contextmenu', this.handleContextMenu.bind(this))
+    })
+  }
+
+  handleContextMenu(event) {
+    // Prevent default browser context menu
+    event.preventDefault()
+    
+    // Don't interfere with inline editing
+    if (event.target.matches('[data-inline-habit-editor-target="name"]')) {
+      return
+    }
+    
+    const habitItem = event.currentTarget
+    const habitId = parseInt(habitItem.dataset.habitId)
+    const habitName = habitItem.dataset.habitName
+    
+    // Set selected habit
+    this.selectedHabitIdValue = habitId
+    this.selectedHabitNameValue = habitName
+    
+    // Position menu near cursor for desktop
+    this.positionMenuForDesktop(event.clientX, event.clientY)
+    this.showMenu()
   }
 
   // Menu action methods
