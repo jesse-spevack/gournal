@@ -3,10 +3,12 @@
   <div class="container">
     <div class="dot-grid-overlay">
       
-      <%# Back button in top-right %>
-      <div class="settings-link-container">
-        <%= link_to "<", root_path, class: "settings-link" %>
-      </div>
+      <%# Back button in top-right - only show if user has habits %>
+      <% if @habits.any? %>
+        <div class="settings-link-container">
+          <%= link_to "<", root_path, class: "settings-link" %>
+        </div>
+      <% end %>
       
       <%# Header - using same class as habit tracker %>
       <header class="month-header">
@@ -27,10 +29,12 @@
           </div>
         </section>
         
-        <%# Section 2: Month Setup %>
-        <section class="settings-section month-setup">
-          <%= render "month_setup_section" %>
-        </section>
+        <%# Section 2: Month Setup - only show if user has habits %>
+        <% if @habits.any? %>
+          <section class="settings-section month-setup">
+            <%= render "month_setup_section" %>
+          </section>
+        <% end %>
         
         <%# Section 3: Profile & Sharing %>
         <section class="settings-section profile-sharing">

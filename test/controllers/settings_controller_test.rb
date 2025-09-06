@@ -27,7 +27,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: "Settings"
   end
 
-  test "should show all three settings sections when authenticated" do
+  test "should show only two sections when user has no habits" do
     # Sign in
     post session_url, params: {
       email_address: @user.email_address,
@@ -37,7 +37,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get settings_path
     assert_response :success
 
-    # Check for the three main sections
+    # Check for the two sections when no habits exist
     assert_select ".settings-section.habits-management", count: 1
     assert_select ".settings-section.profile-sharing", count: 1
 
@@ -45,13 +45,23 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2.settings-section-title", text: "Manage habits"
     assert_select "h2.settings-section-title", text: "Profile & Sharing"
 
-    # Month setup section should be visible since user has no habits in next month yet
-    assert_select ".settings-section.month-setup", count: 1
-    # Check for month setup title
-    assert_select "h2.settings-section-title", text: "Set up next month"
+    # Month setup section should be hidden when user has no habits
+    assert_select ".settings-section.month-setup", count: 0
   end
 
-  test "should show back button when authenticated" do
+  test "should show all three sections when user has habits" do
+    # Create a habit for the current month
+    current_date = Date.current
+    Habit.create!(
+      name: "Test Habit",
+      user: @user,
+      year: current_date.year,
+      month: current_date.month,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
     # Sign in
     post session_url, params: {
       email_address: @user.email_address,
@@ -61,7 +71,53 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get settings_path
     assert_response :success
 
-    # Check for back button
+    # Check for all three sections when habits exist
+    assert_select ".settings-section.habits-management", count: 1
+    assert_select ".settings-section.month-setup", count: 1
+    assert_select ".settings-section.profile-sharing", count: 1
+
+    # Check section titles
+    assert_select "h2.settings-section-title", text: "Manage habits"
+    assert_select "h2.settings-section-title", text: "Profile & Sharing"
+  end
+
+  test "should hide back button when user has no habits" do
+    # Sign in
+    post session_url, params: {
+      email_address: @user.email_address,
+      password: "secure_password123"
+    }
+
+    get settings_path
+    assert_response :success
+
+    # Back button should be hidden when user has no habits
+    assert_select "a[href='#{root_path}'].settings-link", count: 0
+  end
+
+  test "should show back button when user has habits" do
+    # Create a habit for the current month
+    current_date = Date.current
+    Habit.create!(
+      name: "Test Habit",
+      user: @user,
+      year: current_date.year,
+      month: current_date.month,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # Sign in
+    post session_url, params: {
+      email_address: @user.email_address,
+      password: "secure_password123"
+    }
+
+    get settings_path
+    assert_response :success
+
+    # Back button should be visible when user has habits
     assert_select "a[href='#{root_path}'].settings-link", text: "<"
   end
 
