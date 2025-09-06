@@ -49,17 +49,21 @@
   
   /* Editing state */
   &--editing {
-    background: var(--paper-form-bg-focus);
-    border: var(--border-thin) solid var(--ink-primary-20);
-    border-radius: 3px;
-    padding: 2px 4px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
     outline: none;
-    transition: background-color var(--duration-fast) var(--ease-standard),
-                border-color var(--duration-fast) var(--ease-standard);
+    box-shadow: none;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
     
     &:focus {
-      background: var(--paper-light);
-      border-color: var(--ink-primary-30);
+      background: transparent;
+      border: none;
+      outline: none;
+      box-shadow: none;
     }
   }
 }
