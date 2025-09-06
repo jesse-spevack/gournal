@@ -48,17 +48,24 @@
   flex: 1;
 }
 
+/* Shared transparent input mixin */
+%transparent-input {
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
 /* Inline editing input */
 .habit-input,
 input.habit-input,
 input[data-habit-id] {
+  @extend %transparent-input;
   font-family: var(--font-caveat);
   font-size: var(--text-md);
   font-weight: 500;
   color: var(--ink-primary);
-  background: transparent;
-  background-color: transparent;
-  border: none;
   padding: 0;
   margin: 0;
   line-height: 1.4;
@@ -66,37 +73,25 @@ input[data-habit-id] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  box-shadow: none;
   
   &:focus,
   &:active {
-    outline: none;
-    background: transparent;
-    background-color: transparent;
-    box-shadow: none;
-    border: none;
+    @extend %transparent-input;
   }
   
   &.habit-input--inline {
     flex: 1;
-    background: transparent;
-    background-color: transparent;
     
     &:focus,
     &:active {
-      background: transparent;
-      background-color: transparent;
+      @extend %transparent-input;
     }
   }
   
   &.habit-input--new {
-    background: transparent;
-    background-color: transparent;
-    
     &:focus,
     &:active {
-      background: transparent;
-      background-color: transparent;
+      @extend %transparent-input;
     }
     
     &::placeholder {

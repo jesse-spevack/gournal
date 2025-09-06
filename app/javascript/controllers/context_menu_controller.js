@@ -8,9 +8,18 @@ export default class extends Controller {
     selectedHabitName: String
   }
 
+  // Constants for better maintainability
+  static CONSTANTS = {
+    LONG_PRESS_DURATION: 500, // milliseconds
+    MOVEMENT_THRESHOLD: 10, // pixels
+    VIEWPORT_MARGIN: 10, // pixels for menu positioning
+    EDGE_MARGIN: 20, // pixels from viewport edge
+    HAPTIC_DURATION: 10 // milliseconds
+  }
+
   connect() {
     this.longPressTimer = null
-    this.longPressThreshold = 500 // milliseconds
+    this.longPressThreshold = this.constructor.CONSTANTS.LONG_PRESS_DURATION
     this.touchStartPosition = null
     this.menuVisible = false
     
@@ -160,16 +169,22 @@ export default class extends Controller {
   handleTouchMove(event) {
     if (!this.longPressTimer || !this.touchStartPosition) return
     
-    // Calculate movement distance
-    const moveThreshold = 10 // pixels
-    const deltaX = Math.abs(event.touches[0].clientX - this.touchStartPosition.x)
-    const deltaY = Math.abs(event.touches[0].clientY - this.touchStartPosition.y)
-    
-    // Cancel long press if user moved finger too much
-    if (deltaX > moveThreshold || deltaY > moveThreshold) {
-      this.clearLongPressTimer()
-      this.touchStartPosition = null
+    if (this.touchMovedTooMuch(event.touches[0])) {
+      this.cancelLongPress()
     }
+  }
+
+  touchMovedTooMuch(touch) {
+    const deltaX = Math.abs(touch.clientX - this.touchStartPosition.x)
+    const deltaY = Math.abs(touch.clientY - this.touchStartPosition.y)
+    const threshold = this.constructor.CONSTANTS.MOVEMENT_THRESHOLD
+    
+    return deltaX > threshold || deltaY > threshold
+  }
+
+  cancelLongPress() {
+    this.clearLongPressTimer()
+    this.touchStartPosition = null
   }
 
   handleTouchEnd(event) {
@@ -224,40 +239,52 @@ export default class extends Controller {
   }
 
   async updateHabitName(habitId, newName) {
+    try {
+      await this.sendHabitUpdateRequest(habitId, newName)
+      this.updateHabitNameInDOM(habitId, newName)
+    } catch (error) {
+      this.handleUpdateError('update habit name', error)
+    }
+  }
+
+  async sendHabitUpdateRequest(habitId, newName) {
+    const response = await fetch(`/habits/${habitId}`, {
+      method: 'PATCH',
+      headers: this.buildRequestHeaders(),
+      body: JSON.stringify({ habit: { name: newName } })
+    })
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+    
+    return response
+  }
+
+  buildRequestHeaders() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content
     
-    try {
-      const response = await fetch(`/habits/${habitId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken,
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          habit: { name: newName }
-        })
-      })
-      
-      if (response.ok) {
-        // Update the DOM
-        const habitItem = document.querySelector(`[data-habit-id="${habitId}"]`)
-        if (habitItem) {
-          const nameElement = habitItem.querySelector('.habit-name')
-          if (nameElement) {
-            nameElement.textContent = newName
-          }
-          // Update the data attribute too
-          habitItem.dataset.habitName = newName
-        }
-      } else {
-        console.error('Failed to update habit name:', response.statusText)
-        alert('Failed to update habit name. Please try again.')
-      }
-    } catch (error) {
-      console.error('Error updating habit name:', error)
-      alert('Failed to update habit name. Please try again.')
+    return {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': csrfToken,
+      'Accept': 'application/json'
     }
+  }
+
+  updateHabitNameInDOM(habitId, newName) {
+    const habitItem = document.querySelector(`[data-habit-id="${habitId}"]`)
+    if (!habitItem) return
+
+    const nameElement = habitItem.querySelector('.habit-name')
+    if (nameElement) {
+      nameElement.textContent = newName
+    }
+    habitItem.dataset.habitName = newName
+  }
+
+  handleUpdateError(action, error) {
+    console.error(`Failed to ${action}:`, error)
+    alert(`Failed to ${action}. Please try again.`)
   }
 
   moveUp() {
@@ -305,39 +332,53 @@ export default class extends Controller {
   async deleteHabit() {
     if (!this.selectedHabitIdValue) return
     
-    const habitName = this.selectedHabitNameValue || "this habit"
-    
-    // Simple confirmation - in production you might want a better UX
-    if (!confirm(`Delete "${habitName}"?`)) {
+    if (!this.confirmDeletion()) {
       this.hideMenu()
       return
     }
     
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content
-    
     try {
-      const response = await fetch(`/habits/${this.selectedHabitIdValue}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRF-Token': csrfToken,
-          'Accept': 'application/json'
-        }
-      })
-      
-      if (response.ok) {
-        // Remove the habit item from the DOM
-        const habitItem = document.querySelector(`[data-habit-id="${this.selectedHabitIdValue}"]`)
-        if (habitItem) {
-          habitItem.remove()
-        }
-      } else {
-        console.error('Failed to delete habit:', response.statusText)
-      }
+      await this.sendDeleteRequest(this.selectedHabitIdValue)
+      this.removeHabitFromDOM(this.selectedHabitIdValue)
     } catch (error) {
-      console.error('Error deleting habit:', error)
+      this.handleUpdateError('delete habit', error)
     }
     
     this.hideMenu()
+  }
+
+  confirmDeletion() {
+    const habitName = this.selectedHabitNameValue || "this habit"
+    return confirm(`Delete "${habitName}"?`)
+  }
+
+  async sendDeleteRequest(habitId) {
+    const response = await fetch(`/habits/${habitId}`, {
+      method: 'DELETE',
+      headers: this.buildDeleteHeaders()
+    })
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+    
+    return response
+  }
+
+  buildDeleteHeaders() {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+    
+    return {
+      'X-CSRF-Token': csrfToken,
+      'Accept': 'application/json'
+    }
+  }
+
+  removeHabitFromDOM(habitId) {
+    const habitItem = document.querySelector(`[data-habit-id="${habitId}"]`)
+    if (habitItem) {
+      habitItem.remove()
+    }
   }
 
   async updatePositions() {
