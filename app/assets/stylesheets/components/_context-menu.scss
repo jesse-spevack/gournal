@@ -84,6 +84,15 @@
   user-select: none;
   -webkit-user-select: none;
   
+  /* Reset button styles */
+  background: none;
+  border: none;
+  border-bottom: var(--border-thin) solid var(--ink-primary-05);
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  
   /* Remove border from last item */
   &:last-child {
     border-bottom: none;
@@ -136,6 +145,10 @@
     min-height: 48px; /* Ensure proper touch target size */
     display: flex;
     align-items: center;
+    
+    /* Ensure buttons don't expand beyond container */
+    box-sizing: border-box;
+    flex-shrink: 0;
   }
 }
 

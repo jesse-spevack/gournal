@@ -22,6 +22,7 @@ export default class extends Controller {
     this.longPressThreshold = this.constructor.CONSTANTS.LONG_PRESS_DURATION
     this.touchStartPosition = null
     this.menuVisible = false
+    this.boundEventHandlers = []
     
     // Bind touch events to habit items
     this.bindTouchEvents()
@@ -32,6 +33,7 @@ export default class extends Controller {
 
   disconnect() {
     this.clearLongPressTimer()
+    this.cleanupEventListeners()
   }
 
   clearLongPressTimer() {
@@ -125,11 +127,21 @@ export default class extends Controller {
     if (!this.hasHabitItemTarget) return
     
     this.habitItemTargets.forEach(item => {
-      // Touch events for long-press detection
-      item.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false })
-      item.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false })
-      item.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: false })
-      item.addEventListener('touchcancel', this.handleTouchCancel.bind(this), { passive: false })
+      // Create bound handlers and store them for cleanup
+      const handlers = {
+        touchstart: this.handleTouchStart.bind(this),
+        touchmove: this.handleTouchMove.bind(this),
+        touchend: this.handleTouchEnd.bind(this),
+        touchcancel: this.handleTouchCancel.bind(this)
+      }
+      
+      // Bind touch events for long-press detection
+      Object.entries(handlers).forEach(([event, handler]) => {
+        item.addEventListener(event, handler, { passive: false })
+      })
+      
+      // Store for cleanup
+      this.boundEventHandlers.push({ item, handlers })
     })
   }
 
@@ -206,8 +218,24 @@ export default class extends Controller {
     if (!this.hasHabitItemTarget) return
     
     this.habitItemTargets.forEach(item => {
-      item.addEventListener('contextmenu', this.handleContextMenu.bind(this))
+      const handler = this.handleContextMenu.bind(this)
+      item.addEventListener('contextmenu', handler)
+      
+      // Store for cleanup
+      this.boundEventHandlers.push({ 
+        item, 
+        handlers: { contextmenu: handler } 
+      })
     })
+  }
+
+  cleanupEventListeners() {
+    this.boundEventHandlers.forEach(({ item, handlers }) => {
+      Object.entries(handlers).forEach(([event, handler]) => {
+        item.removeEventListener(event, handler)
+      })
+    })
+    this.boundEventHandlers = []
   }
 
   handleContextMenu(event) {
@@ -222,8 +250,12 @@ export default class extends Controller {
     this.selectedHabitIdValue = habitId
     this.selectedHabitNameValue = habitName
     
-    // Position menu near cursor for desktop
-    this.positionMenuForDesktop(event.clientX, event.clientY)
+    // Position menu based on device type
+    if (this.isDesktop()) {
+      this.positionMenuForDesktop(event.clientX, event.clientY)
+    } else {
+      this.positionMenuForMobile()
+    }
     this.showMenu()
   }
 
@@ -341,11 +373,22 @@ export default class extends Controller {
   }
 
   async updateHabitName(habitId, newName) {
+    const originalName = this.getHabitNameFromDOM(habitId)
+    
     try {
+      // Show loading state
+      this.showLoadingState(habitId)
       await this.sendHabitUpdateRequest(habitId, newName)
       this.updateHabitNameInDOM(habitId, newName)
     } catch (error) {
+      // Rollback on failure
+      if (originalName) {
+        this.updateHabitNameInDOM(habitId, originalName)
+      }
+      this.showErrorFeedback('Failed to update habit name')
       this.handleUpdateError('update habit name', error)
+    } finally {
+      this.hideLoadingState(habitId)
     }
   }
 
@@ -357,7 +400,14 @@ export default class extends Controller {
       
       xhr.open('PATCH', url, true)
       xhr.setRequestHeader('Content-Type', 'application/json')
-      xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').content)
+      
+      // Safely get CSRF token with error handling
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+      if (!csrfToken) {
+        reject(new Error('CSRF token not found'))
+        return
+      }
+      xhr.setRequestHeader('X-CSRF-Token', csrfToken)
       xhr.setRequestHeader('Accept', 'application/json')
       
       xhr.onload = function() {
@@ -487,6 +537,36 @@ export default class extends Controller {
       'X-CSRF-Token': csrfToken,
       'Accept': 'application/json'
     }
+  }
+
+  getHabitNameFromDOM(habitId) {
+    const habitItem = this.element.querySelector(`[data-habit-id="${habitId}"]`)
+    const nameElement = habitItem?.querySelector('.habit-name')
+    return nameElement?.textContent?.trim()
+  }
+
+  showLoadingState(habitId) {
+    const habitItem = this.element.querySelector(`[data-habit-id="${habitId}"]`)
+    const nameElement = habitItem?.querySelector('.habit-name')
+    if (nameElement) {
+      nameElement.style.opacity = '0.5'
+      nameElement.style.pointerEvents = 'none'
+    }
+  }
+
+  hideLoadingState(habitId) {
+    const habitItem = this.element.querySelector(`[data-habit-id="${habitId}"]`)
+    const nameElement = habitItem?.querySelector('.habit-name')
+    if (nameElement) {
+      nameElement.style.opacity = ''
+      nameElement.style.pointerEvents = ''
+    }
+  }
+
+  showErrorFeedback(message) {
+    // Simple error feedback - could be enhanced with toast notifications
+    console.error(message)
+    // Could add a temporary error indicator to the UI here
   }
 
   removeHabitFromDOM(habitId) {
