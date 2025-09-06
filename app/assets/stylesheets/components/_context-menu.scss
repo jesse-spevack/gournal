@@ -1,0 +1,179 @@
+/* ============================================ */
+/* CONTEXT MENU COMPONENT                      */
+/* ============================================ */
+
+/* Context Menu Backdrop */
+.context-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-fast) var(--ease-standard),
+              visibility var(--duration-fast) var(--ease-standard);
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Context Menu Container */
+.context-menu {
+  position: fixed;
+  z-index: 1001;
+  background: var(--paper-light);
+  border: var(--border-thin) solid var(--ink-primary-20);
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 16px var(--shadow-medium),
+    0 8px 32px var(--shadow-subtle);
+  min-width: 180px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95) translateY(8px);
+  transition: opacity var(--duration-fast) var(--ease-standard),
+              visibility var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
+
+  /* Mobile: Bottom sheet behavior */
+  @media (max-width: 767px) {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+    min-width: auto;
+    transform: translateY(100%);
+    
+    &--visible {
+      transform: translateY(0);
+    }
+  }
+
+  /* Desktop: Near cursor positioning */
+  @media (min-width: 768px) {
+    /* Position will be set by JavaScript */
+    &--visible {
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Context Menu Items */
+.context-menu__item {
+  padding: 12px 16px;
+  color: var(--ink-primary);
+  cursor: pointer;
+  border-bottom: var(--border-thin) solid var(--ink-primary-05);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+  user-select: none;
+  -webkit-user-select: none;
+  
+  /* Reset button styles */
+  background: none;
+  border: none;
+  border-bottom: var(--border-thin) solid var(--ink-primary-05);
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  
+  /* Remove border from last item */
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  /* Hover/Focus states */
+  &:hover,
+  &:focus {
+    background-color: var(--ink-primary-05);
+    color: var(--ink-hover);
+  }
+  
+  /* Active state */
+  &:active {
+    background-color: var(--ink-primary-10);
+  }
+  
+  /* Danger variant for destructive actions */
+  &--danger {
+    color: #c53030; /* Red for delete action */
+    
+    &:hover,
+    &:focus {
+      background-color: rgba(197, 48, 48, 0.1);
+      color: #9c1c1c;
+    }
+    
+    &:active {
+      background-color: rgba(197, 48, 48, 0.15);
+    }
+  }
+  
+  /* Cancel variant */
+  &--cancel {
+    font-weight: 500;
+    border-top: var(--border-thin) solid var(--ink-primary-10);
+    
+    &:hover,
+    &:focus {
+      background-color: var(--ink-primary-10);
+    }
+  }
+}
+
+/* Mobile-specific touch optimizations */
+@media (max-width: 767px) {
+  .context-menu__item {
+    padding: 16px 20px;
+    font-size: var(--text-xs);
+    min-height: 48px; /* Ensure proper touch target size */
+    display: flex;
+    align-items: center;
+    
+    /* Ensure buttons don't expand beyond container */
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .context-menu,
+  .context-menu-backdrop,
+  .context-menu__item {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .context-menu {
+    border: var(--border-medium) solid var(--ink-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .context-menu__item {
+    border-bottom-color: var(--ink-primary-20);
+    
+    &:hover,
+    &:focus {
+      background-color: var(--ink-primary-20);
+    }
+  }
+}

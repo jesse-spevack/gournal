@@ -1,5 +1,8 @@
 # Habit Tracking Setup - Product Requirements Document
 
+## NOTE
+Implementation of this doc is mostly complete. The major outstanding feature is: [**3. Public Sharing System**](#3-public-sharing-system).
+
 ## Executive Summary
 This PRD outlines the implementation of a comprehensive habit management system for the Gournal application. The system will enable users to create, edit, reorder, and manage their habits through a settings interface while maintaining the existing aesthetic bullet journal design. Additionally, it introduces public sharing capabilities through custom URLs, allowing users to share their habit tracking progress with others.
 

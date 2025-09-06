@@ -1,21 +1,22 @@
 <%# Bullet journal style habit list %>
-<div data-controller="inline-habit-editor" data-target-year="<%= @target_year || Date.current.year %>" data-target-month="<%= @target_month || Date.current.month %>">
+<div data-controller="context-menu" 
+     data-target-year="<%= @target_year || Date.current.year %>" 
+     data-target-month="<%= @target_month || Date.current.month %>">
   <ul class="habit-list">
     <% @habits.each do |habit| %>
-      <li class="habit-item" data-habit-id="<%= habit.id %>">
+      <li class="habit-item" 
+          data-habit-id="<%= habit.id %>"
+          data-habit-name="<%= habit.name %>"
+          data-context-menu-target="habitItem">
         <span class="bullet">•</span>
-        <span class="habit-name" 
-              data-inline-habit-editor-target="name"
-              data-action="click->inline-habit-editor#edit"
-              data-habit-id="<%= habit.id %>">
+        <span class="habit-name">
           <%= habit.name %>
         </span>
-        <span class="drag-handle">⋮⋮</span>
       </li>
     <% end %>
   </ul>
   
-  <%# New habit form - separated from the draggable list %>
+  <%# New habit form %>
   <div class="habit-item habit-item--new">
     <span class="bullet">•</span>
     <%= form_with url: habits_path, 
@@ -36,5 +37,46 @@
                             action: "blur->inline-habit-editor#createHabit keydown.esc->inline-habit-editor#cancelNew"
                           } %>
     <% end %>
+  </div>
+  
+  <%# Context menu structure %>
+  <div class="context-menu-backdrop" 
+       data-context-menu-target="backdrop" 
+       data-action="click->context-menu#hideMenu"></div>
+  
+  <div class="context-menu" 
+       data-context-menu-target="menu"
+       role="menu"
+       aria-label="Habit actions">
+    <button class="context-menu__item" 
+            data-action="click->context-menu#editName"
+            role="menuitem" 
+            tabindex="-1">
+      Edit name
+    </button>
+    <button class="context-menu__item" 
+            data-action="click->context-menu#moveUp"
+            role="menuitem" 
+            tabindex="-1">
+      Move up
+    </button>
+    <button class="context-menu__item" 
+            data-action="click->context-menu#moveDown"
+            role="menuitem" 
+            tabindex="-1">
+      Move down
+    </button>
+    <button class="context-menu__item context-menu__item--danger" 
+            data-action="click->context-menu#deleteHabit"
+            role="menuitem" 
+            tabindex="-1">
+      Delete habit
+    </button>
+    <button class="context-menu__item context-menu__item--cancel" 
+            data-action="click->context-menu#hideMenu"
+            role="menuitem" 
+            tabindex="-1">
+      Cancel
+    </button>
   </div>
 </div>
