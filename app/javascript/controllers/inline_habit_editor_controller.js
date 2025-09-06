@@ -315,11 +315,61 @@ export default class extends Controller {
     this.originalName = null
   }
 
-  createHabit(event) {
-    // Let the form submit naturally
+  async createHabit(event) {
     const input = this.newInputTarget
-    if (!input.value.trim()) {
+    const habitName = input.value.trim()
+    
+    // If called from blur event, check if there's a habit name to create
+    if (event.type === 'blur') {
+      if (habitName) {
+        // Use AJAX to create habit without page reload
+        await this.createHabitViaAjax(habitName, input)
+      }
+      // Don't prevent default for blur events
+      return
+    }
+    
+    // For form submission events, validate input and use AJAX
+    if (!habitName) {
       event.preventDefault()
+      return
+    }
+    
+    event.preventDefault()
+    await this.createHabitViaAjax(habitName, input)
+  }
+
+  async createHabitViaAjax(habitName, input) {
+    const form = this.newFormTarget
+    const formData = new FormData(form)
+    formData.set('name', habitName)
+    
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+    
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'X-CSRF-Token': csrfToken,
+          'Accept': 'application/json'
+        },
+        body: formData
+      })
+      
+      if (response.ok) {
+        // Clear the input on successful creation
+        input.value = ''
+        
+        // Reload the page to show the new habit
+        // This maintains the current UX while fixing the disappearing issue
+        window.location.reload()
+      } else {
+        console.error('Failed to create habit:', response.statusText)
+        // Keep the input value so user can try again
+      }
+    } catch (error) {
+      console.error('Error creating habit:', error)
+      // Keep the input value so user can try again
     }
   }
 

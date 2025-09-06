@@ -115,6 +115,28 @@
   }
 }
 
+/* Month view heading - when next month already has habits */
+.month-view-heading {
+  text-decoration: none;
+  color: inherit;
+  
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+    transition: all 0.1s ease;
+  }
+  
+  &:focus {
+    outline: none;
+  }
+}
+
 /* X mark wrapper for month setup checkboxes */
 .checkbox-x-wrapper {
   position: absolute;
