@@ -52,19 +52,27 @@ class HabitsController < ApplicationController
   end
 
   def update
-    if @habit.update(habit_params)
-      redirect_to settings_path
-    else
-      redirect_to settings_path
+    respond_to do |format|
+      if @habit.update(habit_params)
+        format.html { redirect_to settings_path }
+        format.json { render json: { success: true, habit: @habit } }
+      else
+        format.html { redirect_to settings_path }
+        format.json { render json: { success: false, errors: @habit.errors }, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     # Soft delete - set active to false
-    if @habit.update(active: false)
-      redirect_to settings_path
-    else
-      redirect_to settings_path
+    respond_to do |format|
+      if @habit.update(active: false)
+        format.html { redirect_to settings_path }
+        format.json { render json: { success: true } }
+      else
+        format.html { redirect_to settings_path }
+        format.json { render json: { success: false, errors: @habit.errors }, status: :unprocessable_entity }
+      end
     end
   end
 

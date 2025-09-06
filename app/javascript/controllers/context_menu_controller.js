@@ -149,12 +149,16 @@ export default class extends Controller {
     // Start long press timer
     this.longPressTimer = setTimeout(() => {
       // Trigger haptic feedback if available
-      if (navigator.vibrate) {
-        navigator.vibrate(10)
+      try {
+        if (navigator.vibrate) {
+          navigator.vibrate(10)
+        }
+      } catch (error) {
+        // Ignore vibration errors (browser security restrictions)
       }
       
-      // Set selected habit
-      this.selectedHabitIdValue = habitId
+      // Set selected habit (ensure ID is integer)
+      this.selectedHabitIdValue = parseInt(habitId)
       this.selectedHabitNameValue = habitName
       
       // Position and show menu for mobile
@@ -346,17 +350,30 @@ export default class extends Controller {
   }
 
   async sendHabitUpdateRequest(habitId, newName) {
-    const response = await fetch(`/habits/${habitId}`, {
-      method: 'PATCH',
-      headers: this.buildRequestHeaders(),
-      body: JSON.stringify({ habit: { name: newName } })
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      // Use absolute URL to avoid any base URL or routing issues
+      const url = `${window.location.protocol}//${window.location.host}/habits/${habitId}`
+      
+      xhr.open('PATCH', url, true)
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').content)
+      xhr.setRequestHeader('Accept', 'application/json')
+      
+      xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr)
+        } else {
+          reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`))
+        }
+      }
+      
+      xhr.onerror = function() {
+        reject(new Error('Network error'))
+      }
+      
+      xhr.send(JSON.stringify({ habit: { name: newName } }))
     })
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-    }
-    
-    return response
   }
 
   buildRequestHeaders() {
@@ -382,7 +399,7 @@ export default class extends Controller {
 
   handleUpdateError(action, error) {
     console.error(`Failed to ${action}:`, error)
-    alert(`Failed to ${action}. Please try again.`)
+    // Silent failure - error is logged to console for debugging
   }
 
   moveUp() {
