@@ -34,9 +34,6 @@ export default class extends Controller {
 
   showMenu() {
     if (this.hasMenuTarget && this.hasBackdropTarget) {
-      // Use display style for now until CSS is implemented
-      this.menuTarget.style.display = "block"
-      this.backdropTarget.style.display = "block"
       this.menuTarget.classList.add("context-menu--visible")
       this.backdropTarget.classList.add("context-menu-backdrop--visible")
       this.menuVisible = true
@@ -53,9 +50,6 @@ export default class extends Controller {
 
   hideMenu() {
     if (this.hasMenuTarget && this.hasBackdropTarget) {
-      // Use display style for now until CSS is implemented
-      this.menuTarget.style.display = "none"
-      this.backdropTarget.style.display = "none"
       this.menuTarget.classList.remove("context-menu--visible")
       this.backdropTarget.classList.remove("context-menu-backdrop--visible")
       this.menuVisible = false
@@ -105,14 +99,12 @@ export default class extends Controller {
   positionMenuForMobile() {
     if (!this.hasMenuTarget) return
     
-    // Position as bottom sheet for mobile
+    // Reset any desktop positioning - mobile uses CSS bottom sheet
     const menu = this.menuTarget
-    menu.style.left = "20px"
-    menu.style.right = "20px"
-    menu.style.bottom = "20px"
+    menu.style.left = ""
     menu.style.top = ""
-    menu.style.width = "auto"
-    menu.style.borderRadius = "12px"
+    menu.style.right = ""
+    menu.style.bottom = ""
   }
 
   isDesktop() {

@@ -42,25 +42,23 @@
   <%# Context menu structure %>
   <div class="context-menu-backdrop" 
        data-context-menu-target="backdrop" 
-       data-action="click->context-menu#hideMenu"
-       style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); z-index: 998;"></div>
+       data-action="click->context-menu#hideMenu"></div>
   
   <div class="context-menu" 
-       data-context-menu-target="menu"
-       style="display: none; position: fixed; background: white; border: 1px solid #ccc; border-radius: 8px; padding: 8px 0; z-index: 999; min-width: 200px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    <div class="context-menu__item" data-action="click->context-menu#editName" style="padding: 12px 20px; cursor: pointer; hover: background: #f5f5f5;">
+       data-context-menu-target="menu">
+    <div class="context-menu__item" data-action="click->context-menu#editName">
       Edit name
     </div>
-    <div class="context-menu__item" data-action="click->context-menu#moveUp" style="padding: 12px 20px; cursor: pointer;">
+    <div class="context-menu__item" data-action="click->context-menu#moveUp">
       Move up
     </div>
-    <div class="context-menu__item" data-action="click->context-menu#moveDown" style="padding: 12px 20px; cursor: pointer;">
+    <div class="context-menu__item" data-action="click->context-menu#moveDown">
       Move down
     </div>
-    <div class="context-menu__item context-menu__item--danger" data-action="click->context-menu#deleteHabit" style="padding: 12px 20px; cursor: pointer; color: #dc3545;">
+    <div class="context-menu__item context-menu__item--danger" data-action="click->context-menu#deleteHabit">
       Delete habit
     </div>
-    <div class="context-menu__item context-menu__item--cancel" data-action="click->context-menu#hideMenu" style="padding: 12px 20px; cursor: pointer; border-top: 1px solid #eee; margin-top: 8px; padding-top: 20px;">
+    <div class="context-menu__item context-menu__item--cancel" data-action="click->context-menu#hideMenu">
       Cancel
     </div>
   </div>
