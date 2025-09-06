@@ -46,6 +46,22 @@
   color: var(--ink-primary);
   line-height: 1.4;
   flex: 1;
+  
+  /* Editing state */
+  &--editing {
+    background: var(--paper-form-bg-focus);
+    border: var(--border-thin) solid var(--ink-primary-20);
+    border-radius: 3px;
+    padding: 2px 4px;
+    outline: none;
+    transition: background-color var(--duration-fast) var(--ease-standard),
+                border-color var(--duration-fast) var(--ease-standard);
+    
+    &:focus {
+      background: var(--paper-light);
+      border-color: var(--ink-primary-30);
+    }
+  }
 }
 
 /* Shared transparent input mixin */

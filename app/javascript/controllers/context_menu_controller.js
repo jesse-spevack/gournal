@@ -227,15 +227,98 @@ export default class extends Controller {
   editName() {
     if (!this.selectedHabitIdValue) return
     
-    // Use a simple prompt for now - in a real app you might want a modal
-    const currentName = this.selectedHabitNameValue || ""
-    const newName = prompt("Edit habit name:", currentName)
+    const habitItem = this.element.querySelector(`[data-habit-id="${this.selectedHabitIdValue}"]`)
+    const habitNameElement = habitItem?.querySelector('.habit-name')
     
-    if (newName && newName.trim() !== "" && newName.trim() !== currentName) {
-      this.updateHabitName(this.selectedHabitIdValue, newName.trim())
+    if (!habitNameElement) return
+    
+    this.startInlineEdit(habitNameElement)
+    this.hideMenu()
+  }
+
+  startInlineEdit(habitNameElement) {
+    // Store original name for cancellation
+    const originalName = habitNameElement.textContent.trim()
+    this.originalHabitName = originalName
+    this.editingElement = habitNameElement
+    
+    // Make element editable
+    habitNameElement.contentEditable = true
+    habitNameElement.classList.add('habit-name--editing')
+    
+    // Focus and select all text
+    habitNameElement.focus()
+    this.selectAllText(habitNameElement)
+    
+    // Add event listeners for save/cancel
+    this.boundKeydownHandler = this.handleEditKeydown.bind(this)
+    this.boundBlurHandler = this.handleEditBlur.bind(this)
+    
+    habitNameElement.addEventListener('keydown', this.boundKeydownHandler)
+    habitNameElement.addEventListener('blur', this.boundBlurHandler)
+  }
+
+  selectAllText(element) {
+    const range = document.createRange()
+    range.selectNodeContents(element)
+    const selection = window.getSelection()
+    selection.removeAllRanges()
+    selection.addRange(range)
+  }
+
+  handleEditKeydown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      this.saveEdit()
+    } else if (event.key === 'Escape') {
+      event.preventDefault()
+      this.cancelEdit()
+    }
+  }
+
+  handleEditBlur() {
+    // Save on blur (when user clicks away)
+    this.saveEdit()
+  }
+
+  saveEdit() {
+    if (!this.editingElement) return
+    
+    const newName = this.editingElement.textContent.trim()
+    const originalName = this.originalHabitName
+    
+    if (newName && newName !== originalName) {
+      this.updateHabitName(this.selectedHabitIdValue, newName)
     }
     
-    this.hideMenu()
+    this.finishEdit()
+  }
+
+  cancelEdit() {
+    if (!this.editingElement) return
+    
+    // Restore original name
+    this.editingElement.textContent = this.originalHabitName
+    this.finishEdit()
+  }
+
+  finishEdit() {
+    if (!this.editingElement) return
+    
+    // Remove editing state
+    this.editingElement.contentEditable = false
+    this.editingElement.classList.remove('habit-name--editing')
+    this.editingElement.blur()
+    
+    // Remove event listeners
+    this.editingElement.removeEventListener('keydown', this.boundKeydownHandler)
+    this.editingElement.removeEventListener('blur', this.boundBlurHandler)
+    
+    // Clean up
+    this.editingElement = null
+    this.originalHabitName = null
+    this.boundKeydownHandler = null
+    this.boundBlurHandler = null
   }
 
   async updateHabitName(habitId, newName) {
