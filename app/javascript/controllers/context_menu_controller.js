@@ -381,14 +381,19 @@ export default class extends Controller {
       await this.sendHabitUpdateRequest(habitId, newName)
       this.updateHabitNameInDOM(habitId, newName)
     } catch (error) {
-      // Rollback on failure
-      if (originalName) {
-        this.updateHabitNameInDOM(habitId, originalName)
-      }
+      // Rollback on failure using extracted method
+      this.rollbackHabitName(habitId, originalName)
       this.showErrorFeedback('Failed to update habit name')
       this.handleUpdateError('update habit name', error)
     } finally {
       this.hideLoadingState(habitId)
+    }
+  }
+
+  rollbackHabitName(habitId, originalName) {
+    // Only rollback if we have a valid original name
+    if (originalName !== null && originalName !== undefined && originalName !== '') {
+      this.updateHabitNameInDOM(habitId, originalName)
     }
   }
 
