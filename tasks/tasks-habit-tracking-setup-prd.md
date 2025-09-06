@@ -91,7 +91,7 @@ Implementation tasks for comprehensive habit management system including setting
     - [ ] 4.12.4 Test edge cases: existing target month habits, validation errors
     - [ ] 4.12.5 Cross-browser testing of checkbox interactions
 
-- [ ] CSS Audit - It should be dead simple to identify where all visual behaviors originate. It should be dead simple to make simple, atomic changes. Excessive use of !important declarations indicates specificity issues in the CSS cascade. Consider restructuring the CSS hierarchy to avoid forcing overrides, which makes the stylesheet harder to maintain and debug.
+- [x] CSS Audit - It should be dead simple to identify where all visual behaviors originate. It should be dead simple to make simple, atomic changes. Excessive use of !important declarations indicates specificity issues in the CSS cascade. Consider restructuring the CSS hierarchy to avoid forcing overrides, which makes the stylesheet harder to maintain and debug.
   
 - [x] 5.0 Habit Management Flow Improvements
   - [x] 5.1 Add route for habits/new/:year_month (e.g. habits/new/2025-10)
