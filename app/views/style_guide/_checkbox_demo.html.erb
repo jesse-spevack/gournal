@@ -1,0 +1,188 @@
+<div class="section">
+  <h2 class="section-title">Checkbox System</h2>
+  
+  <div class="subsection">
+    <h3 class="subsection-title">Box Variations (10 hand-drawn styles)</h3>
+    <p class="section-description">Each checkbox has a unique hand-drawn outline for organic variety</p>
+    <div class="checkbox-showcase">
+      <div class="checkbox-grid">
+        <% 10.times do |i| %>
+          <div class="checkbox-demo-item">
+            <%= render "checkboxes/box_#{i}" %>
+            <span class="variant-label">Box <%= i %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3 class="subsection-title">X Mark Variations (10 styles)</h3>
+    <p class="section-description">Hand-drawn X marks with varying stroke weights</p>
+    <div class="checkbox-showcase">
+      <div class="checkbox-grid">
+        <% 10.times do |i| %>
+          <div class="checkbox-demo-item checked">
+            <%= render "checkboxes/box_0" %>
+            <%= render "checkboxes/x_#{i}" %>
+            <span class="variant-label">X <%= i %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3 class="subsection-title">Blot Fill Variations (10 styles)</h3>
+    <p class="section-description">Organic ink blot fills for checked state</p>
+    <div class="checkbox-showcase">
+      <div class="checkbox-grid">
+        <% 10.times do |i| %>
+          <div class="checkbox-demo-item checked">
+            <%= render "checkboxes/box_0" %>
+            <%= render "checkboxes/blot_#{i}" %>
+            <span class="variant-label">Blot <%= i %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3 class="subsection-title">Interactive Demo with Helper</h3>
+    <p class="section-description">Using the habit_checkbox helper as in production</p>
+    <div class="checkbox-showcase">
+      <div class="checkbox-grid-interactive">
+        <% [
+          { box: 3, fill: 7, style: :x, label: "Morning pages" },
+          { box: 1, fill: 2, style: :blot, label: "Meditation" },
+          { box: 5, fill: 4, style: :x, label: "Exercise" },
+          { box: 8, fill: 9, style: :blot, label: "Reading" }
+        ].each do |config| %>
+          <div class="checkbox-demo-interactive">
+            <div class="habit-row">
+              <span class="day-number">1</span>
+              <%= habit_checkbox(
+                box_variant: config[:box],
+                fill_variant: config[:fill],
+                fill_style: config[:style]
+              ) %>
+              <span class="habit-label"><%= config[:label] %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3 class="subsection-title">Mixed Random Grid</h3>
+    <p class="section-description">Simulating the organic variety in actual use</p>
+    <div class="checkbox-showcase">
+      <div class="checkbox-grid-mixed">
+        <% 30.times do |i| %>
+          <% box = rand(10) %>
+          <% show_fill = rand < 0.3 %>
+          <% fill = show_fill ? rand(10) : nil %>
+          <% style = show_fill ? [:x, :blot].sample : nil %>
+          <div class="checkbox-demo-mixed">
+            <%= habit_checkbox(
+              box_variant: box,
+              fill_variant: fill,
+              fill_style: style
+            ) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .checkbox-demo-item {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .checkbox-demo-item svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .checkbox-demo-item.checked {
+    svg:last-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+  
+  .variant-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-primary);
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+  
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 20px;
+    padding: 16px;
+    background: var(--paper-light);
+    border-radius: 4px;
+  }
+  
+  .checkbox-grid-interactive {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: var(--paper-light);
+    border-radius: 4px;
+  }
+  
+  .habit-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .day-number {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-primary);
+    opacity: 0.6;
+    min-width: 20px;
+    text-align: right;
+  }
+  
+  .habit-label {
+    font-family: var(--font-caveat);
+    font-size: 18px;
+    color: var(--ink-primary);
+  }
+  
+  .checkbox-grid-mixed {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    gap: 4px;
+    padding: 16px;
+    background: var(--paper-light);
+    border-radius: 4px;
+  }
+  
+  .section-description {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-primary);
+    opacity: 0.7;
+    margin-bottom: 12px;
+  }
+</style>
