@@ -4,11 +4,10 @@
 
 /* Checkbox grid and item layout */
 .checkbox-showcase {
-  background: radial-gradient(ellipse at top left, var(--paper-light) 0%, var(--paper-mid) 40%, var(--paper-dark) 100%);
-  padding: 40px;
-  border-radius: 8px;
+  background: none;
+  padding: var(--space-md);
   position: relative;
-  margin: 20px 0;
+  margin: var(--space-sm) 0;
 }
 
 .checkbox-grid {
@@ -28,11 +27,10 @@
 
 .checkbox-label {
   display: block;
-  margin-top: 10px;
-  font-size: var(--text-small);
+  font-size: var(--text-xs);
   color: var(--ink-primary);
   font-family: var(--font-mono);
-  opacity: 0.8;
+  opacity: var(--opacity-secondary);
 }
 
 /* Interactive checkbox wrapper */

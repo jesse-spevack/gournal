@@ -2,17 +2,17 @@
 
 ## Tasks
 
-- [ ] 1.0 Update checkbox demonstrations to match actual usage patterns
+- [x] 1.0 Update checkbox demonstrations to match actual usage patterns
   - [x] 1.1 Replace horizontal checkbox grids with vertical layout
   - [x] 1.2 Update CSS to use flexbox instead of grid layout
   - [x] 1.3 Remove large spacing between checkbox items
   - [x] 1.4 Update checkbox demo item styling to match habit grid
 
 - [ ] 2.0 Remove style guide container backgrounds and decorative elements  
-  - [ ] 2.1 Remove .checkbox-showcase background gradients
-  - [ ] 2.2 Remove excessive padding from demo containers
-  - [ ] 2.3 Remove decorative border-radius styling
-  - [ ] 2.4 Update to match clean paper background aesthetic
+  - [x] 2.1 Remove .checkbox-showcase background gradients
+  - [x] 2.2 Remove excessive padding from demo containers
+  - [x] 2.3 Remove decorative border-radius styling
+  - [x] 2.4 Update to match clean paper background aesthetic
 
 - [ ] 3.0 Create realistic habit tracking context demos
   - [ ] 3.1 Add "Habit Tracking Context" section to checkbox demo
