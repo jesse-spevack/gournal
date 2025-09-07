@@ -102,11 +102,10 @@
     </div>
     
     <%# Submit button %>
-    <button type="submit" 
-            class="month-setup-submit"
-            data-privacy-settings-target="submitButton">
-      Save profile settings
-    </button>
+    <%= render 'shared/primary_button', 
+        text: 'Save profile settings', 
+        type: 'submit',
+        data: { privacy_settings_target: "submitButton" } %>
     
   <% end %>
   

@@ -408,6 +408,122 @@ All design tokens are defined as CSS custom properties (CSS variables) for:
 }
 ```
 
+## Button System
+
+### Philosophy
+Buttons embody the typewriter aesthetic of the Japanese bullet journal, using the Special Elite font with subtle character through rotation and minimal interactions that feel authentic to paper.
+
+### Button Variants
+
+#### Primary Buttons
+```css
+.canonical-button--primary {
+  padding: 12px 24px;
+  color: var(--paper-light);
+  background: var(--ink-primary);
+  transform: rotate(-0.5deg);
+  
+  &:hover { 
+    background: var(--ink-hover);
+    opacity: 0.9;
+  }
+  &:active { opacity: 0.8; }
+}
+```
+- **Usage**: Main actions (Create account, Save settings, Set up month)
+- **Character**: Dark ink background with subtle left rotation
+- **Interactions**: Darker ink + opacity fade on hover/active
+
+#### Secondary Buttons  
+```css
+.canonical-button--secondary {
+  padding: 12px 24px;
+  color: var(--ink-primary);
+  background: var(--paper-mid);
+  border: var(--border-thin) solid var(--ink-primary-20);
+  transform: rotate(0.2deg);
+  
+  &:hover {
+    background: var(--paper-dark);
+    color: var(--ink-hover);
+    border-color: var(--ink-primary-30);
+    opacity: 0.9;
+  }
+  &:active { opacity: 0.8; }
+}
+```
+- **Usage**: Less prominent actions (Cancel, View help, Create your own)
+- **Character**: Paper background with subtle border and right rotation
+- **Interactions**: Darker paper + enhanced border + opacity fade
+
+#### Context Menu Buttons
+```css
+.canonical-button--context {
+  padding: 12px 16px;
+  color: var(--ink-primary);
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transform: none;
+  
+  &:hover { 
+    background-color: var(--ink-primary-05);
+    color: var(--ink-hover);
+  }
+}
+```
+- **Usage**: Menu items (Edit name, Move up, Delete)
+- **Character**: Clean, minimal styling with left alignment
+- **Variants**: Danger (red text), Cancel (font-weight: 500)
+
+#### Utility Buttons
+```css
+.canonical-button--help {
+  padding: 4px 8px;
+  opacity: var(--opacity-secondary);
+  &:hover { 
+    opacity: 1;
+    text-decoration: underline wavy;
+  }
+}
+
+.canonical-button--nav {
+  padding: 4px 8px;
+  opacity: var(--opacity-headers);
+  &:hover { opacity: 1; }
+  &:active { transform: translateY(1px); }
+}
+```
+
+### Base Button Properties
+```css
+.canonical-button {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-tight);
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+```
+
+### Design Principles
+- **Typewriter Consistency**: All buttons use Special Elite font at var(--text-xs)
+- **Organic Character**: Subtle rotations (-0.5deg, 0.2deg) add personality
+- **Paper Authenticity**: Interactions use opacity and color changes, not transforms
+- **Element Consistency**: Same height/alignment for both `<button>` and `<a>` elements
+
+### Accessibility
+- Minimum 24px touch targets on mobile
+- WCAG AA color contrast compliance
+- Keyboard navigation support
+- Screen reader compatible
+
 ## Versioning & Updates
 
 ### Current Version

@@ -1,0 +1,33 @@
+<%
+# Context Menu Button Partial
+# 
+# Usage:
+#   render 'shared/context_button', text: 'Edit name'
+#   render 'shared/context_button', text: 'Delete habit', danger: true
+#   render 'shared/context_button', text: 'Cancel', cancel: true
+
+text = local_assigns[:text] || 'Button'
+type = local_assigns[:type] || 'button' 
+disabled = local_assigns[:disabled] || false
+danger = local_assigns[:danger] || false
+cancel = local_assigns[:cancel] || false
+url = local_assigns[:url]
+
+# Build CSS classes
+css_classes = ['canonical-button', 'canonical-button--context']
+css_classes << 'canonical-button--danger' if danger
+css_classes << 'canonical-button--cancel' if cancel
+
+# Build HTML attributes
+html_attrs = local_assigns.except(:text, :type, :disabled, :danger, :cancel, :url)
+html_attrs[:class] = [html_attrs[:class], css_classes].flatten.compact.join(' ')
+html_attrs[:disabled] = true if disabled && !url
+%>
+
+<% if url %>
+  <%= link_to text, url, html_attrs %>
+<% else %>
+  <button type="<%= type %>" <%= 'disabled' if disabled %> <%= html_attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ').html_safe %>>
+    <%= text %>
+  </button>
+<% end %>

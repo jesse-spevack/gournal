@@ -46,7 +46,7 @@ class HabitsController < ApplicationController
             redirect_to settings_path
           end
         end
-        format.json { render json: { success: false, errors: result[:errors] }, status: :unprocessable_entity }
+        format.json { render json: { success: false, errors: result[:errors] }, status: :unprocessable_content }
       end
     end
   end
@@ -58,7 +58,7 @@ class HabitsController < ApplicationController
         format.json { render json: { success: true, habit: @habit } }
       else
         format.html { redirect_to settings_path }
-        format.json { render json: { success: false, errors: @habit.errors }, status: :unprocessable_entity }
+        format.json { render json: { success: false, errors: @habit.errors }, status: :unprocessable_content }
       end
     end
   end
@@ -71,7 +71,7 @@ class HabitsController < ApplicationController
         format.json { render json: { success: true } }
       else
         format.html { redirect_to settings_path }
-        format.json { render json: { success: false, errors: @habit.errors }, status: :unprocessable_entity }
+        format.json { render json: { success: false, errors: @habit.errors }, status: :unprocessable_content }
       end
     end
   end

@@ -25,7 +25,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_select "form[action=?]", session_path
     assert_select "input[type=email][name=?]", "email_address"
     assert_select "input[type=password][name=?]", "password"
-    assert_select "input[type=submit][value=?]", "Sign in"
+    assert_select "button[type=submit]", "Sign in"
   end
 
   test "should create session with valid credentials" do

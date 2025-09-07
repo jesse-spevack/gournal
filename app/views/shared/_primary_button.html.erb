@@ -1,0 +1,25 @@
+<%
+# Primary Button Partial
+# 
+# Usage:
+#   render 'shared/primary_button', text: 'Save settings'
+#   render 'shared/primary_button', text: 'Create account', type: 'submit'
+
+text = local_assigns[:text] || 'Button'
+type = local_assigns[:type] || 'button' 
+disabled = local_assigns[:disabled] || false
+url = local_assigns[:url]
+
+# Build HTML attributes
+html_attrs = local_assigns.except(:text, :type, :disabled, :url)
+html_attrs[:class] = [html_attrs[:class], 'canonical-button', 'canonical-button--primary'].flatten.compact.join(' ')
+html_attrs[:disabled] = true if disabled && !url
+%>
+
+<% if url %>
+  <%= link_to text, url, html_attrs %>
+<% else %>
+  <button type="<%= type %>" <%= 'disabled' if disabled %> <%= html_attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ').html_safe %>>
+    <%= text %>
+  </button>
+<% end %>

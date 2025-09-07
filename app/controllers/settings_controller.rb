@@ -33,7 +33,7 @@ class SettingsController < ApplicationController
                                         .exists?
       @next_month_date = next_month_date
 
-      render :index, status: :unprocessable_entity
+      render :index, status: :unprocessable_content
     end
   end
 

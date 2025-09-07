@@ -50,7 +50,7 @@ class SettingsProfileTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     assert_select ".field-error"
 
     @user.reload
@@ -72,7 +72,7 @@ class SettingsProfileTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
 
     @user.reload
     assert_not_equal "taken-slug", @user.slug
