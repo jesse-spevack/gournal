@@ -70,14 +70,12 @@
     display: none; /* Chrome/Safari */
   }
   
-  /* Desktop: Override mobile behavior to allow multi-line reflections */
+  /* Desktop: Keep single line with truncation - no line wrap */
   @media (min-width: 480px) {
-    white-space: normal;
-    word-wrap: break-word;
-    min-height: 2em; /* Allow for at least 2 lines */
-    max-height: 6em; /* Limit to reasonable height */
-    overflow-y: auto; /* Allow vertical scroll for very long content */
-    text-overflow: initial; /* Remove ellipsis for multi-line display */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 1.4em; /* Single line height */
   }
   
   /* Empty state placeholder */
@@ -93,10 +91,11 @@
     overflow-x: auto;
     text-overflow: clip;
     
-    /* Desktop: Keep vertical scroll, no horizontal scroll needed */
+    /* Desktop: Enable horizontal scroll while editing, but keep single line */
     @media (min-width: 480px) {
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
     }
   }
   
