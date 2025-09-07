@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get "help/manage-habits" => "help#manage_habits", as: :help_manage_habits
   get "help/next-month-setup" => "help#next_month_setup", as: :help_next_month_setup
   get "help/profile-sharing" => "help#profile_sharing", as: :help_profile_sharing
+  get "help/profile-link" => "help#profile_link", as: :help_profile_link
+  get "help/sharing-settings" => "help#sharing_settings", as: :help_sharing_settings
 
   # Batch position updates for habits (must come before generic :habits routes)
   namespace :habits do

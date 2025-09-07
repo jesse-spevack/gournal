@@ -8,7 +8,7 @@
 }
 
 .settings-section {
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
   
   &:last-child {
     margin-bottom: 0;
@@ -19,7 +19,7 @@
 .section-header {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   margin-bottom: var(--space-md);
 }
 
@@ -63,10 +63,39 @@
   margin-left: 0;
 }
 
-/* Profile URL display with inline editing */
-.profile-url-section {
+/* Form button alignment and spacing */
+.settings-section .canonical-button--primary {
+  align-self: flex-start;
+  margin-top: var(--space-lg);
+}
+
+/* Settings specific form spacing */
+.settings-section .month-setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.settings-section .profile-url-section {
   margin-bottom: var(--space-lg);
 }
+
+.settings-section .month-setup-options {
+  margin-bottom: 0;
+}
+
+/* Save state indicators */
+.canonical-button--saving {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.canonical-button--saved {
+  opacity: 0.9;
+  transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+/* Profile URL display with inline editing */
 
 .profile-url-display {
   display: flex;

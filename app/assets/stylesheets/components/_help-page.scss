@@ -8,10 +8,8 @@
 }
 
 .help-section {
-  margin-bottom: var(--space-xl);
-  
-  &:last-child {
-    margin-bottom: 0;
+  &:not(:first-child) {
+    margin-top: var(--space-lg);
   }
 }
 

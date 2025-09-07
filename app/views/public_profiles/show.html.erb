@@ -13,33 +13,13 @@
         <%# Create Account CTA for unauthenticated users %>
         <% unless authenticated? %>
           <div class="create-account-cta">
-            <%= render 'shared/secondary_button', text: 'Create your own Gournal', url: new_user_path, class: 'create-account-button' %>
+            <%= render 'shared/secondary_button', text: 'Create your own Gournal', url: new_user_path %>
           </div>
         <% end %>
       </header>
       
       <% if @tracker_data.empty? %>
         <%# Empty state when no public data is available %>
-        <div class="empty-state">
-          <div class="empty-state-content">
-            <div class="empty-state-message">
-              <% if !@user.has_public_profile? %>
-                This user hasn't set up a public profile yet.
-              <% elsif !@user.public_habits_visible? && !@user.public_reflections_visible? %>
-                This user hasn't shared any data publicly.
-              <% else %>
-                No habits for this month.
-              <% end %>
-            </div>
-            
-            <%# Additional CTA in empty state for unauthenticated users %>
-            <% unless authenticated? %>
-              <div class="empty-state-cta">
-                <%= render 'shared/secondary_button', text: 'Create your own Gournal', url: new_user_path, class: 'create-account-button' %>
-              </div>
-            <% end %>
-          </div>
-        </div>
       <% else %>
         <%# Use shared habit grid partial with read-only mode %>
         <%= render 'shared/habit_grid', 

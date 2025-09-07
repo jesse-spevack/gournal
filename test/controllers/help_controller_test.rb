@@ -72,8 +72,8 @@ class HelpControllerTest < ActionDispatch::IntegrationTest
 
     get help_profile_sharing_path
     assert_response :success
-    assert_select "h1", text: "Profile Sharing Help"
-    assert_select ".help-section", minimum: 5
+    assert_select "h1", text: "Help"
+    assert_select ".help-section", minimum: 2
     assert_select "a[href='#{settings_path}'].settings-link", text: "<"
   end
 

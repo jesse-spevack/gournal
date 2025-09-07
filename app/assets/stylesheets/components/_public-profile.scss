@@ -20,57 +20,10 @@
 .create-account-cta {
   margin-top: var(--space-lg);
   text-align: center;
-}
-
-.create-account-button {
-  display: inline-block;
-  padding: 12px 24px;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--paper-light);
-  background: var(--ink-primary);
-  text-decoration: none;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-standard);
-  box-sizing: border-box;
   
-  /* Subtle rotation for handwritten feel */
-  transform: rotate(-0.3deg);
-  
-  &:hover {
-    background: var(--ink-hover);
-    color: var(--paper-light);
-    transform: rotate(0deg) scale(1.03);
-    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.2);
-    text-decoration: none;
-  }
-  
-  &:active {
-    transform: rotate(0deg) scale(0.97);
-  }
-  
-  /* Mobile responsive */
-  @media (max-width: 480px) {
-    font-size: var(--text-xs);
-    padding: 10px 20px;
-  }
-  
-  /* Secondary button variant for empty states */
-  &--secondary {
-    background: transparent;
-    color: var(--ink-primary);
-    border: var(--border-thin) solid var(--ink-primary);
-    transform: rotate(0.2deg);
-    
-    &:hover {
-      background: var(--ink-primary);
-      color: var(--paper-light);
-      border-color: var(--ink-primary);
-    }
+  /* Let the shared button partial handle all styling */
+  .canonical-button--secondary {
+    display: inline-flex;
   }
 }
 

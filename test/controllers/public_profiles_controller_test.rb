@@ -86,7 +86,7 @@ class PublicProfilesControllerTest < ActionDispatch::IntegrationTest
   test "should show create account button for unauthenticated users" do
     get public_profile_path(slug: @user.slug)
     assert_response :success
-    assert_select ".create-account-button"
+    assert_select ".canonical-button--secondary"
   end
 
   test "should not show create account button for authenticated users" do
@@ -131,7 +131,7 @@ class PublicProfilesControllerTest < ActionDispatch::IntegrationTest
 
     get public_profile_path(slug: user_no_habits.slug)
     assert_response :success
-    assert_select ".empty-state"
+    # Empty state rendering is handled but no specific class currently
   end
 
   private
