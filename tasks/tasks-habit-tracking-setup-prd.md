@@ -109,18 +109,18 @@ Implementation tasks for comprehensive habit management system including setting
 
 
 - [ ] 6.0 Public Profile Sharing Feature
-  - [ ] 6.1 Generate migration for slug and privacy fields
-  - [ ] 6.2 Update User model with slug/privacy validations
-  - [ ] 6.3 Generate PublicProfilesController
-  - [ ] 6.4 Add catch-all route for /:slug
-  - [ ] 6.5 Add slug input to settings profile section
-  - [ ] 6.6 Add privacy toggles (habits/reflections) to settings
-  - [ ] 6.7 Create privacy_settings Stimulus controller
-  - [ ] 6.8 Implement public profile show action with privacy checks
-  - [ ] 6.9 Create public_profiles/show.html.erb (read-only view)
-  - [ ] 6.10 Add "Create Account" button for non-auth users
-  - [ ] 6.11 Remove ENV["FIRST_USER"] hardcoding
-  - [ ] 6.12 Write tests for privacy and public access
+  - [x] 6.1 Generate migration for slug and privacy fields
+  - [x] 6.2 Update User model with slug/privacy validations
+  - [x] 6.3 Generate PublicProfilesController
+  - [x] 6.4 Add catch-all route for /:slug
+  - [x] 6.5 Add slug input to settings profile section
+  - [x] 6.6 Add privacy toggles (habits/reflections) to settings
+  - [x] 6.7 Create privacy_settings Stimulus controller
+  - [x] 6.8 Implement public profile show action with privacy checks
+  - [x] 6.9 Create public_profiles/show.html.erb (read-only view)
+  - [x] 6.10 Add "Create Account" button for non-auth users
+  - [x] 6.11 Remove ENV["FIRST_USER"] hardcoding
+  - [x] 6.12 Write tests for privacy and public access
   - [ ] 6.13 Manual test sharing flow end-to-end
   
 - [ ] 7.0 Polish and Integration

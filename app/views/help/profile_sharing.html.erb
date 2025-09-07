@@ -1,0 +1,91 @@
+<%# Help page for profile sharing %>
+<div class="paper-background">
+  <div class="container">
+    <div class="dot-grid-overlay">
+      
+      <%# Back button %>
+      <div class="settings-link-container">
+        <%= link_to "<", settings_path, class: "settings-link" %>
+      </div>
+      
+      <%# Header %>
+      <header class="month-header">
+        <h1>Profile Sharing Help</h1>
+      </header>
+      
+      <%# Help Content %>
+      <div class="help-content">
+        
+        <section class="help-section">
+          <h2 class="help-section-title">What is profile sharing?</h2>
+          <div class="help-text">
+            <p>Profile sharing lets you create a public view of your habit tracking progress to share with friends, accountability partners, or the community while maintaining full control over what's visible</p>
+          </div>
+        </section>
+        
+        <section class="help-section">
+          <h2 class="help-section-title">Setting up your public profile</h2>
+          <div class="help-text">
+            <p><strong>1. Choose your custom URL</strong></p>
+            <p>• Click on "your-custom-share-link" to edit your unique profile URL</p>
+            <p>• Your slug can contain lowercase letters, numbers, dashes, and underscores</p>
+            <p>• Example: verynormal.dev/jane-doe</p>
+            <p></p>
+            <p><strong>2. Select what to share</strong></p>
+            <p>• Use the checkboxes to control what appears on your public profile</p>
+            <p>• "Share my habits publicly" shows your habit names and completion status</p>
+            <p>• "Share my daily reflections publicly" shows your reflection notes</p>
+            <p></p>
+            <p><strong>3. Save your settings</strong></p>
+            <p>• Click "Save profile settings" to activate your public profile</p>
+            <p>• You can change these settings at any time</p>
+          </div>
+        </section>
+        
+        <section class="help-section">
+          <h2 class="help-section-title">Privacy controls</h2>
+          <div class="help-text">
+            <p>• Your profile is only visible if you set a custom URL</p>
+            <p>• Each privacy setting works independently</p>
+            <p>• Unchecking a box immediately hides that data</p>
+            <p>• Removing your slug disables your public profile entirely</p>
+          </div>
+        </section>
+        
+        <section class="help-section">
+          <h2 class="help-section-title">Sharing your profile</h2>
+          <div class="help-text">
+            <p>• Once you've saved your settings, your public profile is available at verynormal.dev/[your-slug]</p>
+            <p>• Click on your profile URL to copy it to your clipboard</p>
+            <p>• The small box icon (□) changes to indicate copying (⧉)</p>
+            <p>• Share this link with anyone you'd like to see your progress</p>
+            <p>• They don't need an account to view your public profile</p>
+          </div>
+        </section>
+        
+        <section class="help-section">
+          <h2 class="help-section-title">What visitors see</h2>
+          <div class="help-text">
+            <p>• The current month's habit tracker (if habits are public)</p>
+            <p>• Your daily reflections (if reflections are public)</p>
+            <p>• A read-only view - they cannot modify your data</p>
+            <p>• An invitation to create their own tracker</p>
+            <p>• Your email address and other personal information are never shown</p>
+          </div>
+        </section>
+        
+        <section class="help-section">
+          <h2 class="help-section-title">Tips for sharing</h2>
+          <div class="help-text">
+            <p>• Choose a memorable slug that represents you</p>
+            <p>• Consider what level of detail you're comfortable sharing</p>
+            <p>• You can temporarily disable sharing by unchecking both boxes</p>
+            <p>• Update your privacy settings as your comfort level changes</p>
+          </div>
+        </section>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>

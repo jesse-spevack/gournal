@@ -12,62 +12,11 @@
       </header>
       
       <%# Grid Layout: Day numbers + Habit columns + Reflection column %>
-      <div class="habit-grid" data-csrf-token="<%= form_authenticity_token %>">
-        
-        <%# Column Headers %>
-        <div class="grid-headers">
-          <div class="day-column-header"></div>
-          <% @tracker_data.habits.each do |habit| %>
-            <div class="habit-column-header">
-              <span class="habit-name"><%= habit.name %></span>
-            </div>
-          <% end %>
-          <div class="reflection-column-header">
-            <span class="reflection-label">Reflection</span>
-          </div>
-        </div>
-        
-        <%# Grid Rows: One row per day %>
-        <div class="grid-rows">
-          <% @tracker_data.days.each do |day| %>
-            <div class="day-row" data-day="<%= day %>">
-              
-              <%# Day Number %>
-              <div class="day-number"><%= day %></div>
-              
-              <%# Habit Checkboxes %>
-              <% @tracker_data.habits.each do |habit| %>
-                <div class="habit-checkbox">
-                  <% entry = @tracker_data.habit_entry_for(habit.id, day) %>
-                  <% if entry %>
-                    <%= render_habit_checkbox(entry) %>
-                  <% end %>
-                </div>
-              <% end %>
-              
-              <%# Reflection Column %>
-              <div class="reflection-cell">
-                <% reflection = @tracker_data.reflection_for(day) %>
-                <% reflection_date = Date.new(@tracker_data.year, @tracker_data.month, day) %>
-                <div 
-                  class="reflection-input"
-                  contenteditable="true"
-                  data-controller="reflection-editor"
-                  data-reflection-editor-id-value="<%= reflection&.id %>"
-                  data-reflection-editor-date-value="<%= reflection_date.iso8601 %>"
-                  data-reflection-editor-user-id-value="<%= @tracker_data.user&.id %>"
-                  data-action="input->reflection-editor#onInput blur->reflection-editor#onBlur"
-                  aria-label="Daily reflection for <%= format_full_date(reflection_date) %>"
-                  role="textbox"
-                  tabindex="0"
-                  data-placeholder=""><%= reflection&.content %></div>
-              </div>
-              
-            </div>
-          <% end %>
-        </div>
-        
-      </div>
+      <%= render 'shared/habit_grid', 
+          tracker_data: @tracker_data,
+          read_only: false,
+          show_habits: true,
+          show_reflections: true %>
       
     </div>
   </div>

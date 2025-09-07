@@ -1,0 +1,17 @@
+<%# Shared habit grid structure - accepts tracker_data and read_only flag %>
+<div class="habit-grid<%= ' habit-grid--readonly' if local_assigns[:read_only] %>" <%= 'data-csrf-token="' + form_authenticity_token + '"' unless local_assigns[:read_only] %>>
+  
+  <%# Column Headers %>
+  <%= render 'shared/habit_grid_headers', 
+      tracker_data: tracker_data, 
+      show_habits: local_assigns[:show_habits] != false,
+      show_reflections: local_assigns[:show_reflections] != false %>
+  
+  <%# Grid Rows: One row per day %>
+  <%= render 'shared/habit_grid_rows', 
+      tracker_data: tracker_data,
+      read_only: local_assigns[:read_only] || false,
+      show_habits: local_assigns[:show_habits] != false,
+      show_reflections: local_assigns[:show_reflections] != false %>
+  
+</div>

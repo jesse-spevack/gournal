@@ -62,3 +62,86 @@
   padding-left: 0;
   margin-left: 0;
 }
+
+/* Profile URL display with inline editing */
+.profile-url-section {
+  margin-bottom: var(--space-lg);
+}
+
+.profile-url-display {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: var(--space-sm);
+  line-height: 1.4;
+  position: relative;
+  
+  /* Add copy indicator after the full URL */
+  &::after {
+    content: "□";
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-primary);
+    opacity: var(--opacity-secondary);
+    margin-left: var(--space-sm);
+    transition: all var(--duration-fast) var(--ease-standard);
+    cursor: pointer;
+  }
+  
+  &:hover {
+    cursor: pointer;
+    
+    &::after {
+      opacity: 1;
+      content: "⧉";
+    }
+  }
+  
+  /* Copied state feedback */
+  &.url-copied::after {
+    content: "✓";
+    opacity: 1;
+    color: var(--success-color, var(--ink-primary));
+  }
+}
+
+.profile-url-prefix {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: var(--opacity-secondary);
+  white-space: nowrap;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.profile-slug-editable {
+  font-family: var(--font-caveat);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  padding: 2px 4px;
+  border-radius: 2px;
+  
+  &:hover {
+    background: var(--paper-hover);
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 3px;
+  }
+  
+  /* When no slug is set, make it look like placeholder */
+  &[data-placeholder="true"] {
+    opacity: var(--opacity-placeholder);
+    font-style: italic;
+  }
+}
+
+.field-error {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-error);
+  margin-top: var(--space-xs);
+  letter-spacing: var(--letter-spacing-tight);
+}

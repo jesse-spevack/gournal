@@ -43,7 +43,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # Check section titles
     assert_select "h2.settings-section-title", text: "Manage habits"
-    assert_select "h2.settings-section-title", text: "Profile & Sharing"
+    assert_select "h2.settings-section-title", text: "Profile sharing"
 
     # Month setup section should be hidden when user has no habits
     assert_select ".settings-section.month-setup", count: 0
@@ -78,7 +78,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # Check section titles
     assert_select "h2.settings-section-title", text: "Manage habits"
-    assert_select "h2.settings-section-title", text: "Profile & Sharing"
+    assert_select "h2.settings-section-title", text: "Profile sharing"
   end
 
   test "should hide back button when user has no habits" do
