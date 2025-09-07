@@ -52,9 +52,19 @@
   background: none;
   border: none;
   
+  /* Prevent line wrap with ellipsis truncation */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
   /* Handle simple_format paragraphs */
   p {
     margin: 0 0 var(--space-xs) 0;
+    
+    /* Apply truncation to paragraphs too */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     
     &:last-child {
       margin-bottom: 0;
