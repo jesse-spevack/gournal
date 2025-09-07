@@ -8,7 +8,7 @@
       <div class="checkbox-grid">
         <% 10.times do |i| %>
           <div class="checkbox-demo-item">
-            <%= render "checkboxes/box_#{i}" %>
+            <%= habit_checkbox(box_variant: i) %>
             <span class="variant-label">Box <%= i %></span>
           </div>
         <% end %>
@@ -22,9 +22,12 @@
     <div class="checkbox-showcase">
       <div class="checkbox-grid">
         <% 10.times do |i| %>
-          <div class="checkbox-demo-item checked">
-            <%= render "checkboxes/box_0" %>
-            <%= render "checkboxes/x_#{i}" %>
+          <div class="checkbox-demo-item">
+            <%= habit_checkbox(
+              box_variant: 0,
+              fill_variant: i,
+              fill_style: :x
+            ) %>
             <span class="variant-label">X <%= i %></span>
           </div>
         <% end %>
@@ -38,9 +41,12 @@
     <div class="checkbox-showcase">
       <div class="checkbox-grid">
         <% 10.times do |i| %>
-          <div class="checkbox-demo-item checked">
-            <%= render "checkboxes/box_0" %>
-            <%= render "checkboxes/blot_#{i}" %>
+          <div class="checkbox-demo-item">
+            <%= habit_checkbox(
+              box_variant: 0,
+              fill_variant: i,
+              fill_style: :blot
+            ) %>
             <span class="variant-label">Blot <%= i %></span>
           </div>
         <% end %>
@@ -100,26 +106,21 @@
 
 <style>
   .checkbox-demo-item {
-    position: relative;
-    width: 24px;
-    height: 24px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 4px;
+    min-height: calc(var(--checkbox-size) + var(--space-checkbox-gap));
+    margin-bottom: var(--space-checkbox-gap);
   }
   
-  .checkbox-demo-item svg {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .checkbox-demo-item.checked {
-    svg:last-child {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
+  .checkbox-demo-item .checkbox-container {
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    margin-right: var(--space-column-gap);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
   
   .variant-label {
@@ -131,9 +132,9 @@
   }
   
   .checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-checkbox-gap);
     padding: 16px;
     background: var(--paper-light);
     border-radius: 4px;
@@ -142,7 +143,7 @@
   .checkbox-grid-interactive {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--space-checkbox-gap);
     padding: 16px;
     background: var(--paper-light);
     border-radius: 4px;
@@ -151,16 +152,22 @@
   .habit-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    min-height: calc(var(--checkbox-size) + var(--space-checkbox-gap));
+    margin-bottom: var(--space-checkbox-gap);
   }
   
   .day-number {
-    font-family: var(--font-mono);
     font-size: var(--text-xs);
+    font-family: var(--font-mono);
     color: var(--ink-primary);
-    opacity: 0.6;
+    opacity: var(--opacity-numbers);
     min-width: 20px;
     text-align: right;
+    margin-right: 8px;
+    letter-spacing: var(--letter-spacing-tight);
+    height: var(--checkbox-size);
+    display: inline-flex;
+    align-items: center;
   }
   
   .habit-label {

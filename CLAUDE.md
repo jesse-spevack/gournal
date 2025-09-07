@@ -142,6 +142,12 @@ app/assets/stylesheets/
 
 ## Typography & Design System
 
+### Required Reading Before View Work
+**Always review these files before working on views:**
+- `docs/design_system.md` - Complete design system documentation
+- `app/views/shared/` - Reusable view partials and components
+- `app/views/style_guide/` - Living style guide with component examples
+
 ### Font Rules
 - **Typewriter Font** (`var(--font-mono)`): System UI elements
   - Labels, buttons, headers, navigation
@@ -192,6 +198,83 @@ ls -lh app/assets/builds/application.css | awk '{print $5}'
 5. **Manual UI testing** - Skip brittle system tests
 6. **Design tokens everywhere** - Consistent visual language
 7. **Sentence case UI** - Friendly, not shouty
+
+## View Development Guidelines
+
+### Required Reading Before View Work
+**Always review these files before working on views:**
+- `docs/design_system.md` - Complete design system documentation
+- `app/views/shared/` - Reusable view partials and components
+- `app/views/style_guide/` - Living style guide with component examples
+
+### Typography & Font Rules
+- **Typewriter Font** (`var(--font-mono)`): System UI elements
+  - Labels, buttons, headers, navigation, day numbers
+  - Standard size: `var(--text-xs)` (11px) for ALL UI elements
+  - Never use larger fonts to simulate "old typewriters"
+  
+- **Script Font** (`var(--font-caveat)`): User-generated content
+  - Habit names, reflections, user input
+  - Size: 18px for readability
+
+### Button System
+Use shared button partials for all buttons:
+- `shared/primary_button` - Main actions (Save, Create, Submit)
+- `shared/secondary_button` - Less prominent actions (Cancel, Links)  
+- `shared/context_button` - Menu items with danger/cancel variants
+- `shared/navigation_button` - Back links, help buttons (variants: 'nav', 'help')
+
+```erb
+<%= render 'shared/primary_button', text: 'Save settings', type: 'submit' %>
+<%= render 'shared/secondary_button', text: 'Cancel', url: root_path %>
+<%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_path %>
+```
+
+### Layout Patterns
+
+#### Paper Background Structure
+All main pages use this hierarchy:
+```erb
+<div class="paper-background">
+  <div class="container">
+    <div class="dot-grid-overlay">
+      <header class="month-header">
+        <h1>Page Title</h1>
+      </header>
+      <!-- Page content -->
+    </div>
+  </div>
+</div>
+```
+
+#### Habit Tracking Grid
+Checkboxes appear in structured vertical grids:
+- Day numbers on left (11px font-mono)
+- Habits in columns with minimal spacing (4px gaps)
+- No background containers around checkbox groups
+- Use `habit_checkbox` helper for all checkbox rendering
+
+#### Form Patterns
+- Auth forms: Use button partials with `width: 100%` styling
+- Settings forms: Primary buttons for submit, secondary for cancel
+- Inline forms: Navigation buttons for help/utility actions
+
+### Spacing & Visual Hierarchy
+- Use design tokens: `var(--space-xs)`, `var(--space-sm)`, etc.
+- Checkbox gaps: 0px vertical, 4px horizontal (`--space-checkbox-gap`)
+- No decorative containers - clean paper aesthetic
+- Minimal visual hierarchy - content over decoration
+
+### Component Integration
+- Always use existing partials from `app/views/shared/`
+- Check style guide for component demonstrations
+- Follow existing patterns in similar views
+- Integrate with Stimulus controllers when needed
+
+### Capitalization
+- **Always use sentence case** throughout the application
+- Never use UPPERCASE (except acronyms)
+- Title case only for proper nouns
 
 ## Quick Reference
 
