@@ -13,6 +13,13 @@
   max-width: 300px;
   position: relative;
   
+  /* Desktop: Wider reflection area for better readability */
+  @media (min-width: 480px) {
+    width: 400px;
+    max-width: 400px;
+    min-height: 2em; /* Match input min-height for consistency */
+  }
+  
   /* Mobile responsive adjustments */
   @media (max-width: 479px) {
     width: 200px;
@@ -47,7 +54,7 @@
   box-shadow: none;
   border-radius: 0;
   
-  /* Single-line with ellipsis - this works properly on contenteditable divs */
+  /* Base styles: Single-line with ellipsis (mobile behavior by default) */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -63,6 +70,16 @@
     display: none; /* Chrome/Safari */
   }
   
+  /* Desktop: Override mobile behavior to allow multi-line reflections */
+  @media (min-width: 480px) {
+    white-space: normal;
+    word-wrap: break-word;
+    min-height: 2em; /* Allow for at least 2 lines */
+    max-height: 6em; /* Limit to reasonable height */
+    overflow-y: auto; /* Allow vertical scroll for very long content */
+    text-overflow: initial; /* Remove ellipsis for multi-line display */
+  }
+  
   /* Empty state placeholder */
   &:empty::before {
     content: attr(data-placeholder);
@@ -70,11 +87,17 @@
     font-style: italic;
   }
   
-  /* Focused State - allow horizontal scroll while typing */
+  /* Focused State */
   &:focus {
-    /* Enable scrolling while typing and remove ellipsis */
+    /* Mobile: Enable horizontal scroll while typing */
     overflow-x: auto;
     text-overflow: clip;
+    
+    /* Desktop: Keep vertical scroll, no horizontal scroll needed */
+    @media (min-width: 480px) {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
   }
   
   /* Save Status Indicators - subtle opacity change only */
