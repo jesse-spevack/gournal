@@ -37,12 +37,12 @@
       </div>
       
       <div class="form-submit">
-        <%= form.submit "Create account" %>
+        <%= render 'shared/primary_button', text: 'Create account', type: 'submit' %>
       </div>
     <% end %>
     
     <div class="form-links">
-      <%= link_to "Already have an account? Sign in", new_session_path %>
+      <%= render 'shared/secondary_button', text: 'Already have an account? Sign in', url: new_session_path %>
     </div>
   </div>
 </div>

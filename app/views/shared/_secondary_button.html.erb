@@ -1,0 +1,23 @@
+<%
+# Secondary Button Partial
+# 
+# Usage:
+#   render 'shared/secondary_button', text: 'Cancel', url: root_path
+#   render 'shared/secondary_button', text: 'View help'
+
+text = local_assigns[:text] || 'Button'
+type = local_assigns[:type] || 'button' 
+disabled = local_assigns[:disabled] || false
+url = local_assigns[:url]
+
+# Build HTML attributes
+html_attrs = local_assigns.except(:text, :type, :disabled, :url)
+html_attrs[:class] = [html_attrs[:class], 'canonical-button', 'canonical-button--secondary'].flatten.compact.join(' ')
+html_attrs[:disabled] = true if disabled && !url
+%>
+
+<% if url %>
+  <%= link_to text, url, html_attrs %>
+<% else %>
+  <%= button_tag text, html_attrs.merge(type: type, disabled: disabled) %>
+<% end %>

@@ -48,35 +48,32 @@
        data-context-menu-target="menu"
        role="menu"
        aria-label="Habit actions">
-    <button class="context-menu__item" 
-            data-action="click->context-menu#editName"
-            role="menuitem" 
-            tabindex="-1">
-      Edit name
-    </button>
-    <button class="context-menu__item" 
-            data-action="click->context-menu#moveUp"
-            role="menuitem" 
-            tabindex="-1">
-      Move up
-    </button>
-    <button class="context-menu__item" 
-            data-action="click->context-menu#moveDown"
-            role="menuitem" 
-            tabindex="-1">
-      Move down
-    </button>
-    <button class="context-menu__item context-menu__item--danger" 
-            data-action="click->context-menu#deleteHabit"
-            role="menuitem" 
-            tabindex="-1">
-      Delete habit
-    </button>
-    <button class="context-menu__item context-menu__item--cancel" 
-            data-action="click->context-menu#hideMenu"
-            role="menuitem" 
-            tabindex="-1">
-      Cancel
-    </button>
+    <%= render 'shared/context_button', 
+        text: 'Edit name', 
+        data: { action: "click->context-menu#editName" },
+        role: "menuitem",
+        tabindex: "-1" %>
+    <%= render 'shared/context_button', 
+        text: 'Move up', 
+        data: { action: "click->context-menu#moveUp" },
+        role: "menuitem",
+        tabindex: "-1" %>
+    <%= render 'shared/context_button', 
+        text: 'Move down', 
+        data: { action: "click->context-menu#moveDown" },
+        role: "menuitem",
+        tabindex: "-1" %>
+    <%= render 'shared/context_button', 
+        text: 'Delete habit', 
+        danger: true,
+        data: { action: "click->context-menu#deleteHabit" },
+        role: "menuitem",
+        tabindex: "-1" %>
+    <%= render 'shared/context_button', 
+        text: 'Cancel', 
+        cancel: true,
+        data: { action: "click->context-menu#hideMenu" },
+        role: "menuitem",
+        tabindex: "-1" %>
   </div>
 </div>

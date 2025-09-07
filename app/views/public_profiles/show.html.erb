@@ -13,7 +13,7 @@
         <%# Create Account CTA for unauthenticated users %>
         <% unless authenticated? %>
           <div class="create-account-cta">
-            <%= link_to "Create your own Gournal", new_user_path, class: "create-account-button" %>
+            <%= render 'shared/secondary_button', text: 'Create your own Gournal', url: new_user_path, class: 'create-account-button' %>
           </div>
         <% end %>
       </header>
@@ -35,7 +35,7 @@
             <%# Additional CTA in empty state for unauthenticated users %>
             <% unless authenticated? %>
               <div class="empty-state-cta">
-                <%= link_to "Create your own Gournal", new_user_path, class: "create-account-button create-account-button--secondary" %>
+                <%= render 'shared/secondary_button', text: 'Create your own Gournal', url: new_user_path, class: 'create-account-button' %>
               </div>
             <% end %>
           </div>

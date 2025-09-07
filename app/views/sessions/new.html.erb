@@ -23,12 +23,12 @@
       </div>
       
       <div class="form-submit">
-        <%= form.submit "Sign in" %>
+        <%= render 'shared/primary_button', text: 'Sign in', type: 'submit' %>
       </div>
     <% end %>
     
     <div class="form-links">
-      <%= link_to "Create an account", new_user_path %>
+      <%= render 'shared/secondary_button', text: 'Create an account', url: new_user_path %>
     </div>
   </div>
 </div>

@@ -6,7 +6,7 @@
       <%# Back button in top-right - only show if user has habits %>
       <% if @habits.any? %>
         <div class="settings-link-container">
-          <%= link_to "<", root_path, class: "settings-link" %>
+          <%= render 'shared/navigation_button', text: '<', url: root_path, class: 'settings-link' %>
         </div>
       <% end %>
       
@@ -22,7 +22,7 @@
         <section class="settings-section habits-management">
           <div class="section-header">
             <h2 class="settings-section-title">Manage habits</h2>
-            <%= link_to "(?)", help_manage_habits_path, class: "help-button" %>
+            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_manage_habits_path %>
           </div>
           <div class="section-content">
             <%= render "habit_list", habits: @habits %>
@@ -40,7 +40,7 @@
         <section class="settings-section profile-sharing">
           <div class="section-header">
             <h2 class="settings-section-title">Profile sharing</h2>
-            <%= link_to "(?)", help_profile_sharing_path, class: "help-button" %>
+            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_profile_sharing_path %>
           </div>
           <div class="section-content">
             <%= render "profile_sharing_section", user: @user %>

@@ -8,13 +8,13 @@
 <% if @next_month_habits_exist %>
   <%# Show view next month link when habits already exist %>
   <div class="section-header">
-    <%= link_to "View #{month_name} ↗", habit_entries_path(year: target_year, month: target_month), class: "settings-section-title month-view-heading" %>
+    <%= render 'shared/secondary_button', text: "View #{month_name} ↗", url: habit_entries_path(year: target_year, month: target_month), class: "settings-section-title month-view-heading" %>
   </div>
 <% else %>
   <%# Show header and setup form when no habits exist %>
   <div class="section-header">
     <h2 class="settings-section-title">Set up next month</h2>
-    <%= link_to "(?)", help_next_month_setup_path, class: "help-button" %>
+    <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_next_month_setup_path %>
   </div>
   <div class="section-content">
   <%# Show month setup form when no habits exist %>
@@ -85,12 +85,11 @@
         
       </div>
       
-      <button type="submit" 
-              class="month-setup-submit"
-              data-month-setup-target="submitButton"
-              disabled>
-        Set up <%= month_name %>
-      </button>
+      <%= render 'shared/primary_button', 
+          text: "Set up #{month_name}", 
+          type: 'submit',
+          disabled: true,
+          data: { month_setup_target: "submitButton" } %>
       
     <% end %>
     
