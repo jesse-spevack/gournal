@@ -17,7 +17,7 @@
   @media (min-width: 480px) {
     width: 400px;
     max-width: 400px;
-    min-height: 3em; /* Accommodate multi-line content */
+    min-height: 2em; /* Match input min-height for consistency */
   }
   
   /* Mobile responsive adjustments */
@@ -54,7 +54,7 @@
   box-shadow: none;
   border-radius: 0;
   
-  /* Single-line with ellipsis on mobile only */
+  /* Base styles: Single-line with ellipsis (mobile behavior by default) */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -70,14 +70,14 @@
     display: none; /* Chrome/Safari */
   }
   
-  /* Desktop: Allow multi-line reflections */
+  /* Desktop: Override mobile behavior to allow multi-line reflections */
   @media (min-width: 480px) {
     white-space: normal;
     word-wrap: break-word;
     min-height: 2em; /* Allow for at least 2 lines */
     max-height: 6em; /* Limit to reasonable height */
     overflow-y: auto; /* Allow vertical scroll for very long content */
-    text-overflow: initial;
+    text-overflow: initial; /* Remove ellipsis for multi-line display */
   }
   
   /* Empty state placeholder */
