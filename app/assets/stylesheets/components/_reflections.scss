@@ -90,7 +90,7 @@
 /* Mobile-specific adjustments */
 @media (max-width: 479px) {
   .reflection-input {
-    font-size: var(--text-form); /* Slightly smaller on mobile */
+    font-size: var(--text-small); /* Slightly smaller on mobile */
     padding: var(--space-xs) var(--space-sm);
   }
   

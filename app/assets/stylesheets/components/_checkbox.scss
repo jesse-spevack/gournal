@@ -4,35 +4,33 @@
 
 /* Checkbox grid and item layout */
 .checkbox-showcase {
-  background: radial-gradient(ellipse at top left, var(--paper-light) 0%, var(--paper-mid) 40%, var(--paper-dark) 100%);
-  padding: 40px;
-  border-radius: 8px;
+  background: none;
+  padding: var(--space-md);
   position: relative;
-  margin: 20px 0;
+  margin: var(--space-sm) 0;
 }
 
 .checkbox-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 30px;
-  align-items: start;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-checkbox-gap);
+  align-items: stretch;
 }
 
 .checkbox-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-column-gap);
+  padding: var(--space-checkbox-gap) 0;
 }
 
 .checkbox-label {
   display: block;
-  margin-top: 10px;
-  font-size: var(--text-small);
+  font-size: var(--text-xxs);
   color: var(--ink-primary);
   font-family: var(--font-mono);
-  opacity: 0.8;
+  opacity: var(--opacity-secondary);
 }
 
 /* Interactive checkbox wrapper */

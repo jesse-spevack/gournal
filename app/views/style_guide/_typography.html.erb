@@ -5,44 +5,56 @@
     <h3 class="subsection-title">Font Families & Usage</h3>
     <div class="typography-sample">
       <div class="type-label">Typewriter Font (Special Elite) - UI Elements</div>
-      <div class="type-example" style="font-family: 'Special Elite', monospace; font-size: 11px;">
+      <div class="type-example" style="font-family: var(--font-mono); font-size: var(--text-xs);">
         Settings • Edit name • Move up • Move down • Delete habit
       </div>
       <div class="type-description">Used for headers, labels, buttons, context menus, and all interface text. Standard size: 11px (--text-xs)</div>
     </div>
     <div class="typography-sample">
       <div class="type-label">Cursive Font (Caveat) - User Input</div>
-      <div class="type-example" style="font-family: 'Caveat', cursive; font-size: 18px; font-weight: 500;">
+      <div class="type-example" style="font-family: var(--font-caveat); font-size: var(--text-md);">
         Morning meditation • Read 20 pages • Drink more water
       </div>
-      <div class="type-description">Used for habit names, reflections, and all user-generated content</div>
+      <div class="type-description">Used for habit names, reflections, and all user-generated content. Size: 18px (--text-md)</div>
     </div>
     <div class="typography-sample">
       <div class="type-label">Watermark only (Georgia, serif)</div>
-      <div class="type-example" style="font-family: Georgia, serif; font-size: 11px; opacity: 0.25; font-style: italic;">
+      <div class="type-example" style="font-family: var(--font-serif); font-size: var(--text-xs); opacity: var(--opacity-watermark); font-style: italic;">
         和紙
       </div>
-      <div class="type-description">Decorative element only</div>
+      <div class="type-description">Decorative element only. Size: 11px (--text-xs)</div>
     </div>
   </div>
 
   <div class="subsection">
     <h3 class="subsection-title">Type Scale</h3>
     <div class="typography-sample">
-      <div class="type-label">Standard UI Text (11px - --text-xs)</div>
-      <div class="type-example" style="font-size: 11px; font-family: 'Special Elite', monospace;">
-        Settings • Manage habits • Context menu items
+      <div class="type-label">Micro Text (11px - --text-xxs)</div>
+      <div class="type-example" style="font-size: var(--text-xxs); font-family: var(--font-mono);">
+        Day numbers, watermark, micro UI elements
       </div>
     </div>
     <div class="typography-sample">
-      <div class="type-label">Reflection Text (12px)</div>
-      <div class="type-example" style="font-size: 12px; font-family: 'Courier New', monospace; opacity: 0.8;">
-        Started the day with green smoothie and felt energized. Evening yoga helped with sleep quality.
+      <div class="type-label">Small Text (12px - --text-xs)</div>
+      <div class="type-example" style="font-size: var(--text-xs); font-family: var(--font-mono); opacity: 0.8;">
+        Small text, reflection text
       </div>
     </div>
     <div class="typography-sample">
-      <div class="type-label">Day Numbers (11px - --text-xs)</div>
-      <div class="type-example" style="font-size: 11px; font-family: 'Special Elite', monospace; opacity: 0.75;">
+      <div class="type-label">Mobile Reflection Text (13px - --text-small)</div>
+      <div class="type-example" style="font-size: var(--text-small); font-family: var(--font-caveat);">
+        Reflections on mobile (smaller than 18px desktop size)
+      </div>
+    </div>
+    <div class="typography-sample">
+      <div class="type-label">User Content (18px - --text-md)</div>
+      <div class="type-example" style="font-size: var(--text-md); font-family: var(--font-caveat);">
+        Habit names and reflections (Caveat font)
+      </div>
+    </div>
+    <div class="typography-sample">
+      <div class="type-label">Day Numbers (11px - --text-xxs)</div>
+      <div class="type-example" style="font-size: var(--text-xxs); font-family: var(--font-mono); opacity: var(--opacity-numbers);">
         1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
       </div>
     </div>

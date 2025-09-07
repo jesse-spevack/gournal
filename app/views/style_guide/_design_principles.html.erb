@@ -31,12 +31,12 @@
     <div class="principle-item">
       <h4 class="principle-title">Typography hierarchy</h4>
       <div class="principle-example neutral">
-        <div class="example-text" style="font-size: 18px; font-weight: 600;">Page title</div>
-        <div class="example-text" style="font-size: 14px; font-weight: 500; margin-top: 8px;">Section header</div>
-        <div class="example-text" style="font-size: 12px; margin-top: 4px;">Body text and descriptions</div>
+        <div class="example-text" style="font-family: var(--font-caveat); font-size: var(--text-md);">Habit names (Caveat, 18px)</div>
+        <div class="example-text" style="font-family: var(--font-caveat); font-size: var(--text-small); margin-top: var(--space-sm);">Mobile reflections (Caveat, 13px)</div>
+        <div class="example-text" style="font-family: var(--font-mono); font-size: var(--text-xxs); margin-top: var(--space-xs);">UI labels (Special Elite, 11px)</div>
       </div>
       <div class="principle-description">
-        Use size and opacity to create hierarchy, not case transformation.
+        Two font families: Special Elite (typewriter) for UI, Caveat (script) for user content. Use opacity for hierarchy, not weight.
       </div>
     </div>
   </div>
@@ -45,16 +45,30 @@
     <h3 class="subsection-title">Interface principles</h3>
     
     <div class="principle-item">
-      <h4 class="principle-title">Bullet journal aesthetic</h4>
+      <h4 class="principle-title">Japanese paper aesthetic</h4>
       <div class="principle-description">
-        The interface should feel like writing in a physical bullet journal - calm, organized, and handwritten.
+        Clean washi paper background with organic dot grid. No decorative containers or gradients - let the content breathe.
       </div>
     </div>
 
     <div class="principle-item">
-      <h4 class="principle-title">Minimal and functional</h4>
+      <h4 class="principle-title">Hand-drawn variety</h4>
       <div class="principle-description">
-        Every element serves a purpose. Avoid decorative elements that don't enhance usability.
+        Each checkbox has unique hand-drawn variations (10 box styles, 10 X marks, 10 ink blots) for organic diversity.
+      </div>
+    </div>
+
+    <div class="principle-item">
+      <h4 class="principle-title">Tight vertical spacing</h4>
+      <div class="principle-description">
+        Zero gap between checkbox rows (--space-checkbox-gap: 0px) with minimal column gaps (--space-column-gap: 4px) for compact tracking.
+      </div>
+    </div>
+
+    <div class="principle-item">
+      <h4 class="principle-title">Design tokens only</h4>
+      <div class="principle-description">
+        Always use CSS custom properties from _design-tokens.scss. No hardcoded values for colors, spacing, or typography.
       </div>
     </div>
   </div>

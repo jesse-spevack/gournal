@@ -25,7 +25,7 @@
 
 .settings-section-title {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-xxs);
   color: var(--ink-primary);
   opacity: var(--opacity-headers);
   letter-spacing: var(--letter-spacing-wide);
@@ -34,7 +34,7 @@
 
 .help-button {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-xxs);
   color: var(--ink-primary);
   opacity: var(--opacity-secondary);
   text-decoration: none;
@@ -50,7 +50,7 @@
 
 .settings-description {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-xxs);
   color: var(--ink-primary);
   opacity: var(--opacity-secondary);
   letter-spacing: var(--letter-spacing-tight);
@@ -80,7 +80,7 @@
   &::after {
     content: "□";
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--text-xxs);
     color: var(--ink-primary);
     opacity: var(--opacity-secondary);
     margin-left: var(--space-sm);
@@ -107,7 +107,7 @@
 
 .profile-url-prefix {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-xxs);
   color: var(--ink-primary);
   opacity: var(--opacity-secondary);
   white-space: nowrap;
@@ -140,7 +140,7 @@
 
 .field-error {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-xxs);
   color: var(--ink-error);
   margin-top: var(--space-xs);
   letter-spacing: var(--letter-spacing-tight);
