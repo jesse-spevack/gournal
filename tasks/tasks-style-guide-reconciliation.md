@@ -8,15 +8,15 @@
   - [x] 1.3 Remove large spacing between checkbox items
   - [x] 1.4 Update checkbox demo item styling to match habit grid
 
-- [ ] 2.0 Remove style guide container backgrounds and decorative elements  
+- [x] 2.0 Remove style guide container backgrounds and decorative elements  
   - [x] 2.1 Remove .checkbox-showcase background gradients
   - [x] 2.2 Remove excessive padding from demo containers
   - [x] 2.3 Remove decorative border-radius styling
   - [x] 2.4 Update to match clean paper background aesthetic
 
 - [ ] 3.0 Create realistic habit tracking context demos
-  - [ ] 3.1 Add "Habit Tracking Context" section to checkbox demo
-  - [ ] 3.2 Create mini habit grid example with day numbers
+  - [x] 3.1 Add "Habit Tracking Context" section to checkbox demo
+  - [x] 3.2 Create mini habit grid example with day numbers
   - [ ] 3.3 Show checkboxes in actual row/column structure
   - [ ] 3.4 Add habit name headers as in real implementation
 

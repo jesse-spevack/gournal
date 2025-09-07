@@ -4,6 +4,7 @@
   <div class="subsection">
     <h3 class="subsection-title">Box Variations (10 hand-drawn styles)</h3>
     <p class="section-description">Each checkbox has a unique hand-drawn outline for organic variety</p>
+    <p class="educational-note"><strong>Development note:</strong> These individual variations are combined randomly in production using the <code>habit_checkbox</code> helper. Box variants are selected automatically to create organic diversity.</p>
     <div class="checkbox-showcase">
       <div class="checkbox-grid">
         <% 10.times do |i| %>
@@ -19,6 +20,7 @@
   <div class="subsection">
     <h3 class="subsection-title">X Mark Variations (10 styles)</h3>
     <p class="section-description">Hand-drawn X marks with varying stroke weights</p>
+    <p class="educational-note"><strong>Usage:</strong> X marks are displayed when <code>fill_style: :x</code> is passed to the helper. The <code>fill_variant</code> parameter selects which X style to render.</p>
     <div class="checkbox-showcase">
       <div class="checkbox-grid">
         <% 10.times do |i| %>
@@ -38,6 +40,7 @@
   <div class="subsection">
     <h3 class="subsection-title">Blot Fill Variations (10 styles)</h3>
     <p class="section-description">Organic ink blot fills for checked state</p>
+    <p class="educational-note"><strong>Usage:</strong> Ink blots are displayed when <code>fill_style: :blot</code> is passed to the helper. Each blot has unique organic shapes for natural variety.</p>
     <div class="checkbox-showcase">
       <div class="checkbox-grid">
         <% 10.times do |i| %>
@@ -82,6 +85,74 @@
   </div>
 
   <div class="subsection">
+    <h3 class="subsection-title">Habit Tracking Context</h3>
+    <p class="section-description">Checkboxes in actual row/column grid structure as used in production</p>
+    <div class="checkbox-showcase">
+      <div class="habit-grid">
+        <%# Grid Headers - matches actual habit_grid_headers.html.erb structure %>
+        <div class="grid-headers">
+          <div class="day-column-header"></div>
+          <div class="habit-column-header">
+            <span class="habit-name">Morning pages</span>
+          </div>
+          <div class="habit-column-header">
+            <span class="habit-name">Meditation</span>
+          </div>
+          <div class="habit-column-header">
+            <span class="habit-name">Exercise</span>
+          </div>
+          <div class="reflection-column-header">
+            <span class="reflection-label">Reflection</span>
+          </div>
+        </div>
+        
+        <%# Grid Rows - matches actual habit_grid_rows.html.erb structure %>
+        <div class="grid-rows">
+          <% [1, 2, 3, 4, 5].each do |day| %>
+            <div class="day-row" data-day="<%= day %>">
+              <%# Day Number %>
+              <div class="day-number"><%= day %></div>
+              
+              <%# Habit Checkboxes %>
+              <div class="habit-checkbox">
+                <% show_fill = rand < 0.6 %>
+                <%= habit_checkbox(
+                  box_variant: rand(10),
+                  fill_variant: show_fill ? rand(10) : nil,
+                  fill_style: show_fill ? [:x, :blot].sample : nil
+                ) %>
+              </div>
+              <div class="habit-checkbox">
+                <% show_fill = rand < 0.4 %>
+                <%= habit_checkbox(
+                  box_variant: rand(10),
+                  fill_variant: show_fill ? rand(10) : nil,
+                  fill_style: show_fill ? [:x, :blot].sample : nil
+                ) %>
+              </div>
+              <div class="habit-checkbox">
+                <% show_fill = rand < 0.7 %>
+                <%= habit_checkbox(
+                  box_variant: rand(10),
+                  fill_variant: show_fill ? rand(10) : nil,
+                  fill_style: show_fill ? [:x, :blot].sample : nil
+                ) %>
+              </div>
+              
+              <%# Reflection Column %>
+              <div class="reflection-cell">
+                <div class="reflection-content">
+                  <%= day == 3 ? "Felt energized today!" : "" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
     <h3 class="subsection-title">Mixed Random Grid</h3>
     <p class="section-description">Simulating the organic variety in actual use</p>
     <div class="checkbox-showcase">
@@ -100,6 +171,38 @@
           </div>
         <% end %>
       </div>
+    </div>
+  </div>
+  
+  <div class="subsection">
+    <h3 class="subsection-title">Developer Guide</h3>
+    <div class="developer-guide">
+      <h4>Helper vs. Partials</h4>
+      <p><strong>Recommended:</strong> Use <code>habit_checkbox</code> helper for all production code:</p>
+      <pre><code>&lt;%= habit_checkbox(
+  box_variant: 3,
+  fill_variant: 7,
+  fill_style: :x
+) %&gt;</code></pre>
+      
+      <h4>Individual Partials</h4>
+      <p><strong>Advanced use only:</strong> Individual partials are available for special cases:</p>
+      <ul>
+        <li><code>checkboxes/_box_0</code> through <code>_box_9</code> - Box outlines only</li>
+        <li><code>checkboxes/_x_0</code> through <code>_x_9</code> - X mark fills</li>
+        <li><code>checkboxes/_blot_0</code> through <code>_blot_9</code> - Ink blot fills</li>
+      </ul>
+      
+      <h4>Layout Patterns</h4>
+      <p>Checkboxes are always arranged vertically in production with zero gap spacing (<code>--space-checkbox-gap: 0px</code>). The horizontal grids shown in individual variations are for demonstration only.</p>
+      
+      <h4>Design Tokens</h4>
+      <p>Always use design tokens for spacing and sizing:</p>
+      <ul>
+        <li><code>--checkbox-size</code> - Standard checkbox dimensions</li>
+        <li><code>--space-column-gap</code> - Spacing between habit columns</li>
+        <li><code>--space-checkbox-gap</code> - Spacing between checkbox rows (0px)</li>
+      </ul>
     </div>
   </div>
 </div>
@@ -168,14 +271,14 @@
   
   .habit-label {
     font-family: var(--font-caveat);
-    font-size: 18px;
+    font-size: var(--text-md);
     color: var(--ink-primary);
   }
   
   .checkbox-grid-mixed {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
-    gap: 4px;
+    grid-template-columns: repeat(auto-fill, var(--checkbox-size));
+    gap: var(--space-column-gap);
     padding: var(--space-xs);
   }
   
@@ -184,6 +287,89 @@
     font-size: var(--text-xs);
     color: var(--ink-primary);
     opacity: 0.7;
-    margin-bottom: 12px;
+    margin-bottom: var(--space-md);
+  }
+  
+  /* Style guide uses production habit grid styles from _habit-tracking-layout.scss */
+  .habit-grid {
+    max-width: 500px; /* Constrain width for demo */
+  }
+  
+  /* Override reflection cell for demo purposes */
+  .reflection-cell {
+    flex-grow: 1;
+    min-height: var(--checkbox-size);
+    display: flex;
+    align-items: center;
+    padding-left: var(--space-column-gap);
+  }
+  
+  .reflection-content {
+    font-family: var(--font-caveat);
+    font-size: var(--text-small);
+    color: var(--ink-primary);
+    opacity: 0.8;
+  }
+  
+  /* Educational content styling */
+  .educational-note {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-primary);
+    opacity: 0.8;
+    background: var(--paper-form-bg);
+    padding: var(--space-sm) var(--space-md);
+    margin: var(--space-sm) 0;
+    border-left: 2px solid var(--ink-primary-10);
+  }
+  
+  .developer-guide {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-primary);
+    background: var(--paper-form-bg);
+    padding: var(--space-md);
+    margin: var(--space-sm) 0;
+    border-radius: var(--space-sm);
+  }
+  
+  .developer-guide h4 {
+    font-size: var(--text-small);
+    margin: var(--space-md) 0 var(--space-sm) 0;
+    color: var(--ink-primary);
+    opacity: 0.9;
+  }
+  
+  .developer-guide h4:first-child {
+    margin-top: 0;
+  }
+  
+  .developer-guide pre {
+    background: var(--ink-primary-05);
+    padding: var(--space-sm);
+    border-radius: var(--space-xs);
+    overflow-x: auto;
+    margin: var(--space-sm) 0;
+  }
+  
+  .developer-guide code {
+    font-family: var(--font-mono);
+    background: var(--ink-primary-05);
+    padding: 1px var(--space-xs);
+    border-radius: var(--space-xs);
+  }
+  
+  .developer-guide pre code {
+    background: none;
+    padding: 0;
+  }
+  
+  .developer-guide ul {
+    margin: var(--space-sm) 0;
+    padding-left: var(--space-lg);
+  }
+  
+  .developer-guide li {
+    margin-bottom: var(--space-xs);
   }
 </style>
