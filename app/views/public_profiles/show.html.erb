@@ -1,0 +1,61 @@
+<%# Public Profile View - Read-only habit tracker %>
+<div class="paper-background">
+  <div class="container">
+    <div class="dot-grid-overlay">
+      
+      <%# Header with user name and month/year %>
+      <header class="month-header">
+        <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %></h1>
+        <div class="public-profile-info">
+          <span class="profile-user-name">@<%= @user.slug %></span>
+        </div>
+        
+        <%# Create Account CTA for unauthenticated users %>
+        <% unless authenticated? %>
+          <div class="create-account-cta">
+            <%= link_to "Create your own Gournal", new_user_path, class: "create-account-button" %>
+          </div>
+        <% end %>
+      </header>
+      
+      <% if @tracker_data.empty? %>
+        <%# Empty state when no public data is available %>
+        <div class="empty-state">
+          <div class="empty-state-content">
+            <div class="empty-state-message">
+              <% if !@user.has_public_profile? %>
+                This user hasn't set up a public profile yet.
+              <% elsif !@user.public_habits_visible? && !@user.public_reflections_visible? %>
+                This user hasn't shared any data publicly.
+              <% else %>
+                No habits for this month.
+              <% end %>
+            </div>
+            
+            <%# Additional CTA in empty state for unauthenticated users %>
+            <% unless authenticated? %>
+              <div class="empty-state-cta">
+                <%= link_to "Create your own Gournal", new_user_path, class: "create-account-button create-account-button--secondary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <%# Use shared habit grid partial with read-only mode %>
+        <%= render 'shared/habit_grid', 
+            tracker_data: @tracker_data,
+            read_only: true,
+            show_habits: @user.public_habits_visible?,
+            show_reflections: @user.public_reflections_visible? %>
+      <% end %>
+      
+      <%# Footer with attribution %>
+      <footer class="public-profile-footer">
+        <div class="attribution">
+          Powered by <a href="https://verynormal.dev" target="_blank">verynormal.dev</a>
+        </div>
+      </footer>
+      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<%# Grid rows for each day %>
+<div class="grid-rows">
+  <% tracker_data.days.each do |day| %>
+    <div class="day-row" data-day="<%= day %>">
+      
+      <%# Day Number %>
+      <div class="day-number"><%= day %></div>
+      
+      <%# Habit Checkboxes %>
+      <% if local_assigns[:show_habits] != false %>
+        <% tracker_data.habits.each do |habit| %>
+          <div class="habit-checkbox<%= ' habit-checkbox--readonly' if local_assigns[:read_only] %>">
+            <% entry = tracker_data.habit_entry_for(habit.id, day) %>
+            <% if entry %>
+              <% if local_assigns[:read_only] %>
+                <%= render_public_habit_checkbox(entry) %>
+              <% else %>
+                <%= render_habit_checkbox(entry) %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+      
+      <%# Reflection Column %>
+      <% if local_assigns[:show_reflections] != false %>
+        <div class="reflection-cell<%= ' reflection-cell--readonly' if local_assigns[:read_only] %>">
+          <% reflection = tracker_data.reflection_for(day) %>
+          <% if local_assigns[:read_only] %>
+            <%# Read-only reflection display %>
+            <% if reflection&.content.present? %>
+              <div class="reflection-content">
+                <%= simple_format(reflection.content) %>
+              </div>
+            <% end %>
+          <% else %>
+            <%# Editable reflection %>
+            <% reflection_date = Date.new(tracker_data.year, tracker_data.month, day) %>
+            <div 
+              class="reflection-input"
+              contenteditable="true"
+              data-controller="reflection-editor"
+              data-reflection-editor-id-value="<%= reflection&.id %>"
+              data-reflection-editor-date-value="<%= reflection_date.iso8601 %>"
+              data-reflection-editor-user-id-value="<%= tracker_data.user&.id %>"
+              data-action="input->reflection-editor#onInput blur->reflection-editor#onBlur"
+              aria-label="Daily reflection for <%= format_full_date(reflection_date) %>"
+              role="textbox"
+              tabindex="0"
+              data-placeholder=""><%= reflection&.content %></div>
+          <% end %>
+        </div>
+      <% end %>
+      
+    </div>
+  <% end %>
+</div>

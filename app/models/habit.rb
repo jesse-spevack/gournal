@@ -32,4 +32,6 @@ class Habit < ApplicationRecord
   # Scopes
   scope :current_month, ->(year, month) { where(year: year, month: month) }
   scope :ordered, -> { order(:position) }
+  scope :active, -> { where(active: true) }
+  scope :positioned, -> { order(:position) }
 end

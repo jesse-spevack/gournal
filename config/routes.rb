@@ -16,10 +16,12 @@ Rails.application.routes.draw do
 
   # Settings (authenticated)
   get "settings" => "settings#index", as: :settings
+  patch "settings" => "settings#update"
 
   # Help system (authenticated)
   get "help/manage-habits" => "help#manage_habits", as: :help_manage_habits
   get "help/next-month-setup" => "help#next_month_setup", as: :help_next_month_setup
+  get "help/profile-sharing" => "help#profile_sharing", as: :help_profile_sharing
 
   # Batch position updates for habits (must come before generic :habits routes)
   namespace :habits do
@@ -33,6 +35,8 @@ Rails.application.routes.draw do
   resources :habits, only: [ :new, :create, :update, :destroy ]
 
   # Habit entries routes
+  get "habit_entries/:year/:month", to: "habit_entries#index", as: :habit_entries_month,
+      constraints: { year: /\d{4}/, month: /\d{1,2}/ }
   resources :habit_entries, only: [ :index, :update ]
 
   # Daily reflections - top level resource since they belong to users
@@ -40,4 +44,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "habit_entries#index"
-end#
+
+  # Catch-all routes for public profiles (must be last to avoid conflicts)
+  get "/:slug/:year/:month", to: "public_profiles#show", as: :public_profile_month,
+      constraints: { slug: /[a-z0-9_-]+/, year: /\d{4}/, month: /\d{1,2}/ }
+  get "/:slug", to: "public_profiles#show", as: :public_profile,
+      constraints: { slug: /[a-z0-9_-]+/ }
+end

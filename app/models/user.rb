@@ -13,6 +13,29 @@ class User < ApplicationRecord
                            format: { with: URI::MailTo::EMAIL_REGEXP,
                                    message: "must be a valid email address" }
 
+  validates :slug, uniqueness: { case_sensitive: false },
+                   format: { with: /\A[a-z0-9_-]+\z/,
+                            message: "can only contain lowercase letters, numbers, underscores, and dashes" },
+                   length: { minimum: 3, maximum: 30 },
+                   allow_blank: true
+
   # Normalizations
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+  normalizes :slug, with: ->(s) { s.strip.downcase if s.present? }
+
+  # Scopes
+  scope :with_slug, -> { where.not(slug: [ nil, "" ]) }
+
+  # Public profile methods
+  def has_public_profile?
+    slug.present?
+  end
+
+  def public_habits_visible?
+    habits_public? && has_public_profile?
+  end
+
+  def public_reflections_visible?
+    reflections_public? && has_public_profile?
+  end
 end

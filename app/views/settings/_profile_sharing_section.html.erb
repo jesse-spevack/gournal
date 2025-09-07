@@ -1,0 +1,113 @@
+<%# Profile sharing form section %>
+<%
+  x_marks = JSON.parse(random_x_marks_json)
+%>
+
+<div data-controller="privacy-settings" 
+     data-privacy-settings-x-marks-value="<%= random_x_marks_json %>">
+  
+  <%= form_with model: user, 
+                url: settings_path,
+                method: :patch,
+                data: { 
+                  privacy_settings_target: "form"
+                },
+                class: "month-setup-form" do |form| %>
+    
+    <%# Profile URL display with inline editing %>
+    <div class="profile-url-section">
+      <div class="profile-url-display"
+           data-privacy-settings-target="urlDisplay"
+           data-action="click->privacy-settings#copyUrl">
+        <span class="profile-url-prefix">verynormal.dev/</span>
+        <span class="profile-slug-editable" 
+              data-privacy-settings-target="slugDisplay"
+              data-action="click->privacy-settings#editSlug"
+              <%= user.slug.blank? ? 'data-placeholder="true"' : '' %>>
+          <%= user.slug.present? ? user.slug : "your-custom-share-link" %>
+        </span>
+      </div>
+      <%= form.hidden_field :slug, 
+                           value: user.slug,
+                           data: { privacy_settings_target: "slugField" } %>
+      <% if user.errors[:slug].any? %>
+        <div class="field-error">
+          <%= user.errors[:slug].first %>
+        </div>
+      <% end %>
+    </div>
+    
+    <%# Privacy toggles %>
+    <div class="month-setup-options">
+      <div class="settings-description">What to share:</div>
+      
+      <%# Habits privacy toggle %>
+      <div class="month-setup-option" 
+           data-privacy-settings-target="option"
+           data-option-field="habits_public">
+        <div class="checkbox-label-container"
+             data-action="click->privacy-settings#toggleOption"
+             data-option="habits_public">
+          <div class="checkbox-container">
+            <%= render "checkboxes/box_0" %>
+            <% if user.habits_public? %>
+              <div class="checkbox-x-wrapper" data-x-variant="0">
+                <%= render "checkboxes/x_0" %>
+              </div>
+            <% end %>
+            <% x_marks.each do |variant| %>
+              <div class="checkbox-x-wrapper" data-x-variant="<%= variant %>" style="display: none;">
+                <%= render "checkboxes/x_#{variant}" %>
+              </div>
+            <% end %>
+          </div>
+          <label class="month-setup-label">
+            Share my habits publicly
+          </label>
+        </div>
+        <%= form.hidden_field :habits_public, 
+                             value: user.habits_public?,
+                             data: { privacy_settings_target: "habitsPublicField" } %>
+      </div>
+      
+      <%# Reflections privacy toggle %>
+      <div class="month-setup-option"
+           data-privacy-settings-target="option"
+           data-option-field="reflections_public">
+        <div class="checkbox-label-container"
+             data-action="click->privacy-settings#toggleOption"
+             data-option="reflections_public">
+          <div class="checkbox-container">
+            <%= render "checkboxes/box_0" %>
+            <% if user.reflections_public? %>
+              <div class="checkbox-x-wrapper" data-x-variant="0">
+                <%= render "checkboxes/x_0" %>
+              </div>
+            <% end %>
+            <% x_marks.each do |variant| %>
+              <div class="checkbox-x-wrapper" data-x-variant="<%= variant %>" style="display: none;">
+                <%= render "checkboxes/x_#{variant}" %>
+              </div>
+            <% end %>
+          </div>
+          <label class="month-setup-label">
+            Share my daily reflections publicly
+          </label>
+        </div>
+        <%= form.hidden_field :reflections_public, 
+                             value: user.reflections_public?,
+                             data: { privacy_settings_target: "reflectionsPublicField" } %>
+      </div>
+      
+    </div>
+    
+    <%# Submit button %>
+    <button type="submit" 
+            class="month-setup-submit"
+            data-privacy-settings-target="submitButton">
+      Save profile settings
+    </button>
+    
+  <% end %>
+  
+</div>

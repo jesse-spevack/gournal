@@ -38,9 +38,12 @@
         
         <%# Section 3: Profile & Sharing %>
         <section class="settings-section profile-sharing">
-          <h2 class="settings-section-title">Profile & Sharing</h2>
+          <div class="section-header">
+            <h2 class="settings-section-title">Profile sharing</h2>
+            <%= link_to "(?)", help_profile_sharing_path, class: "help-button" %>
+          </div>
           <div class="section-content">
-            <%# Profile and sharing settings will go here %>
+            <%= render "profile_sharing_section", user: @user %>
           </div>
         </section>
         

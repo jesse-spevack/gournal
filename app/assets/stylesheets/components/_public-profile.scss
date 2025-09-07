@@ -1,0 +1,159 @@
+/* ============================================================================ */
+/* PUBLIC PROFILE - Read-only habit tracker for sharing                        */
+/* ============================================================================ */
+
+/* Public profile header additions */
+.public-profile-info {
+  text-align: center;
+  margin-top: var(--space-xs);
+}
+
+.profile-user-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: var(--opacity-secondary);
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+/* Create Account CTA for unauthenticated users */
+.create-account-cta {
+  margin-top: var(--space-lg);
+  text-align: center;
+}
+
+.create-account-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--paper-light);
+  background: var(--ink-primary);
+  text-decoration: none;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  box-sizing: border-box;
+  
+  /* Subtle rotation for handwritten feel */
+  transform: rotate(-0.3deg);
+  
+  &:hover {
+    background: var(--ink-hover);
+    color: var(--paper-light);
+    transform: rotate(0deg) scale(1.03);
+    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.2);
+    text-decoration: none;
+  }
+  
+  &:active {
+    transform: rotate(0deg) scale(0.97);
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 480px) {
+    font-size: var(--text-xxs);
+    padding: 10px 20px;
+  }
+  
+  /* Secondary button variant for empty states */
+  &--secondary {
+    background: transparent;
+    color: var(--ink-primary);
+    border: var(--border-thin) solid var(--ink-primary);
+    transform: rotate(0.2deg);
+    
+    &:hover {
+      background: var(--ink-primary);
+      color: var(--paper-light);
+      border-color: var(--ink-primary);
+    }
+  }
+}
+
+/* Read-only habit grid modifications */
+.habit-grid--readonly {
+  /* Remove interactive elements cursor styles */
+  .habit-checkbox--readonly {
+    cursor: default;
+    pointer-events: none;
+  }
+  
+  .reflection-cell--readonly {
+    cursor: default;
+  }
+}
+
+/* Read-only reflection content */
+.reflection-content {
+  font-family: var(--font-caveat);
+  font-size: var(--text-md);
+  color: var(--ink-primary);
+  line-height: 1.4;
+  padding: var(--space-xs) 0;
+  
+  /* Remove the editable styling */
+  background: none;
+  border: none;
+  
+  /* Handle simple_format paragraphs */
+  p {
+    margin: 0 0 var(--space-xs) 0;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Empty state for public profiles */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xxl) var(--space-lg);
+}
+
+.empty-state-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.empty-state-message {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-primary);
+  opacity: var(--opacity-secondary);
+  line-height: 1.5;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.empty-state-cta {
+  margin-top: var(--space-lg);
+}
+
+/* Footer attribution */
+.public-profile-footer {
+  margin-top: var(--space-xxl);
+  padding-top: var(--space-lg);
+  border-top: var(--border-thin) solid var(--ink-primary-10);
+  text-align: center;
+}
+
+.attribution {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  opacity: var(--opacity-secondary);
+  
+  a {
+    color: var(--ink-primary);
+    text-decoration: none;
+    
+    &:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+  }
+}

@@ -8,4 +8,8 @@ class HelpController < ApplicationController
   def next_month_setup
     # Help page for month setup process
   end
+
+  def profile_sharing
+    # Help page for profile sharing
+  end
 end

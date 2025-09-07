@@ -1,0 +1,16 @@
+<%# Grid column headers %>
+<div class="grid-headers">
+  <div class="day-column-header"></div>
+  <% if local_assigns[:show_habits] != false %>
+    <% tracker_data.habits.each do |habit| %>
+      <div class="habit-column-header">
+        <span class="habit-name"><%= habit.name %></span>
+      </div>
+    <% end %>
+  <% end %>
+  <% if local_assigns[:show_reflections] != false %>
+    <div class="reflection-column-header">
+      <span class="reflection-label">Reflection</span>
+    </div>
+  <% end %>
+</div>
