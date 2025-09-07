@@ -16,6 +16,12 @@
 .container {
   padding: var(--space-md);
   position: relative;
+  
+  /* Desktop: Center content with max-width */
+  @media (min-width: 480px) {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 
 /* Dot Grid Overlay */
@@ -41,6 +47,12 @@
 .habit-grid {
   position: relative;
   z-index: 1;
+  
+  /* Desktop: Center grid as a whole unit */
+  @media (min-width: 480px) {
+    max-width: fit-content;
+    margin: 0 auto;
+  }
 }
 
 /* Grid Headers */
