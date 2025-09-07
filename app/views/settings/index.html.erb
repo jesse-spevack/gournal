@@ -36,14 +36,25 @@
           </section>
         <% end %>
         
-        <%# Section 3: Profile & Sharing %>
-        <section class="settings-section profile-sharing">
+        <%# Section 3: Profile Link %>
+        <section class="settings-section profile-url">
           <div class="section-header">
-            <h2 class="settings-section-title">Profile sharing</h2>
-            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_profile_sharing_path %>
+            <h2 class="settings-section-title">Profile link</h2>
+            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_profile_link_path %>
           </div>
           <div class="section-content">
-            <%= render "profile_sharing_section", user: @user %>
+            <%= render "profile_url_section", user: @user %>
+          </div>
+        </section>
+        
+        <%# Section 4: Privacy Settings %>
+        <section class="settings-section privacy-settings">
+          <div class="section-header">
+            <h2 class="settings-section-title">Sharing</h2>
+            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_sharing_settings_path %>
+          </div>
+          <div class="section-content">
+            <%= render "privacy_settings_section", user: @user %>
           </div>
         </section>
         

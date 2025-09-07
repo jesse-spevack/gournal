@@ -1,4 +1,4 @@
-<%# Profile sharing form section %>
+<%# Privacy settings form %>
 <%
   x_marks = JSON.parse(random_x_marks_json)
 %>
@@ -13,29 +13,6 @@
                   privacy_settings_target: "form"
                 },
                 class: "month-setup-form" do |form| %>
-    
-    <%# Profile URL display with inline editing %>
-    <div class="profile-url-section">
-      <div class="profile-url-display"
-           data-privacy-settings-target="urlDisplay"
-           data-action="click->privacy-settings#copyUrl">
-        <span class="profile-url-prefix">verynormal.dev/</span>
-        <span class="profile-slug-editable" 
-              data-privacy-settings-target="slugDisplay"
-              data-action="click->privacy-settings#editSlug"
-              <%= user.slug.blank? ? 'data-placeholder="true"' : '' %>>
-          <%= user.slug.present? ? user.slug : "your-custom-share-link" %>
-        </span>
-      </div>
-      <%= form.hidden_field :slug, 
-                           value: user.slug,
-                           data: { privacy_settings_target: "slugField" } %>
-      <% if user.errors[:slug].any? %>
-        <div class="field-error">
-          <%= user.errors[:slug].first %>
-        </div>
-      <% end %>
-    </div>
     
     <%# Privacy toggles %>
     <div class="month-setup-options">
@@ -103,7 +80,7 @@
     
     <%# Submit button %>
     <%= render 'shared/primary_button', 
-        text: 'Save profile settings', 
+        text: 'Save sharing settings', 
         type: 'submit',
         data: { privacy_settings_target: "submitButton" } %>
     

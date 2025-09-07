@@ -37,13 +37,15 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get settings_path
     assert_response :success
 
-    # Check for the two sections when no habits exist
+    # Check for the sections when no habits exist
     assert_select ".settings-section.habits-management", count: 1
-    assert_select ".settings-section.profile-sharing", count: 1
+    assert_select ".settings-section.profile-url", count: 1
+    assert_select ".settings-section.privacy-settings", count: 1
 
     # Check section titles
     assert_select "h2.settings-section-title", text: "Manage habits"
-    assert_select "h2.settings-section-title", text: "Profile sharing"
+    assert_select "h2.settings-section-title", text: "Profile link"
+    assert_select "h2.settings-section-title", text: "Sharing"
 
     # Month setup section should be hidden when user has no habits
     assert_select ".settings-section.month-setup", count: 0
@@ -71,14 +73,16 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get settings_path
     assert_response :success
 
-    # Check for all three sections when habits exist
+    # Check for all sections when habits exist
     assert_select ".settings-section.habits-management", count: 1
     assert_select ".settings-section.month-setup", count: 1
-    assert_select ".settings-section.profile-sharing", count: 1
+    assert_select ".settings-section.profile-url", count: 1
+    assert_select ".settings-section.privacy-settings", count: 1
 
     # Check section titles
     assert_select "h2.settings-section-title", text: "Manage habits"
-    assert_select "h2.settings-section-title", text: "Profile sharing"
+    assert_select "h2.settings-section-title", text: "Profile link"
+    assert_select "h2.settings-section-title", text: "Sharing"
   end
 
   test "should hide back button when user has no habits" do
