@@ -23,7 +23,5 @@ html_attrs[:disabled] = true if disabled && !url
 <% if url %>
   <%= link_to text, url, html_attrs %>
 <% else %>
-  <button type="<%= type %>" <%= 'disabled' if disabled %> <%= html_attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ').html_safe %>>
-    <%= text %>
-  </button>
+  <%= button_tag text, html_attrs.merge(type: type, disabled: disabled) %>
 <% end %>

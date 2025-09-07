@@ -76,18 +76,13 @@
   /* Form title - like a journal header */
   h1 {
     font-family: var(--font-mono);
-    font-size: 18px;  /* Mobile-first: smaller on mobile */
+    font-size: var(--text-xs);  /* Standard typewriter UI size (11px) */
     font-weight: var(--weight-normal);
     color: var(--ink-primary);
     text-align: center;
     margin: 0 0 32px 0;
     letter-spacing: 0.02em;
     opacity: 0.9;
-    
-    /* Desktop: larger font size */
-    @include mobile-up {
-      font-size: 20px;
-    }
     
     /* Subtle underline like ruled paper */
     &::after {
@@ -108,7 +103,7 @@
     label {
       display: block;
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: var(--text-xs);  /* Standard typewriter UI size (11px) */
       color: var(--ink-primary);
       opacity: 0.8;
       margin-bottom: 8px;
@@ -149,58 +144,24 @@
     }
   }
   
-  /* Submit button - styled like an ink stamp */
+  /* Submit button container */
   .form-submit {
     margin-top: 32px;
     
-    input[type="submit"],
-    button[type="submit"] {
+    /* Ensure full width for button partials */
+    .canonical-button {
       width: 100%;
-      padding: 12px 24px;
-      font-family: var(--font-mono);
-      font-size: var(--text-form);
-      font-weight: var(--weight-normal);
-      letter-spacing: 0.02em;
-      color: var(--paper-light);
-      background: var(--ink-primary);
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all var(--duration-normal) var(--ease-standard);
-      box-sizing: border-box;
-      
-      /* Subtle rotation for handwritten feel */
-      transform: rotate(var(--rotate-subtle));
-      
-      &:hover {
-        background: var(--ink-hover);
-        transform: rotate(0deg) scale(1.02);
-        box-shadow: 0 4px 12px var(--shadow-medium);
-      }
-      
-      &:active {
-        transform: rotate(0deg) scale(0.98);
-      }
     }
   }
   
-  /* Links - styled like footnotes */
+  /* Links container */
   .form-links {
     margin-top: 24px;
     text-align: center;
     
-    a {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--ink-primary);
-      opacity: 0.7;
-      text-decoration: none;
-      border-bottom: 1px dotted var(--ink-primary);
-      transition: opacity var(--duration-fast) var(--ease-standard);
-      
-      &:hover {
-        opacity: 1;
-      }
+    /* Ensure full width for button partials */
+    .canonical-button {
+      width: 100%;
     }
   }
 }
