@@ -5,12 +5,16 @@ module ApplicationHelper
 
   def render_public_habit_checkbox(habit_entry)
     content_tag(:div, class: "checkbox-container") do
+      # Extract the randomized style numbers from the stored enum values
+      box_number = habit_entry.checkbox_style.split("_").last
+      check_number = habit_entry.check_style.split("_").last
+
       if !habit_entry&.completed?
-        render("checkboxes/box_0")
+        render("checkboxes/box_#{box_number}")
       elsif habit_entry.habit.x_marks?
-        render("checkboxes/box_0") + render("checkboxes/x_0")
+        render("checkboxes/box_#{box_number}") + render("checkboxes/x_#{check_number}")
       else
-        render("checkboxes/box_0") + render("checkboxes/blot_0")
+        render("checkboxes/box_#{box_number}") + render("checkboxes/blot_#{check_number}")
       end
     end
   end
