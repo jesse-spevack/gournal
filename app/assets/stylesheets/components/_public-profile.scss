@@ -2,28 +2,24 @@
 /* PUBLIC PROFILE - Read-only habit tracker for sharing                        */
 /* ============================================================================ */
 
-/* Public profile header additions */
-.public-profile-info {
+/* Public profile CTA */
+.public-profile-cta {
   text-align: center;
   margin-top: var(--space-xs);
 }
 
-.profile-user-name {
+.create-account-link {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--ink-primary);
   opacity: var(--opacity-secondary);
   letter-spacing: var(--letter-spacing-wide);
-}
-
-/* Create Account CTA for unauthenticated users */
-.create-account-cta {
-  margin-top: var(--space-lg);
-  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s ease;
   
-  /* Let the shared button partial handle all styling */
-  .canonical-button--secondary {
-    display: inline-flex;
+  &:hover {
+    opacity: 1;
   }
 }
 

@@ -9,7 +9,7 @@
   }
   
   .habit-column-header .habit-name {
-    font-size: calc(var(--text-sm) * 0.9);
+    font-size: var(--text-xxs); /* Use proper token instead of calc */
   }
   
   .day-number {

@@ -5,15 +5,10 @@
       
       <%# Header with user name and month/year %>
       <header class="month-header">
-        <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %></h1>
-        <div class="public-profile-info">
-          <span class="profile-user-name">@<%= @user.slug %></span>
-        </div>
-        
-        <%# Create Account CTA for unauthenticated users %>
+        <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %> - <%= @user.slug %></h1>
         <% unless authenticated? %>
-          <div class="create-account-cta">
-            <%= render 'shared/secondary_button', text: 'Create your own Gournal', url: new_user_path %>
+          <div class="public-profile-cta">
+            <a href="<%= new_user_path %>" class="create-account-link">Create your own Gournal</a>
           </div>
         <% end %>
       </header>

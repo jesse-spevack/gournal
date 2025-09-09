@@ -73,7 +73,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px; /* Reduced from 80px for mobile */
+    height: 80px; /* Full height for habit names */
     position: relative;
     
     .habit-name {
@@ -98,7 +98,7 @@
   
   .reflection-column-header {
     flex-grow: 1;
-    height: 60px; /* Match habit column header height */
+    height: 80px; /* Match habit column header height */
     display: flex;
     align-items: flex-end; /* Align to bottom like habit headers */
     justify-content: center; /* Center the label horizontally */
