@@ -37,7 +37,7 @@ class PublicProfilesControllerTest < ActionDispatch::IntegrationTest
     get public_profile_path(slug: @user.slug)
     assert_response :success
     assert_select "h1", /#{Date.current.strftime("%B")}/
-    assert_select ".profile-user-name", "@#{@user.slug}"
+    assert_select "h1", /#{@user.slug}/
   end
 
   test "should return 404 for non-existent slug" do
@@ -86,7 +86,7 @@ class PublicProfilesControllerTest < ActionDispatch::IntegrationTest
   test "should show create account button for unauthenticated users" do
     get public_profile_path(slug: @user.slug)
     assert_response :success
-    assert_select ".canonical-button--secondary"
+    assert_select ".create-account-link"
   end
 
   test "should not show create account button for authenticated users" do
