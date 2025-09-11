@@ -32,7 +32,7 @@
   - [x] 4.5 Ensure state only advances forward (no regression to earlier states)
   - [x] 4.6 Use Turbo to smoothly update the page after form submissions
   
-- [ ] 5.0 Add Visual Styling for Onboarding State
+- [x] 5.0 Add Visual Styling for Onboarding State
   - [x] 5.1 Create `_onboarding.scss` component stylesheet
   - [x] 5.2 Style onboarding hints with appropriate spacing and typography
   - [x] 5.3 Add subtle visual emphasis to current onboarding section
