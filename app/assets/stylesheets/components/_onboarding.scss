@@ -4,8 +4,6 @@
 
 .onboarding-hint {
   margin-top: var(--space-md);
-  border-left: 2px solid var(--ink-primary-30);
-  padding-left: var(--space-sm);
 }
 
 .onboarding-hint-text {
@@ -16,23 +14,6 @@
   margin: 0;
 }
 
-/* Active onboarding section emphasis */
-.settings-content[data-onboarding-state="not_started"] .habits-management,
-.settings-content[data-onboarding-state="habits_created"] .profile-url,
-.settings-content[data-onboarding-state="profile_created"] .privacy-settings {
-  position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    left: -12px;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background-color: var(--ink-primary-30);
-    opacity: 0.5;
-  }
-}
 
 /* Smooth transitions for section appearance */
 .settings-section {
@@ -55,7 +36,6 @@
   margin-top: var(--space-lg);
   text-align: center;
   padding-top: var(--space-md);
-  border-top: 1px solid var(--ink-primary-20);
 }
 
 .skip-onboarding-link {
