@@ -41,7 +41,7 @@
   
   <%# Onboarding hint for new users %>
   <% if @user&.not_started? %>
-    <%= render 'onboarding_hint', hint_text: 'Start by adding your first habit above. Type something you want to track daily and press Enter.' %>
+    <%= render 'onboarding_hint', hint_text: 'Start by adding your first habit above.' %>
   <% end %>
   
   <%# Context menu structure %>
