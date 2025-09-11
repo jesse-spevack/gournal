@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Chrome DevTools well-known endpoint (prevents routing errors in development)
+  get "/.well-known/appspecific/com.chrome.devtools.json" => proc { [ 404, {}, [ "" ] ] }
+
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
@@ -52,7 +55,7 @@ Rails.application.routes.draw do
 
   # Catch-all routes for public profiles (must be last to avoid conflicts)
   get "/:slug/:year/:month", to: "public_profiles#show", as: :public_profile_month,
-      constraints: { slug: /[a-z0-9_-]+/, year: /\d{4}/, month: /\d{1,2}/ }
+      constraints: { slug: /(?!onboarding)[a-z0-9_-]+/, year: /\d{4}/, month: /\d{1,2}/ }
   get "/:slug", to: "public_profiles#show", as: :public_profile,
-      constraints: { slug: /[a-z0-9_-]+/ }
+      constraints: { slug: /(?!onboarding)[a-z0-9_-]+/ }
 end

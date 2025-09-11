@@ -26,6 +26,8 @@ class User < ApplicationRecord
                    format: { with: /\A[a-z0-9_-]+\z/,
                             message: "can only contain lowercase letters, numbers, underscores, and dashes" },
                    length: { minimum: 3, maximum: 30 },
+                   exclusion: { in: %w[onboarding],
+                               message: "is reserved and cannot be used" },
                    allow_blank: true
 
   # Normalizations

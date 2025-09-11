@@ -68,8 +68,7 @@
             <%= link_to "Skip setup", onboarding_path, 
                 class: "skip-onboarding-link",
                 data: { 
-                  method: :delete,
-                  confirm: "Skip the guided setup? You can still access all features normally."
+                  turbo_method: :delete
                 } %>
           </div>
         <% end %>
