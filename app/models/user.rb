@@ -57,6 +57,14 @@ class User < ApplicationRecord
     completed? || skipped?
   end
 
+  def show_profile_section?
+    !not_started?
+  end
+
+  def show_sharing_section?
+    profile_created? || completed? || skipped?
+  end
+
   def advance_onboarding_to(new_state)
     return if onboarding_finished?
 

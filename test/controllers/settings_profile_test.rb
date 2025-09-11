@@ -4,7 +4,8 @@ class SettingsProfileTest < ActionDispatch::IntegrationTest
   setup do
     @user = User.create!(
       email_address: "settings@example.com",
-      password: "password123"
+      password: "password123",
+      onboarding_state: :completed
     )
     sign_in_as(@user)
   end

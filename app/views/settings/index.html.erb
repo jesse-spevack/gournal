@@ -16,9 +16,9 @@
       </header>
       
       <%# Main Settings Content %>
-      <div class="settings-content">
+      <div class="settings-content" data-onboarding-state="<%= @onboarding_state %>">
         
-        <%# Section 1: Manage Habits %>
+        <%# Section 1: Manage Habits - Always visible %>
         <section class="settings-section habits-management">
           <div class="section-header">
             <h2 class="settings-section-title">Manage habits</h2>
@@ -29,34 +29,38 @@
           </div>
         </section>
         
-        <%# Section 2: Month Setup - only show if user has habits %>
+        <%# Section 2: Month Setup - only show if user has habits (independent of onboarding) %>
         <% if @habits.any? %>
           <section class="settings-section month-setup">
             <%= render "month_setup_section" %>
           </section>
         <% end %>
         
-        <%# Section 3: Profile Link %>
-        <section class="settings-section profile-url">
-          <div class="section-header">
-            <h2 class="settings-section-title">Profile link</h2>
-            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_profile_link_path %>
-          </div>
-          <div class="section-content">
-            <%= render "profile_url_section", user: @user %>
-          </div>
-        </section>
+        <%# Section 3: Profile Link - Show based on onboarding state %>
+        <% if @user.show_profile_section? %>
+          <section class="settings-section profile-url">
+            <div class="section-header">
+              <h2 class="settings-section-title">Profile link</h2>
+              <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_profile_link_path %>
+            </div>
+            <div class="section-content">
+              <%= render "profile_url_section", user: @user %>
+            </div>
+          </section>
+        <% end %>
         
-        <%# Section 4: Privacy Settings %>
-        <section class="settings-section privacy-settings">
-          <div class="section-header">
-            <h2 class="settings-section-title">Sharing</h2>
-            <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_sharing_settings_path %>
-          </div>
-          <div class="section-content">
-            <%= render "privacy_settings_section", user: @user %>
-          </div>
-        </section>
+        <%# Section 4: Privacy Settings - Show based on onboarding state %>
+        <% if @user.show_sharing_section? %>
+          <section class="settings-section privacy-settings">
+            <div class="section-header">
+              <h2 class="settings-section-title">Sharing</h2>
+              <%= render 'shared/navigation_button', text: '(?)', variant: 'help', url: help_sharing_settings_path %>
+            </div>
+            <div class="section-content">
+              <%= render "privacy_settings_section", user: @user %>
+            </div>
+          </section>
+        <% end %>
         
       </div>
       

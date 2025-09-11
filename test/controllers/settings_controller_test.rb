@@ -4,7 +4,8 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = User.create!(
       email_address: "test@example.com",
-      password: "secure_password123"
+      password: "secure_password123",
+      onboarding_state: :completed
     )
   end
 

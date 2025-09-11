@@ -2,19 +2,19 @@
 
 ## Tasks
 
-- [ ] 1.0 Detect and Track New User State
+- [x] 1.0 Detect and Track New User State
   - [x] 1.1 Add `onboarding_state` enum column to users table (values: not_started, habits_created, profile_created, completed, skipped)
   - [x] 1.2 Update User model with enum definition and helper methods
   - [x] 1.3 Set default onboarding_state to 'not_started' for new users
   - [x] 1.4 Modify SettingsController to pass onboarding state to view
   
 - [ ] 2.0 Implement Progressive Section Reveal System
-  - [ ] 2.1 Create conditional section rendering based on onboarding_state
-  - [ ] 2.2 Show only habits section when state == 'not_started'
-  - [ ] 2.3 Show habits + profile sections when state == 'habits_created'
-  - [ ] 2.4 Show habits + profile + sharing sections when state == 'profile_created'
-  - [ ] 2.5 Show all sections normally when state == 'completed' or 'skipped'
-  - [ ] 2.6 Ensure Month Setup section remains hidden until habits exist (independent of onboarding)
+  - [x] 2.1 Create conditional section rendering based on onboarding_state
+  - [x] 2.2 Show only habits section when state == 'not_started'
+  - [x] 2.3 Show habits + profile sections when state == 'habits_created'
+  - [x] 2.4 Show habits + profile + sharing sections when state == 'profile_created'
+  - [x] 2.5 Show all sections normally when state == 'completed' or 'skipped'
+  - [x] 2.6 Ensure Month Setup section remains hidden until habits exist (independent of onboarding)
   
 - [ ] 3.0 Create Onboarding Helper Text Components
   - [ ] 3.1 Create `_onboarding_hint.html.erb` partial for reusable hint text
