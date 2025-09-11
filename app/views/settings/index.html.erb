@@ -56,7 +56,7 @@
         <% end %>
         
         <%# Section 4: Month Setup - only show if user has habits AND onboarding is complete %>
-        <% if @habits.any? && @user.onboarding_finished? %>
+        <% if @habits.any? && @user.completed? %>
           <section class="settings-section month-setup">
             <%= render "month_setup_section" %>
           </section>

@@ -12,8 +12,7 @@ class User < ApplicationRecord
     not_started: 0,
     habits_created: 1,
     profile_created: 2,
-    completed: 3,
-    skipped: 4
+    completed: 3
   }, default: :not_started
 
   # Validations
@@ -55,20 +54,17 @@ class User < ApplicationRecord
     not_started? || habits_created? || profile_created?
   end
 
-  def onboarding_finished?
-    completed? || skipped?
-  end
 
   def show_profile_section?
     !not_started?
   end
 
   def show_sharing_section?
-    profile_created? || completed? || skipped?
+    profile_created? || completed?
   end
 
   def advance_onboarding_to(new_state)
-    return if onboarding_finished?
+    return if completed?
 
     # Only allow forward progression
     current_index = self.class.onboarding_states[onboarding_state]
