@@ -34,7 +34,7 @@
     0 8px 32px var(--shadow-subtle);
   min-width: 180px;
   font-family: var(--font-mono);
-  font-size: var(--text-xxs);
+  font-size: var(--text-xs);
   
   /* Hidden by default */
   opacity: 0;
@@ -91,7 +91,7 @@
   width: 100%;
   text-align: left;
   font-family: var(--font-mono);
-  font-size: var(--text-xxs);
+  font-size: var(--text-xs);
   
   /* Remove border from last item */
   &:last-child {
@@ -141,7 +141,7 @@
 @media (max-width: 767px) {
   .context-menu__item {
     padding: 16px 20px;
-    font-size: var(--text-xxs);
+    font-size: var(--text-xs);
     min-height: 48px; /* Ensure proper touch target size */
     display: flex;
     align-items: center;

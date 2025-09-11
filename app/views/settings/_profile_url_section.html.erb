@@ -23,12 +23,12 @@
         <span class="profile-slug-editable" 
               data-privacy-settings-target="slugDisplay"
               data-action="click->privacy-settings#editSlug"
-              <%= user.slug.blank? ? 'data-placeholder="true"' : '' %>>
+              <% if user.slug.blank? %>data-placeholder="true"<% end %>>
           <%= user.slug.present? ? user.slug : "your-custom-share-link" %>
         </span>
       </div>
       <%= form.hidden_field :slug, 
-                           value: user.slug,
+                           value: user.slug || "",
                            data: { privacy_settings_target: "slugField" } %>
       <% if user.errors[:slug].any? %>
         <div class="field-error">
@@ -37,9 +37,14 @@
       <% end %>
     </div>
     
+    <%# Onboarding hint for users who just created habits %>
+    <% if user.habits_created? %>
+      <%= render 'onboarding_hint', hint_text: 'Click on "your-custom-share-link" above to create your profile link.' %>
+    <% end %>
+    
     <%# Submit button %>
     <%= render 'shared/primary_button', 
-        text: 'Save profile link', 
+        text: 'Save', 
         type: 'submit',
         data: { privacy_settings_target: "submitButton" } %>
     

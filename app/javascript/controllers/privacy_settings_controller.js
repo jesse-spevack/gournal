@@ -169,8 +169,7 @@ export default class extends Controller {
     if (!this.editingElement) return
     
     // Restore original text
-    const displayText = this.originalSlug || "your-custom-share-link"
-    this.editingElement.textContent = displayText
+    this.editingElement.textContent = this.originalSlug || "your-custom-share-link"
     this.editingElement.dataset.placeholder = this.originalSlug ? "false" : "true"
     
     this.editingElement = null

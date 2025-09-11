@@ -78,9 +78,14 @@
       
     </div>
     
+    <%# Onboarding hint for users who just created their profile %>
+    <% if user.profile_created? %>
+      <%= render 'onboarding_hint', hint_text: 'Check the boxes above to make your habits and/or reflections visible on your profile.' %>
+    <% end %>
+    
     <%# Submit button %>
     <%= render 'shared/primary_button', 
-        text: 'Save sharing settings', 
+        text: 'Save', 
         type: 'submit',
         data: { privacy_settings_target: "submitButton" } %>
     

@@ -1,0 +1,50 @@
+/* ==========================================================================
+   ONBOARDING - Hint text and guidance for new users
+   ========================================================================== */
+
+.onboarding-hint {
+  margin-top: var(--space-md);
+}
+
+.onboarding-hint-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs); /* 12px - standard text size */
+  color: var(--ink-primary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+
+/* Smooth transitions for section appearance */
+.settings-section {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skip onboarding link */
+.skip-onboarding-section {
+  margin-top: var(--space-lg);
+  text-align: center;
+  padding-top: var(--space-md);
+}
+
+.skip-onboarding-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  text-decoration: underline;
+  
+  &:hover {
+    color: var(--ink-hover);
+  }
+}

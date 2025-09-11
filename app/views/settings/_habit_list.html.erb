@@ -32,12 +32,18 @@
       <%= form.text_field :name, 
                           placeholder: "Add new habit", 
                           class: "habit-input habit-input--new",
+                          autocomplete: "off",
                           data: { 
                             inline_habit_editor_target: "newInput",
                             action: "blur->inline-habit-editor#createHabit keydown.esc->inline-habit-editor#cancelNew"
                           } %>
     <% end %>
   </div>
+  
+  <%# Onboarding hint for new users %>
+  <% if @user&.not_started? %>
+    <%= render 'onboarding_hint', hint_text: 'Start by adding your first habit above.' %>
+  <% end %>
   
   <%# Context menu structure %>
   <div class="context-menu-backdrop" 

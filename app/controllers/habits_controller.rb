@@ -28,6 +28,11 @@ class HabitsController < ApplicationController
 
     respond_to do |format|
       if result[:success]
+        # Advance onboarding state if this is the user's first habit
+        if Current.user.not_started?
+          Current.user.advance_onboarding_to(:habits_created)
+        end
+
         format.html do
           # Redirect back to the habit creation page to stay in the flow
           if year_month.present?
