@@ -24,7 +24,7 @@
   - [x] 3.5 Style hints with typewriter font and subtle visual treatment
   - [x] 3.6 Add skip onboarding link/button at bottom of visible sections
   
-- [ ] 4.0 Update Controllers for Onboarding State Progression
+- [x] 4.0 Update Controllers for Onboarding State Progression
   - [x] 4.1 Update HabitsController#create to advance from 'not_started' to 'habits_created' on first habit
   - [x] 4.2 Update SettingsController#update to detect profile slug changes and advance to 'profile_created'
   - [x] 4.3 Update SettingsController#update to detect sharing settings changes and advance to 'completed'
@@ -33,11 +33,11 @@
   - [x] 4.6 Use Turbo to smoothly update the page after form submissions
   
 - [ ] 5.0 Add Visual Styling for Onboarding State
-  - [ ] 5.1 Create `_onboarding.scss` component stylesheet
-  - [ ] 5.2 Style onboarding hints with appropriate spacing and typography
-  - [ ] 5.3 Add subtle visual emphasis to current onboarding section
-  - [ ] 5.4 Style skip link to be present but unobtrusive
-  - [ ] 5.5 Ensure smooth visual flow when new sections appear after form submission
+  - [x] 5.1 Create `_onboarding.scss` component stylesheet
+  - [x] 5.2 Style onboarding hints with appropriate spacing and typography
+  - [x] 5.3 Add subtle visual emphasis to current onboarding section
+  - [x] 5.4 Style skip link to be present but unobtrusive
+  - [x] 5.5 Ensure smooth visual flow when new sections appear after form submission
   
 - [ ] 6.0 Testing and Polish
   - [ ] 6.1 Write tests for User model onboarding enum and methods

@@ -17,6 +17,40 @@
   margin: 0;
 }
 
+/* Active onboarding section emphasis */
+.settings-content[data-onboarding-state="not_started"] .habits-management,
+.settings-content[data-onboarding-state="habits_created"] .profile-url,
+.settings-content[data-onboarding-state="profile_created"] .privacy-settings {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--ink-lighter);
+    opacity: 0.5;
+  }
+}
+
+/* Smooth transitions for section appearance */
+.settings-section {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Skip onboarding link */
 .skip-onboarding-section {
   margin-top: var(--space-lg);
