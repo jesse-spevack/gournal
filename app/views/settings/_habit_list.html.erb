@@ -32,6 +32,7 @@
       <%= form.text_field :name, 
                           placeholder: "Add new habit", 
                           class: "habit-input habit-input--new",
+                          autocomplete: "off",
                           data: { 
                             inline_habit_editor_target: "newInput",
                             action: "blur->inline-habit-editor#createHabit keydown.esc->inline-habit-editor#cancelNew"
