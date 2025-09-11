@@ -16,7 +16,7 @@
   - [x] 2.5 Show all sections normally when state == 'completed' or 'skipped'
   - [x] 2.6 Ensure Month Setup section remains hidden until habits exist (independent of onboarding)
   
-- [ ] 3.0 Create Onboarding Helper Text Components
+- [x] 3.0 Create Onboarding Helper Text Components
   - [x] 3.1 Create `_onboarding_hint.html.erb` partial for reusable hint text
   - [x] 3.2 Add habit creation hint below habit list when state == 'not_started'
   - [x] 3.3 Add profile setup hint below profile section when state == 'habits_created'
@@ -25,12 +25,12 @@
   - [x] 3.6 Add skip onboarding link/button at bottom of visible sections
   
 - [ ] 4.0 Update Controllers for Onboarding State Progression
-  - [ ] 4.1 Update HabitsController#create to advance from 'not_started' to 'habits_created' on first habit
-  - [ ] 4.2 Update SettingsController#update to detect profile slug changes and advance to 'profile_created'
-  - [ ] 4.3 Update SettingsController#update to detect sharing settings changes and advance to 'completed'
-  - [ ] 4.4 Add skip_onboarding action to SettingsController to set state to 'skipped'
-  - [ ] 4.5 Ensure state only advances forward (no regression to earlier states)
-  - [ ] 4.6 Use Turbo to smoothly update the page after form submissions
+  - [x] 4.1 Update HabitsController#create to advance from 'not_started' to 'habits_created' on first habit
+  - [x] 4.2 Update SettingsController#update to detect profile slug changes and advance to 'profile_created'
+  - [x] 4.3 Update SettingsController#update to detect sharing settings changes and advance to 'completed'
+  - [x] 4.4 Add OnboardingController#destroy action to set state to 'skipped'
+  - [x] 4.5 Ensure state only advances forward (no regression to earlier states)
+  - [x] 4.6 Use Turbo to smoothly update the page after form submissions
   
 - [ ] 5.0 Add Visual Styling for Onboarding State
   - [ ] 5.1 Create `_onboarding.scss` component stylesheet

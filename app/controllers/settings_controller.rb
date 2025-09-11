@@ -19,6 +19,9 @@ class SettingsController < ApplicationController
     @user = Current.user
 
     if @user.update(user_params)
+      # Advance onboarding state based on what was updated
+      handle_onboarding_progression
+
       redirect_to settings_path, notice: "Profile settings updated successfully"
     else
       # Re-render index with errors
@@ -43,5 +46,19 @@ class SettingsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:slug, :habits_public, :reflections_public)
+  end
+
+  def handle_onboarding_progression
+    return unless @user.in_onboarding?
+
+    # If slug was just set and user is in habits_created state, advance to profile_created
+    if @user.slug.present? && @user.habits_created?
+      @user.advance_onboarding_to(:profile_created)
+    end
+
+    # If sharing settings were updated and user is in profile_created state, advance to completed
+    if (@user.habits_public? || @user.reflections_public?) && @user.profile_created?
+      @user.advance_onboarding_to(:completed)
+    end
   end
 end
