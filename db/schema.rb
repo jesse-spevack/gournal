@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_06_170720) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_10_171332) do
   create_table "daily_reflections", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "date", null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_06_170720) do
     t.string "slug"
     t.boolean "habits_public", default: false, null: false
     t.boolean "reflections_public", default: false, null: false
+    t.integer "onboarding_state", default: 0, null: false
     t.index [ "email_address" ], name: "index_users_on_email_address", unique: true
     t.index [ "slug" ], name: "index_users_on_slug", unique: true
   end

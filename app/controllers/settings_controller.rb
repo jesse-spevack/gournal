@@ -1,6 +1,7 @@
 class SettingsController < ApplicationController
   def index
     @user = Current.user
+    @onboarding_state = @user.onboarding_state
     current_date = Date.current
     @habits = Current.user.habits
                      .where(year: current_date.year, month: current_date.month, active: true)
@@ -21,6 +22,7 @@ class SettingsController < ApplicationController
       redirect_to settings_path, notice: "Profile settings updated successfully"
     else
       # Re-render index with errors
+      @onboarding_state = @user.onboarding_state
       current_date = Date.current
       @habits = Current.user.habits
                        .where(year: current_date.year, month: current_date.month, active: true)

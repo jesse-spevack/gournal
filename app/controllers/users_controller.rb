@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
     if @user.save
       start_new_session_for @user
-      redirect_to after_authentication_url
+      redirect_to settings_path
     else
       render :new, status: :unprocessable_content
     end

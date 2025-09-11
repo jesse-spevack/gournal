@@ -7,6 +7,15 @@ class User < ApplicationRecord
   has_many :habit_entries, through: :habits
   has_many :daily_reflections, dependent: :destroy
 
+  # Enums
+  enum :onboarding_state, {
+    not_started: 0,
+    habits_created: 1,
+    profile_created: 2,
+    completed: 3,
+    skipped: 4
+  }, default: :not_started
+
   # Validations
   validates :email_address, presence: true,
                            uniqueness: { case_sensitive: false },
@@ -37,5 +46,26 @@ class User < ApplicationRecord
 
   def public_reflections_visible?
     reflections_public? && has_public_profile?
+  end
+
+  # Onboarding helper methods
+  def in_onboarding?
+    not_started? || habits_created? || profile_created?
+  end
+
+  def onboarding_finished?
+    completed? || skipped?
+  end
+
+  def advance_onboarding_to(new_state)
+    return if onboarding_finished?
+
+    # Only allow forward progression
+    current_index = self.class.onboarding_states[onboarding_state]
+    new_index = self.class.onboarding_states[new_state]
+
+    if new_index > current_index
+      update(onboarding_state: new_state)
+    end
   end
 end
