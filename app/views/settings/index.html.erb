@@ -29,14 +29,7 @@
           </div>
         </section>
         
-        <%# Section 2: Month Setup - only show if user has habits (independent of onboarding) %>
-        <% if @habits.any? %>
-          <section class="settings-section month-setup">
-            <%= render "month_setup_section" %>
-          </section>
-        <% end %>
-        
-        <%# Section 3: Profile Link - Show based on onboarding state %>
+        <%# Section 2: Profile Link - Show based on onboarding state %>
         <% if @user.show_profile_section? %>
           <section class="settings-section profile-url">
             <div class="section-header">
@@ -49,7 +42,7 @@
           </section>
         <% end %>
         
-        <%# Section 4: Privacy Settings - Show based on onboarding state %>
+        <%# Section 3: Privacy Settings - Show based on onboarding state %>
         <% if @user.show_sharing_section? %>
           <section class="settings-section privacy-settings">
             <div class="section-header">
@@ -59,6 +52,13 @@
             <div class="section-content">
               <%= render "privacy_settings_section", user: @user %>
             </div>
+          </section>
+        <% end %>
+        
+        <%# Section 4: Month Setup - only show if user has habits AND onboarding is complete %>
+        <% if @habits.any? && @user.onboarding_finished? %>
+          <section class="settings-section month-setup">
+            <%= render "month_setup_section" %>
           </section>
         <% end %>
         
