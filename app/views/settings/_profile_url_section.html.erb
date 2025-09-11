@@ -37,17 +37,17 @@
       <% end %>
     </div>
     
+    <%# Onboarding hint for users who just created habits %>
+    <% if user.habits_created? %>
+      <%= render 'onboarding_hint', hint_text: 'Click on "your-custom-share-link" above to create your profile link.' %>
+    <% end %>
+    
     <%# Submit button %>
     <%= render 'shared/primary_button', 
         text: 'Save profile link', 
         type: 'submit',
         data: { privacy_settings_target: "submitButton" } %>
     
-  <% end %>
-  
-  <%# Onboarding hint for users who just created habits %>
-  <% if user.habits_created? %>
-    <%= render 'onboarding_hint', hint_text: 'Now create your profile link. Click on "your-custom-share-link" above to choose your own unique URL.' %>
   <% end %>
   
 </div>
