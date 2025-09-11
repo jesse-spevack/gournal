@@ -4,14 +4,14 @@
 
 .onboarding-hint {
   margin-top: var(--space-md);
-  border-left: 2px solid var(--ink-lighter);
+  border-left: 2px solid var(--ink-primary-30);
   padding-left: var(--space-sm);
 }
 
 .onboarding-hint-text {
   font-family: var(--font-mono);
-  font-size: var(--text-xs); /* 11px - standard typewriter UI size */
-  color: var(--ink-secondary);
+  font-size: var(--text-xxs); /* 11px - standard typewriter UI size */
+  color: var(--ink-primary);
   line-height: 1.6;
   margin: 0;
 }
@@ -29,7 +29,7 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background-color: var(--ink-lighter);
+    background-color: var(--ink-primary-30);
     opacity: 0.5;
   }
 }
@@ -55,16 +55,16 @@
   margin-top: var(--space-lg);
   text-align: center;
   padding-top: var(--space-md);
-  border-top: 1px solid var(--ink-lighter);
+  border-top: 1px solid var(--ink-primary-20);
 }
 
 .skip-onboarding-link {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--ink-lighter);
+  font-size: var(--text-xxs);
+  color: var(--ink-primary-30);
   text-decoration: underline;
   
   &:hover {
-    color: var(--ink-secondary);
+    color: var(--ink-primary);
   }
 }
