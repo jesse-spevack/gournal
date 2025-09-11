@@ -28,7 +28,7 @@
         </span>
       </div>
       <%= form.hidden_field :slug, 
-                           value: user.slug,
+                           value: user.slug || "",
                            data: { privacy_settings_target: "slugField" } %>
       <% if user.errors[:slug].any? %>
         <div class="field-error">
