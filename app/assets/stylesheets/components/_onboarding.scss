@@ -1,0 +1,37 @@
+/* ==========================================================================
+   ONBOARDING - Hint text and guidance for new users
+   ========================================================================== */
+
+.onboarding-hint {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--paper-light);
+  border-left: 2px solid var(--ink-lighter);
+}
+
+.onboarding-hint-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs); /* 11px - standard typewriter UI size */
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Skip onboarding link */
+.skip-onboarding-section {
+  margin-top: var(--space-lg);
+  text-align: center;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--ink-lighter);
+}
+
+.skip-onboarding-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-lighter);
+  text-decoration: underline;
+  
+  &:hover {
+    color: var(--ink-secondary);
+  }
+}

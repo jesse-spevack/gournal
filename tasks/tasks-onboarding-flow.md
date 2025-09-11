@@ -8,7 +8,7 @@
   - [x] 1.3 Set default onboarding_state to 'not_started' for new users
   - [x] 1.4 Modify SettingsController to pass onboarding state to view
   
-- [ ] 2.0 Implement Progressive Section Reveal System
+- [x] 2.0 Implement Progressive Section Reveal System
   - [x] 2.1 Create conditional section rendering based on onboarding_state
   - [x] 2.2 Show only habits section when state == 'not_started'
   - [x] 2.3 Show habits + profile sections when state == 'habits_created'
@@ -17,12 +17,12 @@
   - [x] 2.6 Ensure Month Setup section remains hidden until habits exist (independent of onboarding)
   
 - [ ] 3.0 Create Onboarding Helper Text Components
-  - [ ] 3.1 Create `_onboarding_hint.html.erb` partial for reusable hint text
-  - [ ] 3.2 Add habit creation hint below habit list when state == 'not_started'
-  - [ ] 3.3 Add profile setup hint below profile section when state == 'habits_created'
-  - [ ] 3.4 Add sharing settings hint below sharing section when state == 'profile_created'
-  - [ ] 3.5 Style hints with typewriter font and subtle visual treatment
-  - [ ] 3.6 Add skip onboarding link/button at bottom of visible sections
+  - [x] 3.1 Create `_onboarding_hint.html.erb` partial for reusable hint text
+  - [x] 3.2 Add habit creation hint below habit list when state == 'not_started'
+  - [x] 3.3 Add profile setup hint below profile section when state == 'habits_created'
+  - [x] 3.4 Add sharing settings hint below sharing section when state == 'profile_created'
+  - [x] 3.5 Style hints with typewriter font and subtle visual treatment
+  - [x] 3.6 Add skip onboarding link/button at bottom of visible sections
   
 - [ ] 4.0 Update Controllers for Onboarding State Progression
   - [ ] 4.1 Update HabitsController#create to advance from 'not_started' to 'habits_created' on first habit

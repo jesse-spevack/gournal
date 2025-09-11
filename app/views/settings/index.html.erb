@@ -62,6 +62,18 @@
           </section>
         <% end %>
         
+        <%# Skip onboarding option for users in onboarding flow %>
+        <% if @user.in_onboarding? %>
+          <div class="skip-onboarding-section">
+            <%= link_to "Skip setup", onboarding_path, 
+                class: "skip-onboarding-link",
+                data: { 
+                  method: :delete,
+                  confirm: "Skip the guided setup? You can still access all features normally."
+                } %>
+          </div>
+        <% end %>
+        
       </div>
       
     </div>

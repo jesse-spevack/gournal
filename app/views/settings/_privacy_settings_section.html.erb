@@ -86,4 +86,9 @@
     
   <% end %>
   
+  <%# Onboarding hint for users who just created their profile %>
+  <% if user.profile_created? %>
+    <%= render 'onboarding_hint', hint_text: 'Finally, choose what to share. Check the boxes above to make your habits or reflections visible on your profile.' %>
+  <% end %>
+  
 </div>

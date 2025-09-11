@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get "settings" => "settings#index", as: :settings
   patch "settings" => "settings#update"
 
+  # Onboarding (authenticated)
+  resource :onboarding, only: [ :destroy ]
+
   # Help system (authenticated)
   get "help/manage-habits" => "help#manage_habits", as: :help_manage_habits
   get "help/next-month-setup" => "help#next_month_setup", as: :help_next_month_setup
