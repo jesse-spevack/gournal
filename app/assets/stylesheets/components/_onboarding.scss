@@ -41,10 +41,10 @@
 .skip-onboarding-link {
   font-family: var(--font-mono);
   font-size: var(--text-xxs);
-  color: var(--ink-primary-30);
+  color: var(--ink-primary);
   text-decoration: underline;
   
   &:hover {
-    color: var(--ink-primary);
+    color: var(--ink-hover);
   }
 }
