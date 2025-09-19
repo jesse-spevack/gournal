@@ -1,0 +1,23 @@
+/* ============================================================================ */
+/* MONTH NAVIGATION - Previous/Next month navigation arrows                     */
+/* ============================================================================ */
+
+.month-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+
+  // Navigation arrows close to the title
+  .month-navigation__prev,
+  .month-navigation__next {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    padding: 4px 8px;
+    min-width: 44px; // Touch target
+    min-height: 44px; // Touch target
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

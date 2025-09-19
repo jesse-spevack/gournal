@@ -6,9 +6,25 @@
       <%# Settings button in top-right %>
       <%= render "shared/settings_button" %>
       
-      <%# Header - Simple "September 2025" for Phase 2 %>
+      <%# Header with month navigation %>
       <header class="month-header">
+        <% if @previous_month_path %>
+          <%= render 'shared/navigation_button',
+              text: '<',
+              url: @previous_month_path,
+              class: 'month-navigation__prev',
+              'aria-label': 'Previous month' %>
+        <% end %>
+
         <h1><%= @tracker_data.month_name %> <%= @tracker_data.year %></h1>
+
+        <% if @next_month_path %>
+          <%= render 'shared/navigation_button',
+              text: '>',
+              url: @next_month_path,
+              class: 'month-navigation__next',
+              'aria-label': 'Next month' %>
+        <% end %>
       </header>
       
       <%# Grid Layout: Day numbers + Habit columns + Reflection column %>
