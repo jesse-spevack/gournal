@@ -19,6 +19,9 @@ class HabitEntriesController < ApplicationController
       month: month
     )
 
+    # Set up navigation paths
+    setup_navigation_paths(year, month, current_date)
+
     # If no user exists, show empty state
     render_empty_state if @current_user.nil?
   end
@@ -62,5 +65,38 @@ class HabitEntriesController < ApplicationController
     return false unless month >= 1 && month <= 12
 
     true
+  end
+
+  def setup_navigation_paths(year, month, current_date)
+    # Find the earliest month with habits for this user
+    if @current_user
+      earliest_habit = Habit.where(user: @current_user)
+                            .order(:year, :month)
+                            .first
+
+      # Only show previous month if we're not at the earliest month with habits
+      if earliest_habit.nil? || after_date?(year, month, earliest_habit.year, earliest_habit.month)
+        prev_date = Date.new(year, month, 1) - 1.month
+        @previous_month_path = habit_entries_month_path(year: prev_date.year, month: prev_date.month)
+      end
+    else
+      # No user, show previous month navigation anyway
+      prev_date = Date.new(year, month, 1) - 1.month
+      @previous_month_path = habit_entries_month_path(year: prev_date.year, month: prev_date.month)
+    end
+
+    # Calculate next month (only if not current month)
+    @is_current_month = (year == current_date.year && month == current_date.month)
+    unless @is_current_month
+      next_date = Date.new(year, month, 1) + 1.month
+      # Don't allow navigation to future months
+      if next_date <= current_date.beginning_of_month
+        @next_month_path = habit_entries_month_path(year: next_date.year, month: next_date.month)
+      end
+    end
+  end
+
+  def after_date?(year1, month1, year2, month2)
+    year1 > year2 || (year1 == year2 && month1 > month2)
   end
 end
