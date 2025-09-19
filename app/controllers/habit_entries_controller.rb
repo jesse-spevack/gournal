@@ -75,7 +75,7 @@ class HabitEntriesController < ApplicationController
                             .first
 
       # Only show previous month if we're not at the earliest month with habits
-      if earliest_habit.nil? || (year > earliest_habit.year) || (year == earliest_habit.year && month > earliest_habit.month)
+      if earliest_habit.nil? || after_date?(year, month, earliest_habit.year, earliest_habit.month)
         prev_date = Date.new(year, month, 1) - 1.month
         @previous_month_path = habit_entries_month_path(year: prev_date.year, month: prev_date.month)
       end
@@ -94,5 +94,9 @@ class HabitEntriesController < ApplicationController
         @next_month_path = habit_entries_month_path(year: next_date.year, month: next_date.month)
       end
     end
+  end
+
+  def after_date?(year1, month1, year2, month2)
+    year1 > year2 || (year1 == year2 && month1 > month2)
   end
 end
