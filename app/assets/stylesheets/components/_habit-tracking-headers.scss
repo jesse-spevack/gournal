@@ -24,12 +24,22 @@
   opacity: var(--opacity-numbers);
   min-width: 20px;
   text-align: right;
-  margin-right: 8px; /* Reduced from 12px */
+  margin-right: 8px;
   letter-spacing: var(--letter-spacing-tight);
-  
+  position: relative;
+
   /* Precise vertical centering */
   height: var(--checkbox-size);
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
+
+  .today-indicator {
+    position: absolute;
+    left: -6px;
+  }
+
+  .day-value {
+    /* Keep original positioning */
+  }
 }
