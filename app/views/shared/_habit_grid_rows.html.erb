@@ -4,7 +4,15 @@
     <div class="day-row" data-day="<%= day %>">
       
       <%# Day Number %>
-      <div class="day-number"><%= day %></div>
+      <% today = Date.current.day %>
+      <% is_current_month = tracker_data.year == Date.current.year && tracker_data.month == Date.current.month %>
+      <div class="day-number" style="width: 35px;">
+        <% if is_current_month && day == today %>
+          • <%= day %>
+        <% else %>
+          <span style="margin-left: 9px;"><%= day %></span>
+        <% end %>
+      </div>
       
       <%# Habit Checkboxes %>
       <% if local_assigns[:show_habits] != false %>
