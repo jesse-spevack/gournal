@@ -6,12 +6,11 @@
       <%# Day Number %>
       <% today = Date.current.day %>
       <% is_current_month = tracker_data.year == Date.current.year && tracker_data.month == Date.current.month %>
-      <div class="day-number" style="width: 35px;">
+      <div class="day-number<%= ' day-number--today' if is_current_month && day == today %>">
         <% if is_current_month && day == today %>
-          • <%= day %>
-        <% else %>
-          <span style="margin-left: 9px;"><%= day %></span>
+          <span class="today-indicator">•</span>
         <% end %>
+        <%= day %>
       </div>
       
       <%# Habit Checkboxes %>
