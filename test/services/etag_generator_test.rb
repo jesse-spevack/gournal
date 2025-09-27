@@ -140,4 +140,41 @@ class ETagGeneratorTest < ActiveSupport::TestCase
 
     assert_not_equal etag1, etag2, "ETag should change when habit entries are updated"
   end
+
+  test "includes last_modified timestamp in ETag calculation" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    timestamp1 = 1.hour.ago
+    timestamp2 = Time.current
+
+    etag1 = ETagGenerator.call(user: @user, year: 2025, month: 10, last_modified: timestamp1)
+    etag2 = ETagGenerator.call(user: @user, year: 2025, month: 10, last_modified: timestamp2)
+
+    assert_not_equal etag1, etag2, "ETag should change when last_modified timestamp changes"
+  end
+
+  test "handles nil last_modified gracefully" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    etag_with_nil = ETagGenerator.call(user: @user, year: 2025, month: 10, last_modified: nil)
+    etag_without_param = ETagGenerator.call(user: @user, year: 2025, month: 10)
+
+    assert_equal etag_with_nil, etag_without_param, "ETag should be same with nil last_modified and without parameter"
+  end
 end

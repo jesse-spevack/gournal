@@ -19,10 +19,11 @@ class HabitEntriesController < ApplicationController
       month: month
     )
 
-    # Generate ETag for caching based on habit data
+    # Generate ETag and Last-Modified for caching based on habit data
     if @current_user
-      etag = ETagGenerator.call(user: @current_user, year: year, month: month)
-      fresh_when(etag: etag)
+      last_modified = calculate_last_modified(year, month)
+      etag = ETagGenerator.call(user: @current_user, year: year, month: month, last_modified: last_modified)
+      fresh_when(etag: etag, last_modified: last_modified)
     end
 
     # Set up navigation paths
@@ -104,5 +105,23 @@ class HabitEntriesController < ApplicationController
 
   def after_date?(year1, month1, year2, month2)
     year1 > year2 || (year1 == year2 && month1 > month2)
+  end
+
+  def calculate_last_modified(year, month)
+    # Find the most recent timestamp from habits and habit entries for this user/month
+    habits_timestamp = @current_user.habits
+      .where(year: year, month: month, active: true)
+      .maximum(:updated_at)
+
+    habit_ids = @current_user.habits
+      .where(year: year, month: month, active: true)
+      .pluck(:id)
+
+    entries_timestamp = if habit_ids.any?
+      HabitEntry.where(habit_id: habit_ids).maximum(:updated_at)
+    end
+
+    # Return the most recent timestamp, or a default if no data exists
+    [ habits_timestamp, entries_timestamp ].compact.max || Time.current
   end
 end

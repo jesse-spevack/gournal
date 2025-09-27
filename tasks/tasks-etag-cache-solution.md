@@ -9,12 +9,12 @@
   - [x] 1.4 Add ETag generation method to HabitEntriesController
   - [x] 1.5 Run tests to verify ETag generation logic
 
-- [ ] 2.0 Implement HTTP cache headers in HabitEntriesController
-  - [ ] 2.1 Write failing test for fresh_when behavior with matching ETag
-  - [ ] 2.2 Write failing test for fresh_when behavior with stale ETag
-  - [ ] 2.3 Implement fresh_when in HabitEntriesController#index
-  - [ ] 2.4 Add last_modified timestamp to ETag calculation
-  - [ ] 2.5 Verify HTTP headers are set correctly in controller tests
+- [x] 2.0 Implement HTTP cache headers in HabitEntriesController
+  - [x] 2.1 Write failing test for fresh_when behavior with matching ETag
+  - [x] 2.2 Write failing test for fresh_when behavior with stale ETag
+  - [x] 2.3 Implement fresh_when in HabitEntriesController#index
+  - [x] 2.4 Add last_modified timestamp to ETag calculation
+  - [x] 2.5 Verify HTTP headers are set correctly in controller tests
 
 - [ ] 3.0 Add cache invalidation when habit data changes
   - [ ] 3.1 Write failing test for ETag change when habits are updated

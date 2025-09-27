@@ -1,16 +1,17 @@
 require "digest"
 
 class ETagGenerator
-  def self.call(user:, year: Date.current.year, month: Date.current.month)
-    new(user: user, year: year, month: month).call
+  def self.call(user:, year: Date.current.year, month: Date.current.month, last_modified: nil)
+    new(user: user, year: year, month: month, last_modified: last_modified).call
   end
 
-  def initialize(user:, year:, month:)
+  def initialize(user:, year:, month:, last_modified: nil)
     raise ArgumentError, "User cannot be nil" if user.nil?
 
     @user = user
     @year = year
     @month = month
+    @last_modified = last_modified
   end
 
   def call
@@ -20,7 +21,8 @@ class ETagGenerator
       @year,
       @month,
       habits_fingerprint,
-      habit_entries_fingerprint
+      habit_entries_fingerprint,
+      last_modified_fingerprint
     ]
 
     # Generate MD5 hash of the combined components
@@ -68,5 +70,12 @@ class ETagGenerator
     end
 
     Digest::MD5.hexdigest(fingerprint_data.join("|"))
+  end
+
+  def last_modified_fingerprint
+    # Include last_modified timestamp in ETag calculation if provided
+    return "no-timestamp" unless @last_modified
+
+    @last_modified.to_i.to_s
   end
 end
