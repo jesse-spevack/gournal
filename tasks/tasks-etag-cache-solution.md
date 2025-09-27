@@ -16,12 +16,12 @@
   - [x] 2.4 Add last_modified timestamp to ETag calculation
   - [x] 2.5 Verify HTTP headers are set correctly in controller tests
 
-- [ ] 3.0 Add cache invalidation when habit data changes
-  - [ ] 3.1 Write failing test for ETag change when habits are updated
-  - [ ] 3.2 Write failing test for ETag change when habit entries are updated
-  - [ ] 3.3 Ensure habit model touches affect ETag calculation
-  - [ ] 3.4 Verify habit_entry updates trigger ETag changes
-  - [ ] 3.5 Test cross-device scenario with habit updates
+- [x] 3.0 Add cache invalidation when habit data changes
+  - [x] 3.1 Write failing test for ETag change when habits are updated
+  - [x] 3.2 Write failing test for ETag change when habit entries are updated
+  - [x] 3.3 Ensure habit model touches affect ETag calculation
+  - [x] 3.4 Verify habit_entry updates trigger ETag changes
+  - [x] 3.5 Test cross-device scenario with habit updates
 
 - [ ] 4.0 Create comprehensive test suite for ETag functionality
   - [ ] 4.1 Write unit tests for ETagGenerator service

@@ -121,7 +121,11 @@ class HabitEntriesController < ApplicationController
       HabitEntry.where(habit_id: habit_ids).maximum(:updated_at)
     end
 
-    # Return the most recent timestamp, or a default if no data exists
-    [ habits_timestamp, entries_timestamp ].compact.max || Time.current
+    # Return the most recent timestamp, or a default based on the specific month if no data exists
+    most_recent = [ habits_timestamp, entries_timestamp ].compact.max
+
+    # Use a consistent fallback timestamp based on the month being requested
+    # instead of Time.current which changes during test execution
+    most_recent || Time.zone.local(year, month, 1).beginning_of_month
   end
 end
