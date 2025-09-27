@@ -19,6 +19,12 @@ class HabitEntriesController < ApplicationController
       month: month
     )
 
+    # Generate ETag for caching based on habit data
+    if @current_user
+      etag = ETagGenerator.call(user: @current_user, year: year, month: month)
+      fresh_when(etag: etag)
+    end
+
     # Set up navigation paths
     setup_navigation_paths(year, month, current_date)
 
