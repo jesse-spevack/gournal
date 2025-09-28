@@ -1,5 +1,5 @@
 class HabitEntry < ApplicationRecord
-  belongs_to :habit
+  belongs_to :habit, touch: true
 
   # Enums
   enum :checkbox_style, {

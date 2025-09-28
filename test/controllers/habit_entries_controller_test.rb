@@ -108,4 +108,312 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
     # Should show next month link
     assert_select "a[href='/habit_entries/2025/4']", text: ">"
   end
+
+  # ETag integration tests
+  test "includes ETag header in response" do
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+    assert_not_nil response.headers["ETag"], "Response should include ETag header"
+  end
+
+  test "generates consistent ETag for same request" do
+    # Create some habit data
+    Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # First request
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag1 = response.headers["ETag"]
+
+    # Second request
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag2 = response.headers["ETag"]
+
+    assert_equal etag1, etag2, "ETag should be consistent for identical data"
+  end
+
+  test "generates different ETag when habit data changes" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # First request
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag1 = response.headers["ETag"]
+
+    # Change habit data
+    habit.update!(name: "Evening Exercise")
+
+    # Second request after change
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag2 = response.headers["ETag"]
+
+    assert_not_equal etag1, etag2, "ETag should change when habit data changes"
+  end
+
+  test "returns 304 Not Modified for matching ETag" do
+    Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # First request to get ETag
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+    etag = response.headers["ETag"]
+
+    # Second request with If-None-Match header
+    get habit_entries_month_path(year: 2025, month: 10), headers: { "If-None-Match" => etag }
+    assert_response :not_modified
+    assert_empty response.body, "304 response should have empty body"
+  end
+
+  test "returns 200 OK when ETag does not match" do
+    Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # Request with non-matching ETag
+    get habit_entries_month_path(year: 2025, month: 10), headers: { "If-None-Match" => '"fake-etag"' }
+    assert_response :success
+    assert_not_empty response.body, "200 response should have body content"
+    assert_not_nil response.headers["ETag"], "Response should include new ETag"
+  end
+
+  # Additional HTTP cache header tests for Task 2.0
+  test "includes Last-Modified header in response" do
+    Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+    assert_not_nil response.headers["Last-Modified"], "Response should include Last-Modified header"
+  end
+
+  test "returns 304 for matching If-Modified-Since" do
+    Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # First request to get Last-Modified
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+    last_modified = response.headers["Last-Modified"]
+
+    # Second request with If-Modified-Since header
+    get habit_entries_month_path(year: 2025, month: 10), headers: { "If-Modified-Since" => last_modified }
+    assert_response :not_modified
+    assert_empty response.body, "304 response should have empty body"
+  end
+
+  test "sets correct Cache-Control headers" do
+    Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+
+    # Check that appropriate cache headers are set
+    assert_not_nil response.headers["ETag"], "Should have ETag header"
+    assert_not_nil response.headers["Last-Modified"], "Should have Last-Modified header"
+
+    # Verify cache headers allow conditional requests
+    assert_not_nil response.headers["Cache-Control"], "Should have Cache-Control header"
+  end
+
+  # Stale ETag and Last-Modified behavior tests for Task 2.2
+  test "returns 200 for stale If-Modified-Since" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # Get current Last-Modified
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+
+    # Update habit data to make timestamp stale
+    habit.update!(name: "Evening Exercise")
+
+    # Request with stale If-Modified-Since (from before the update)
+    stale_timestamp = 1.hour.ago.httpdate
+    get habit_entries_month_path(year: 2025, month: 10), headers: { "If-Modified-Since" => stale_timestamp }
+    assert_response :success
+    assert_not_empty response.body, "200 response should have body content when data is newer"
+  end
+
+  test "Last-Modified changes when habit data changes" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # First request
+    get habit_entries_month_path(year: 2025, month: 10)
+    last_modified1 = response.headers["Last-Modified"]
+
+    # Change habit data
+    travel 1.minute
+    habit.update!(name: "Evening Exercise")
+
+    # Second request after change
+    get habit_entries_month_path(year: 2025, month: 10)
+    last_modified2 = response.headers["Last-Modified"]
+
+    assert_not_equal last_modified1, last_modified2, "Last-Modified should change when habit data changes"
+  ensure
+    travel_back
+  end
+
+  test "ETag and Last-Modified work together for cache validation" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # First request to get both headers
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag = response.headers["ETag"]
+    last_modified = response.headers["Last-Modified"]
+
+    # Request with both If-None-Match and If-Modified-Since
+    get habit_entries_month_path(year: 2025, month: 10), headers: {
+      "If-None-Match" => etag,
+      "If-Modified-Since" => last_modified
+    }
+    assert_response :not_modified
+    assert_empty response.body, "304 response should have empty body when both conditions match"
+  end
+
+  test "returns 200 when both ETag and Last-Modified are stale" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # Get initial headers
+    get habit_entries_month_path(year: 2025, month: 10)
+    old_etag = response.headers["ETag"]
+    old_last_modified = response.headers["Last-Modified"]
+
+    # Change data to make both headers stale
+    travel 1.minute
+    habit.update!(name: "Evening Exercise")
+
+    # Request with stale headers
+    get habit_entries_month_path(year: 2025, month: 10), headers: {
+      "If-None-Match" => old_etag,
+      "If-Modified-Since" => old_last_modified
+    }
+    assert_response :success
+    assert_not_empty response.body, "200 response should have body when data has changed"
+
+    # Verify new headers are different
+    assert_not_equal old_etag, response.headers["ETag"], "ETag should be different after data change"
+    assert_not_equal old_last_modified, response.headers["Last-Modified"], "Last-Modified should be different after data change"
+  ensure
+    travel_back
+  end
+
+
+  test "ETag reflects actual data changes" do
+    habit = Habit.create!(
+      user: @user,
+      name: "Morning Exercise",
+      year: 2025,
+      month: 10,
+      position: 1,
+      active: true,
+      check_type: :x_marks
+    )
+
+    # Get initial ETag
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag1 = response.headers["ETag"]
+
+    # Create habit entry
+    HabitEntry.create!(habit: habit, day: 1, completed: true)
+
+    # Get new ETag after data change
+    get habit_entries_month_path(year: 2025, month: 10)
+    etag2 = response.headers["ETag"]
+
+    assert_not_equal etag1, etag2, "ETag should change when habit entries are created"
+  end
+
+  test "headers work correctly for user without habits" do
+    # Test with user who has no habits for this month
+    get habit_entries_month_path(year: 2025, month: 10)
+    assert_response :success
+
+    etag = response.headers["ETag"]
+    last_modified = response.headers["Last-Modified"]
+
+    assert_not_nil etag, "ETag should be present even without habits"
+    assert_not_nil last_modified, "Last-Modified should be present even without habits"
+  end
 end
