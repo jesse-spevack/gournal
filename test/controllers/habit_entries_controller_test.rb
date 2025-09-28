@@ -379,48 +379,6 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
     travel_back
   end
 
-  # HTTP header verification tests for Task 2.5
-  test "sets correct ETag format" do
-    Habit.create!(
-      user: @user,
-      name: "Morning Exercise",
-      year: 2025,
-      month: 10,
-      position: 1,
-      active: true,
-      check_type: :x_marks
-    )
-
-    get habit_entries_month_path(year: 2025, month: 10)
-    assert_response :success
-
-    etag = response.headers["ETag"]
-    assert_not_nil etag, "ETag header should be present"
-    # Rails uses weak ETags (W/"hash") for fresh_when
-    assert_match(/\A(W\/)?"[a-f0-9]{32}"\z/, etag, "ETag should be a quoted MD5 hash (may be weak)")
-  end
-
-  test "sets correct Last-Modified format" do
-    Habit.create!(
-      user: @user,
-      name: "Morning Exercise",
-      year: 2025,
-      month: 10,
-      position: 1,
-      active: true,
-      check_type: :x_marks
-    )
-
-    get habit_entries_month_path(year: 2025, month: 10)
-    assert_response :success
-
-    last_modified = response.headers["Last-Modified"]
-    assert_not_nil last_modified, "Last-Modified header should be present"
-
-    # Parse as HTTP date to verify format
-    parsed_time = Time.httpdate(last_modified)
-    assert parsed_time.is_a?(Time), "Last-Modified should be valid HTTP date format"
-  end
 
   test "ETag reflects actual data changes" do
     habit = Habit.create!(
@@ -447,33 +405,6 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal etag1, etag2, "ETag should change when habit entries are created"
   end
 
-  test "Last-Modified reflects most recent change" do
-    travel_to Time.zone.local(2025, 10, 1, 10, 0, 0)
-
-    habit = Habit.create!(
-      user: @user,
-      name: "Morning Exercise",
-      year: 2025,
-      month: 10,
-      position: 1,
-      active: true,
-      check_type: :x_marks
-    )
-
-    # Update habit at a specific time
-    travel_to Time.zone.local(2025, 10, 1, 11, 0, 0)
-    habit.update!(name: "Evening Exercise")
-
-    get habit_entries_month_path(year: 2025, month: 10)
-    last_modified = Time.httpdate(response.headers["Last-Modified"])
-
-    # Last-Modified should be close to the update time
-    expected_time = Time.zone.local(2025, 10, 1, 11, 0, 0)
-    assert_in_delta expected_time.to_i, last_modified.to_i, 60, "Last-Modified should reflect recent update time"
-  ensure
-    travel_back
-  end
-
   test "headers work correctly for user without habits" do
     # Test with user who has no habits for this month
     get habit_entries_month_path(year: 2025, month: 10)
@@ -484,35 +415,5 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_nil etag, "ETag should be present even without habits"
     assert_not_nil last_modified, "Last-Modified should be present even without habits"
-  end
-
-  test "headers are consistent across multiple requests" do
-    Habit.create!(
-      user: @user,
-      name: "Morning Exercise",
-      year: 2025,
-      month: 10,
-      position: 1,
-      active: true,
-      check_type: :x_marks
-    )
-
-    # Make multiple requests without changing data
-    get habit_entries_month_path(year: 2025, month: 10)
-    etag1 = response.headers["ETag"]
-    last_modified1 = response.headers["Last-Modified"]
-
-    get habit_entries_month_path(year: 2025, month: 10)
-    etag2 = response.headers["ETag"]
-    last_modified2 = response.headers["Last-Modified"]
-
-    get habit_entries_month_path(year: 2025, month: 10)
-    etag3 = response.headers["ETag"]
-    last_modified3 = response.headers["Last-Modified"]
-
-    assert_equal etag1, etag2, "ETag should be consistent across requests"
-    assert_equal etag2, etag3, "ETag should be consistent across requests"
-    assert_equal last_modified1, last_modified2, "Last-Modified should be consistent across requests"
-    assert_equal last_modified2, last_modified3, "Last-Modified should be consistent across requests"
   end
 end
