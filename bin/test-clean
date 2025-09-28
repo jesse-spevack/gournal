@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# Run Rails tests without bundler/rubygems constant warnings
-export RUBYOPT="-W0"
-exec bin/rails test "$@"

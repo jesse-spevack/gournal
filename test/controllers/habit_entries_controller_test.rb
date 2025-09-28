@@ -118,7 +118,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "generates consistent ETag for same request" do
     # Create some habit data
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -165,7 +165,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "returns 304 Not Modified for matching ETag" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -187,7 +187,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "returns 200 OK when ETag does not match" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -206,7 +206,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
 
   # Additional HTTP cache header tests for Task 2.0
   test "includes Last-Modified header in response" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -222,7 +222,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "returns 304 for matching If-Modified-Since" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -244,7 +244,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "sets correct Cache-Control headers" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -262,8 +262,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil response.headers["Last-Modified"], "Should have Last-Modified header"
 
     # Verify cache headers allow conditional requests
-    cache_control = response.headers["Cache-Control"]
-    assert_not_nil cache_control, "Should have Cache-Control header"
+    assert_not_nil response.headers["Cache-Control"], "Should have Cache-Control header"
   end
 
   # Stale ETag and Last-Modified behavior tests for Task 2.2
@@ -382,7 +381,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
 
   # HTTP header verification tests for Task 2.5
   test "sets correct ETag format" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -402,7 +401,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "sets correct Last-Modified format" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -488,7 +487,7 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "headers are consistent across multiple requests" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,

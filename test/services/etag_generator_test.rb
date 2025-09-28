@@ -17,7 +17,7 @@ class ETagGeneratorTest < ActiveSupport::TestCase
   end
 
   test "generates consistent ETag for same habit data" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -142,7 +142,7 @@ class ETagGeneratorTest < ActiveSupport::TestCase
   end
 
   test "includes last_modified timestamp in ETag calculation" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,
@@ -162,7 +162,7 @@ class ETagGeneratorTest < ActiveSupport::TestCase
   end
 
   test "handles nil last_modified gracefully" do
-    habit = Habit.create!(
+    Habit.create!(
       user: @user,
       name: "Morning Exercise",
       year: 2025,

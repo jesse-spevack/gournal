@@ -17,11 +17,9 @@ class HabitEntriesController < ApplicationController
       month: month
     )
 
-    if @current_user
-      last_modified = calculate_last_modified(year, month)
-      etag = ETagGenerator.call(user: @current_user, year: year, month: month, last_modified: last_modified)
-      fresh_when(etag: etag, last_modified: last_modified)
-    end
+    last_modified = HabitDataTimestamp.call(user: @current_user, year: year, month: month)
+    etag = ETagGenerator.call(user: @current_user, year: year, month: month, last_modified: last_modified)
+    fresh_when(etag: etag, last_modified: last_modified)
 
     setup_navigation_paths(year, month, current_date)
 
@@ -92,23 +90,5 @@ class HabitEntriesController < ApplicationController
 
   def after_date?(year1, month1, year2, month2)
     year1 > year2 || (year1 == year2 && month1 > month2)
-  end
-
-  def calculate_last_modified(year, month)
-    habits_timestamp = @current_user.habits
-      .where(year: year, month: month, active: true)
-      .maximum(:updated_at)
-
-    habit_ids = @current_user.habits
-      .where(year: year, month: month, active: true)
-      .pluck(:id)
-
-    entries_timestamp = if habit_ids.any?
-      HabitEntry.where(habit_id: habit_ids).maximum(:updated_at)
-    end
-
-    most_recent = [ habits_timestamp, entries_timestamp ].compact.max
-
-    most_recent || Time.zone.local(year, month, 1).beginning_of_month
   end
 end
