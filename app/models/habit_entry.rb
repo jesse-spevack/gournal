@@ -62,35 +62,7 @@ class HabitEntry < ApplicationRecord
 
   # Assign random styles before creation if not already set
   def assign_random_styles
-    self.checkbox_style ||= random_checkbox_style
-    self.check_style ||= random_check_style
-  end
-
-  def random_checkbox_style
-    self.class.checkbox_styles.keys.sample
-  end
-
-  # Select random check style based on the habit's check type
-  # Ensures visual consistency: x_marks habits use x_styles, blots habits use blot_styles
-  def random_check_style
-    case habit.check_type
-    when Habit::CHECK_TYPE_X_MARKS
-      x_style_options.sample
-    when Habit::CHECK_TYPE_BLOTS
-      blot_style_options.sample
-    end
-  end
-
-  # Style filtering methods - each returns appropriate styles based on habit type
-  def x_style_options
-    @x_style_options ||= self.class.check_styles.keys.select { |k| k.start_with?(X_STYLE_PREFIX) }
-  end
-
-  def blot_style_options
-    @blot_style_options ||= self.class.check_styles.keys.select { |k| k.start_with?(BLOT_STYLE_PREFIX) }
-  end
-
-  def all_check_styles
-    @all_check_styles ||= self.class.check_styles.keys
+    self.checkbox_style ||= HabitEntryStyleSelector.random_checkbox_style
+    self.check_style ||= HabitEntryStyleSelector.random_check_style_for(habit.check_type)
   end
 end

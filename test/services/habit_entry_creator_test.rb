@@ -22,7 +22,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
     # Delete any auto-created entries
     @habit.habit_entries.destroy_all
 
-    result = HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    result = HabitEntryCreator.call(habit: @habit)
 
     # Verify entries were created
     assert_equal 31, @habit.habit_entries.count
@@ -40,7 +40,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
     )
     february_habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: february_habit, year: 2025, month: 2)
+    HabitEntryCreator.call(habit: february_habit)
 
     assert_equal 28, february_habit.habit_entries.count
   end
@@ -57,7 +57,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
     )
     april_habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: april_habit, year: 2025, month: 4)
+    HabitEntryCreator.call(habit: april_habit)
 
     assert_equal 30, april_habit.habit_entries.count
   end
@@ -65,7 +65,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "creates entries for full month with 31 days" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     assert_equal 31, @habit.habit_entries.count
   end
@@ -73,7 +73,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "assigns random checkbox_style to each entry" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     entries = @habit.habit_entries.reload
     assert entries.all? { |e| e.checkbox_style.present? }
@@ -86,7 +86,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "assigns random check_style to each entry" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     entries = @habit.habit_entries.reload
     assert entries.all? { |e| e.check_style.present? }
@@ -99,7 +99,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "check_style matches habit.check_type for x_marks habits" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     entries = @habit.habit_entries.reload
     assert entries.all? { |e| e.check_style.start_with?("x_style_") }
@@ -117,7 +117,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
     )
     blot_habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: blot_habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: blot_habit)
 
     entries = blot_habit.habit_entries.reload
     assert entries.all? { |e| e.check_style.start_with?("blot_style_") }
@@ -126,7 +126,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "all entries default to completed: false" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     entries = @habit.habit_entries.reload
     assert entries.all? { |e| e.completed == false }
@@ -135,7 +135,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "creates entries for each day of the month" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     entries = @habit.habit_entries.reload
     days = entries.map(&:day).sort
@@ -145,7 +145,7 @@ class HabitEntryCreatorTest < ActiveSupport::TestCase
   test "sets created_at and updated_at timestamps" do
     @habit.habit_entries.destroy_all
 
-    HabitEntryCreator.call(habit: @habit, year: 2025, month: 10)
+    HabitEntryCreator.call(habit: @habit)
 
     entries = @habit.habit_entries.reload
     assert entries.all? { |e| e.created_at.present? }

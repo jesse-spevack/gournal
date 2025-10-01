@@ -93,17 +93,17 @@ class HabitEntryStyleSelectorTest < ActiveSupport::TestCase
     assert_empty overlap, "x_style and blot_style options should not overlap"
   end
 
-  test "x_style_options are memoized" do
+  test "x_style_options returns consistent results" do
     first_call = HabitEntryStyleSelector.x_style_options
     second_call = HabitEntryStyleSelector.x_style_options
 
-    assert_same first_call, second_call
+    assert_equal first_call, second_call
   end
 
-  test "blot_style_options are memoized" do
+  test "blot_style_options returns consistent results" do
     first_call = HabitEntryStyleSelector.blot_style_options
     second_call = HabitEntryStyleSelector.blot_style_options
 
-    assert_same first_call, second_call
+    assert_equal first_call, second_call
   end
 end

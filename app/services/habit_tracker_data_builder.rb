@@ -61,13 +61,13 @@ class HabitTrackerDataBuilder
   end
 
   def days_in_month
-    Date.new(@year, @month, -1).day
+    Time.days_in_month(@month, @year)
   end
 
   def ensure_habit_entries_exist(habits)
     return if habits.empty?
 
-    entries_created = false
+    habit_ids_to_reload = []
 
     habits.each do |habit|
       existing_days = habit.habit_entries.map(&:day).to_set
@@ -75,11 +75,20 @@ class HabitTrackerDataBuilder
 
       if missing_days.any?
         create_missing_entries(habit, missing_days)
-        entries_created = true
+        habit_ids_to_reload << habit.id
       end
     end
 
-    habits.each(&:reload) if entries_created
+    return if habit_ids_to_reload.empty?
+
+    # Reload habits with entries in a single query
+    reloaded_habits = Habit.includes(:habit_entries).where(id: habit_ids_to_reload).index_by(&:id)
+    habits.each do |habit|
+      next unless habit_ids_to_reload.include?(habit.id)
+
+      reloaded = reloaded_habits[habit.id]
+      habit.association(:habit_entries).target = reloaded.habit_entries.to_a
+    end
   end
 
   def create_missing_entries(habit, missing_days)
@@ -97,7 +106,7 @@ class HabitTrackerDataBuilder
       }
     end
 
-    HabitEntry.insert_all(entries_data) if entries_data.any?
+    HabitEntry.insert_all(entries_data)
   end
 
   def random_check_style_for_habit(habit)

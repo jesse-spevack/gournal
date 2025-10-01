@@ -28,7 +28,7 @@ class HabitCreator
     )
 
     if habit.save
-      HabitEntryCreator.call(habit: habit, year: @target_date.year, month: @target_date.month)
+      HabitEntryCreator.call(habit: habit)
       { success: true, habit: habit }
     else
       { success: false, errors: habit.errors.full_messages }

@@ -36,7 +36,7 @@ class HabitCopyService
       copied_habit = habit.dup
       copied_habit.assign_attributes(year: target_year, month: target_month)
       copied_habit.save!
-      HabitEntryCreator.call(habit: copied_habit, year: target_year, month: target_month)
+      HabitEntryCreator.call(habit: copied_habit)
       copied_habit
     end
   end

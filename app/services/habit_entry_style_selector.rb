@@ -15,10 +15,10 @@ class HabitEntryStyleSelector
   end
 
   def self.x_style_options
-    @x_style_options ||= HabitEntry.check_styles.keys.select { |k| k.start_with?(HabitEntry::X_STYLE_PREFIX) }
+    HabitEntry.check_styles.keys.select { |k| k.start_with?(HabitEntry::X_STYLE_PREFIX) }
   end
 
   def self.blot_style_options
-    @blot_style_options ||= HabitEntry.check_styles.keys.select { |k| k.start_with?(HabitEntry::BLOT_STYLE_PREFIX) }
+    HabitEntry.check_styles.keys.select { |k| k.start_with?(HabitEntry::BLOT_STYLE_PREFIX) }
   end
 end
