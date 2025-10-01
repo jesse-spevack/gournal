@@ -31,26 +31,26 @@ When users copy habits to a new month, only `Habit` records are created but not 
   - [x] 3.3 Verify entries are created for all days in target month
   - [x] 3.4 Run `rubocop -A` and verify no style issues
 
-- [ ] 4.0 Add comprehensive tests for both solutions
-  - [ ] 4.1 Create `test/services/habit_entry_creator_test.rb` with tests for:
-    - [ ] Class method delegation
-    - [ ] Creating entries for full month (28, 30, 31 days)
-    - [ ] Random style assignment (checkbox_style and check_style)
-    - [ ] Check_style matches habit.check_type (x_marks vs blots)
-    - [ ] All entries default to completed: false
-  - [ ] 4.2 Update `test/services/habit_tracker_data_builder_test.rb` with auto-heal tests:
-    - [ ] Test that missing entries are created when habits exist without entries
-    - [ ] Test that no duplicate entries are created if some already exist
-    - [ ] Test that existing entries are not modified
-    - [ ] Test performance with multiple habits missing entries
-  - [ ] 4.3 Update `test/services/habit_copy_service_test.rb` to verify entries are created:
-    - [ ] Modify existing tests to assert habit_entries are created
-    - [ ] Test that all days in target month have entries
-    - [ ] Test entries have proper styles assigned
-    - [ ] Test December to January transition creates correct number of entries
-  - [ ] 4.4 Update `test/services/habit_creator_test.rb` if needed to verify refactoring
-  - [ ] 4.5 Run full test suite: `bin/rails test`
-  - [ ] 4.6 Verify all tests pass
+- [x] 4.0 Add comprehensive tests for both solutions
+  - [x] 4.1 Create `test/services/habit_entry_creator_test.rb` with tests for:
+    - [x] Class method delegation
+    - [x] Creating entries for full month (28, 30, 31 days)
+    - [x] Random style assignment (checkbox_style and check_style)
+    - [x] Check_style matches habit.check_type (x_marks vs blots)
+    - [x] All entries default to completed: false
+  - [x] 4.2 Update `test/services/habit_tracker_data_builder_test.rb` with auto-heal tests:
+    - [x] Test that missing entries are created when habits exist without entries
+    - [x] Test that no duplicate entries are created if some already exist
+    - [x] Test that existing entries are not modified
+    - [x] Test performance with multiple habits missing entries
+  - [x] 4.3 Update `test/services/habit_copy_service_test.rb` to verify entries are created:
+    - [x] Modify existing tests to assert habit_entries are created
+    - [x] Test that all days in target month have entries
+    - [x] Test entries have proper styles assigned
+    - [x] Test December to January transition creates correct number of entries
+  - [x] 4.4 Update `test/services/habit_creator_test.rb` if needed to verify refactoring
+  - [x] 4.5 Run full test suite: `bin/rails test`
+  - [x] 4.6 Verify all tests pass
 
 - [ ] 5.0 Manual testing and verification
   - [ ] 5.1 Test auto-heal: Create a habit directly in console without entries, then load tracker page
