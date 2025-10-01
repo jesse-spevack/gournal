@@ -90,7 +90,7 @@ class HabitTrackerDataBuilder
         habit_id: habit.id,
         day: day,
         completed: false,
-        checkbox_style: HabitEntry.checkbox_styles.keys.sample,
+        checkbox_style: HabitEntryStyleSelector.random_checkbox_style,
         check_style: random_check_style_for_habit(habit),
         created_at: now,
         updated_at: now
@@ -101,6 +101,6 @@ class HabitTrackerDataBuilder
   end
 
   def random_check_style_for_habit(habit)
-    HabitEntry.random_check_style_for(habit.check_type)
+    HabitEntryStyleSelector.random_check_style_for(habit.check_type)
   end
 end

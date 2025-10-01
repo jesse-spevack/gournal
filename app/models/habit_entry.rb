@@ -58,26 +58,6 @@ class HabitEntry < ApplicationRecord
     Date.new(habit.year, habit.month, day)
   end
 
-  # Class methods for getting style options (used by services for bulk creation)
-  def self.x_style_options
-    @x_style_options ||= check_styles.keys.select { |k| k.start_with?(X_STYLE_PREFIX) }
-  end
-
-  def self.blot_style_options
-    @blot_style_options ||= check_styles.keys.select { |k| k.start_with?(BLOT_STYLE_PREFIX) }
-  end
-
-  def self.random_check_style_for(check_type)
-    case check_type
-    when Habit::CHECK_TYPE_X_MARKS
-      x_style_options.sample
-    when Habit::CHECK_TYPE_BLOTS
-      blot_style_options.sample
-    else
-      check_styles.keys.sample
-    end
-  end
-
   private
 
   # Assign random styles before creation if not already set

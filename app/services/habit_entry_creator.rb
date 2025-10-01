@@ -37,10 +37,10 @@ class HabitEntryCreator
   end
 
   def random_checkbox_style
-    HabitEntry.checkbox_styles.keys.sample
+    HabitEntryStyleSelector.random_checkbox_style
   end
 
   def random_check_style
-    HabitEntry.random_check_style_for(habit.check_type)
+    HabitEntryStyleSelector.random_check_style_for(habit.check_type)
   end
 end
