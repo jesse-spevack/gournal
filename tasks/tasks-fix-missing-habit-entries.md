@@ -17,7 +17,7 @@ When users copy habits to a new month, only `Habit` records are created but not 
   - [x] 1.5 Refactor `HabitCreator` to use the new `HabitEntryCreator` service
   - [x] 1.6 Run `rubocop -A` and verify no style issues
 
-- [ ] 2.0 Implement auto-heal in HabitTrackerDataBuilder
+- [x] 2.0 Implement auto-heal in HabitTrackerDataBuilder
   - [x] 2.1 Add private method `ensure_habit_entries_exist(habits)` in `HabitTrackerDataBuilder`
   - [x] 2.2 Iterate through habits and identify missing days for each habit
   - [x] 2.3 Call `HabitEntryCreator` to bulk create missing entries
@@ -26,10 +26,10 @@ When users copy habits to a new month, only `Habit` records are created but not 
   - [x] 2.6 Run `rubocop -A` and verify no style issues
 
 - [ ] 3.0 Fix HabitCopyService to create habit entries
-  - [ ] 3.1 Modify `copy_habits` method to call `HabitEntryCreator` after saving each copied habit
-  - [ ] 3.2 Pass target_year and target_month to `HabitEntryCreator`
-  - [ ] 3.3 Verify entries are created for all days in target month
-  - [ ] 3.4 Run `rubocop -A` and verify no style issues
+  - [x] 3.1 Modify `copy_habits` method to call `HabitEntryCreator` after saving each copied habit
+  - [x] 3.2 Pass target_year and target_month to `HabitEntryCreator`
+  - [x] 3.3 Verify entries are created for all days in target month
+  - [x] 3.4 Run `rubocop -A` and verify no style issues
 
 - [ ] 4.0 Add comprehensive tests for both solutions
   - [ ] 4.1 Create `test/services/habit_entry_creator_test.rb` with tests for:
