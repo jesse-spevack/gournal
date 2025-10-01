@@ -25,7 +25,7 @@ When users copy habits to a new month, only `Habit` records are created but not 
   - [x] 2.5 Call auto-heal method from `fetch_habits` before returning habits
   - [x] 2.6 Run `rubocop -A` and verify no style issues
 
-- [ ] 3.0 Fix HabitCopyService to create habit entries
+- [x] 3.0 Fix HabitCopyService to create habit entries
   - [x] 3.1 Modify `copy_habits` method to call `HabitEntryCreator` after saving each copied habit
   - [x] 3.2 Pass target_year and target_month to `HabitEntryCreator`
   - [x] 3.3 Verify entries are created for all days in target month
