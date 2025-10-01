@@ -9,7 +9,7 @@ When users copy habits to a new month, only `Habit` records are created but not 
 
 ## Tasks
 
-- [ ] 1.0 Extract habit entry creation logic into shared service
+- [x] 1.0 Extract habit entry creation logic into shared service
   - [x] 1.1 Create `HabitEntryCreator` service following existing service pattern (class method `self.call`)
   - [x] 1.2 Implement `create_entries_for_month` method that takes habit, year, month parameters
   - [x] 1.3 Include random style assignment logic (checkbox_style and check_style based on habit.check_type)
@@ -18,12 +18,12 @@ When users copy habits to a new month, only `Habit` records are created but not 
   - [x] 1.6 Run `rubocop -A` and verify no style issues
 
 - [ ] 2.0 Implement auto-heal in HabitTrackerDataBuilder
-  - [ ] 2.1 Add private method `ensure_habit_entries_exist(habits)` in `HabitTrackerDataBuilder`
-  - [ ] 2.2 Iterate through habits and identify missing days for each habit
-  - [ ] 2.3 Call `HabitEntryCreator` to bulk create missing entries
-  - [ ] 2.4 Reload habit associations if entries were created
-  - [ ] 2.5 Call auto-heal method from `fetch_habits` before returning habits
-  - [ ] 2.6 Run `rubocop -A` and verify no style issues
+  - [x] 2.1 Add private method `ensure_habit_entries_exist(habits)` in `HabitTrackerDataBuilder`
+  - [x] 2.2 Iterate through habits and identify missing days for each habit
+  - [x] 2.3 Call `HabitEntryCreator` to bulk create missing entries
+  - [x] 2.4 Reload habit associations if entries were created
+  - [x] 2.5 Call auto-heal method from `fetch_habits` before returning habits
+  - [x] 2.6 Run `rubocop -A` and verify no style issues
 
 - [ ] 3.0 Fix HabitCopyService to create habit entries
   - [ ] 3.1 Modify `copy_habits` method to call `HabitEntryCreator` after saving each copied habit

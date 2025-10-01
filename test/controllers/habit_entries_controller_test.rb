@@ -395,8 +395,9 @@ class HabitEntriesControllerTest < ActionDispatch::IntegrationTest
     get habit_entries_month_path(year: 2025, month: 10)
     etag1 = response.headers["ETag"]
 
-    # Create habit entry
-    HabitEntry.create!(habit: habit, day: 1, completed: true)
+    # Update habit entry (auto-heal creates entries with completed: false)
+    entry = HabitEntry.find_by!(habit: habit, day: 1)
+    entry.update!(completed: true)
 
     # Get new ETag after data change
     get habit_entries_month_path(year: 2025, month: 10)
