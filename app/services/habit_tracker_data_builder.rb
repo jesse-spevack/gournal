@@ -101,13 +101,6 @@ class HabitTrackerDataBuilder
   end
 
   def random_check_style_for_habit(habit)
-    case habit.check_type
-    when "x_marks"
-      HabitEntry.check_styles.keys.select { |k| k.start_with?("x_style_") }.sample
-    when "blots"
-      HabitEntry.check_styles.keys.select { |k| k.start_with?("blot_style_") }.sample
-    else
-      HabitEntry.check_styles.keys.sample
-    end
+    HabitEntry.random_check_style_for(habit.check_type)
   end
 end
