@@ -238,17 +238,14 @@ class HabitTrackingCacheTest < ActionDispatch::IntegrationTest
       check_type: :x_marks
     )
 
-    # Get initial ETag (no entries)
+    # Get initial ETag (entries auto-created with completed: false)
     get habit_entries_month_path(year: 2025, month: 10)
     etag_before = response.headers["ETag"]
 
-    # Create a habit entry
+    # Update a habit entry
     travel 1.minute
-    HabitEntry.create!(
-      habit: habit,
-      day: 1,
-      completed: true
-    )
+    entry = HabitEntry.find_by!(habit: habit, day: 1)
+    entry.update!(completed: true)
 
     # Get ETag after entry creation
     get habit_entries_month_path(year: 2025, month: 10)

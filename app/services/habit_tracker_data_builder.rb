@@ -27,10 +27,14 @@ class HabitTrackerDataBuilder
   private
 
   def fetch_habits
-    @habits ||= @user.habits
+    habits = @user.habits
       .includes(:habit_entries)
       .where(year: @year, month: @month, active: true)
       .ordered
+
+    ensure_habit_entries_exist(habits)
+
+    @habits ||= habits
   end
 
   def build_entries_lookup
@@ -57,6 +61,55 @@ class HabitTrackerDataBuilder
   end
 
   def days_in_month
-    Date.new(@year, @month, -1).day
+    Time.days_in_month(@month, @year)
+  end
+
+  def ensure_habit_entries_exist(habits)
+    return if habits.empty?
+
+    habit_ids_to_reload = []
+
+    habits.each do |habit|
+      existing_days = habit.habit_entries.map(&:day).to_set
+      missing_days = (1..days_in_month).to_a - existing_days.to_a
+
+      if missing_days.any?
+        create_missing_entries(habit, missing_days)
+        habit_ids_to_reload << habit.id
+      end
+    end
+
+    return if habit_ids_to_reload.empty?
+
+    # Reload habits with entries in a single query
+    reloaded_habits = Habit.includes(:habit_entries).where(id: habit_ids_to_reload).index_by(&:id)
+    habits.each do |habit|
+      next unless habit_ids_to_reload.include?(habit.id)
+
+      reloaded = reloaded_habits[habit.id]
+      habit.association(:habit_entries).target = reloaded.habit_entries.to_a
+    end
+  end
+
+  def create_missing_entries(habit, missing_days)
+    now = Time.current
+
+    entries_data = missing_days.map do |day|
+      {
+        habit_id: habit.id,
+        day: day,
+        completed: false,
+        checkbox_style: HabitEntryStyleSelector.random_checkbox_style,
+        check_style: random_check_style_for_habit(habit),
+        created_at: now,
+        updated_at: now
+      }
+    end
+
+    HabitEntry.insert_all(entries_data)
+  end
+
+  def random_check_style_for_habit(habit)
+    HabitEntryStyleSelector.random_check_style_for(habit.check_type)
   end
 end

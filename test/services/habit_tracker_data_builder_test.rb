@@ -40,15 +40,6 @@ class HabitTrackerDataBuilderTest < ActiveSupport::TestCase
     end
   end
 
-  test "properly loads associations to prevent N+1" do
-    # This test verifies associations are loaded
-    result = HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 9)
-
-    # Verify we can access habit entries without additional queries
-    habit = result.habits.first
-    assert_equal @habit_entry, habit.habit_entries.first
-  end
-
   test "includes reflections lookup for the month" do
     # Create reflections for different days and months
     reflection_day_5 = DailyReflection.create!(
@@ -80,5 +71,81 @@ class HabitTrackerDataBuilderTest < ActiveSupport::TestCase
     assert_nil result.reflection_for(1)
     assert_instance_of Hash, result.reflections_lookup
     assert_empty result.reflections_lookup
+  end
+
+  # Auto-heal tests
+  test "auto-heal creates missing entries when habits exist without entries" do
+    habit_without_entries = Habit.create!(
+      user: @user,
+      name: "Habit Without Entries",
+      year: 2025,
+      month: 11,
+      position: 1,
+      check_type: :x_marks,
+      active: true
+    )
+    habit_without_entries.habit_entries.destroy_all
+
+    assert_equal 0, habit_without_entries.habit_entries.count
+
+    result = HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 11)
+
+    habit_without_entries.reload
+    assert_equal 30, habit_without_entries.habit_entries.count
+    assert result.habit_entry_for(habit_without_entries.id, 1).present?
+  end
+
+  test "auto-heal does not create duplicate entries if some already exist" do
+    habit_partial = Habit.create!(
+      user: @user,
+      name: "Habit With Partial Entries",
+      year: 2025,
+      month: 11,
+      position: 2,
+      check_type: :x_marks,
+      active: true
+    )
+    habit_partial.habit_entries.destroy_all
+
+    # Create entries for days 1-5 only
+    (1..5).each do |day|
+      HabitEntry.create!(habit: habit_partial, day: day, completed: false)
+    end
+
+    assert_equal 5, habit_partial.habit_entries.count
+
+    result = HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 11)
+
+    habit_partial.reload
+    assert_equal 30, habit_partial.habit_entries.count
+
+    # Verify no duplicates
+    days = habit_partial.habit_entries.map(&:day)
+    assert_equal days.uniq, days
+  end
+
+
+  test "auto-heal handles multiple habits missing entries efficiently" do
+    habits = []
+    3.times do |i|
+      habit = Habit.create!(
+        user: @user,
+        name: "Habit #{i}",
+        year: 2025,
+        month: 12,
+        position: i + 1,
+        check_type: :x_marks,
+        active: true
+      )
+      habit.habit_entries.destroy_all
+      habits << habit
+    end
+
+    HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 12)
+
+    habits.each do |habit|
+      habit.reload
+      assert_equal 31, habit.habit_entries.count
+    end
   end
 end

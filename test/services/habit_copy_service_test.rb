@@ -142,4 +142,12 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     assert_equal "x_marks", exercise_copy.check_type
     assert_equal "blots", read_copy.check_type
   end
+
+  test "creates habit entries when copying habits" do
+    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
+
+    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
+
+    assert_equal 31, copied_habits.first.habit_entries.count
+  end
 end
