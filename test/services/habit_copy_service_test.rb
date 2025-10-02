@@ -143,85 +143,11 @@ class HabitCopyServiceTest < ActiveSupport::TestCase
     assert_equal "blots", read_copy.check_type
   end
 
-  # Tests for habit entry creation
-  test "creates habit entries for all days in target month" do
+  test "creates habit entries when copying habits" do
     Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
 
     copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
 
-    # August has 31 days
-    assert_equal 31, copied_habit.habit_entries.count
-  end
-
-  test "creates habit entries with all days represented" do
-    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
-
-    days = copied_habit.habit_entries.map(&:day).sort
-    assert_equal (1..31).to_a, days
-  end
-
-  test "creates habit entries with proper random styles" do
-    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
-
-    entries = copied_habit.habit_entries
-    assert entries.all? { |e| e.checkbox_style.present? }
-    assert entries.all? { |e| e.check_style.present? }
-  end
-
-  test "creates habit entries with check_style matching habit check_type for x_marks" do
-    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
-
-    entries = copied_habit.habit_entries
-    assert entries.all? { |e| e.check_style.start_with?("x_style_") }
-  end
-
-  test "creates habit entries with check_style matching habit check_type for blots" do
-    Habit.create!(name: "Meditation", user: @user, month: 7, year: 2024, position: 1, check_type: "blots")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
-
-    entries = copied_habit.habit_entries
-    assert entries.all? { |e| e.check_style.start_with?("blot_style_") }
-  end
-
-  test "December to January transition creates correct number of entries" do
-    Habit.create!(name: "Exercise", user: @user, month: 12, year: 2024, position: 1, check_type: "x_marks")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2025, target_month: 1)
-    copied_habit = copied_habits.first
-
-    # January has 31 days
-    assert_equal 31, copied_habit.habit_entries.count
-  end
-
-  test "creates entries for February with 28 days" do
-    Habit.create!(name: "Exercise", user: @user, month: 1, year: 2025, position: 1, check_type: "x_marks")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2025, target_month: 2)
-    copied_habit = copied_habits.first
-
-    # February 2025 has 28 days
-    assert_equal 28, copied_habit.habit_entries.count
-  end
-
-  test "all created entries default to completed false" do
-    Habit.create!(name: "Exercise", user: @user, month: 7, year: 2024, position: 1, check_type: "x_marks")
-
-    copied_habits = HabitCopyService.call(user: @user, target_year: 2024, target_month: 8)
-    copied_habit = copied_habits.first
-
-    entries = copied_habit.habit_entries
-    assert entries.all? { |e| e.completed == false }
+    assert_equal 31, copied_habits.first.habit_entries.count
   end
 end

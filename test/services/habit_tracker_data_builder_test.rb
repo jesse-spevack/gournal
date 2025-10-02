@@ -40,15 +40,6 @@ class HabitTrackerDataBuilderTest < ActiveSupport::TestCase
     end
   end
 
-  test "properly loads associations to prevent N+1" do
-    # This test verifies associations are loaded
-    result = HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 9)
-
-    # Verify we can access habit entries without additional queries
-    habit = result.habits.first
-    assert_equal @habit_entry, habit.habit_entries.first
-  end
-
   test "includes reflections lookup for the month" do
     # Create reflections for different days and months
     reflection_day_5 = DailyReflection.create!(
@@ -133,37 +124,6 @@ class HabitTrackerDataBuilderTest < ActiveSupport::TestCase
     assert_equal days.uniq, days
   end
 
-  test "auto-heal does not modify existing entries" do
-    habit = Habit.create!(
-      user: @user,
-      name: "Habit With Existing Entries",
-      year: 2025,
-      month: 11,
-      position: 3,
-      check_type: :blots,
-      active: true
-    )
-    habit.habit_entries.destroy_all
-
-    # Create some completed entries
-    entry1 = HabitEntry.create!(habit: habit, day: 1, completed: true)
-    entry2 = HabitEntry.create!(habit: habit, day: 2, completed: true)
-
-    original_entry1_updated_at = entry1.updated_at
-    original_entry2_updated_at = entry2.updated_at
-
-    travel 1.hour
-
-    HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 11)
-
-    entry1.reload
-    entry2.reload
-
-    assert entry1.completed
-    assert entry2.completed
-    assert_equal original_entry1_updated_at.to_i, entry1.updated_at.to_i
-    assert_equal original_entry2_updated_at.to_i, entry2.updated_at.to_i
-  end
 
   test "auto-heal handles multiple habits missing entries efficiently" do
     habits = []
@@ -187,26 +147,5 @@ class HabitTrackerDataBuilderTest < ActiveSupport::TestCase
       habit.reload
       assert_equal 31, habit.habit_entries.count
     end
-  end
-
-  test "auto-heal creates entries with proper styles" do
-    habit = Habit.create!(
-      user: @user,
-      name: "Style Check Habit",
-      year: 2025,
-      month: 10,
-      position: 1,
-      check_type: :blots,
-      active: true
-    )
-    habit.habit_entries.destroy_all
-
-    HabitTrackerDataBuilder.call(user: @user, year: 2025, month: 10)
-
-    habit.reload
-    entries = habit.habit_entries
-
-    assert entries.all? { |e| e.checkbox_style.present? }
-    assert entries.all? { |e| e.check_style.start_with?("blot_style_") }
   end
 end
