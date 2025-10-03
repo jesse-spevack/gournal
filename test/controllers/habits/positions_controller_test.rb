@@ -157,4 +157,34 @@ class Habits::PositionsControllerTest < ActionDispatch::IntegrationTest
     response_data = JSON.parse(response.body)
     assert_equal "Invalid positions data", response_data["error"]
   end
+
+  test "should pass target_year and target_month params to service" do
+    # Create habits in February 2024
+    travel_to Date.new(2024, 2, 1) do
+      @feb_habit1 = @user.habits.create!(name: "Feb Habit 1", year: 2024, month: 2, position: 1, check_type: :x_marks, active: true)
+      @feb_habit2 = @user.habits.create!(name: "Feb Habit 2", year: 2024, month: 2, position: 2, check_type: :x_marks, active: true)
+    end
+
+    positions_data = [
+      { id: @feb_habit1.id, position: 2 },
+      { id: @feb_habit2.id, position: 1 }
+    ]
+
+    # Send request with target_year and target_month params
+    travel_to Date.new(2024, 3, 1) do  # Current date is March
+      patch habits_positions_path, params: {
+        positions: positions_data,
+        target_year: 2024,
+        target_month: 2
+      }
+
+      assert_response :ok
+    end
+
+    # Verify February habits were updated
+    @feb_habit1.reload
+    @feb_habit2.reload
+    assert_equal 2, @feb_habit1.position
+    assert_equal 1, @feb_habit2.position
+  end
 end
