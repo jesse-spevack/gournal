@@ -22,16 +22,16 @@ Fix bugs in habit re-ordering functionality where position updates ignore target
   - [x] 2.3 Update `habits_scope` method to use provided year/month or fall back to current date
   - [x] 2.4 Ensure the logic properly handles both cases: explicit year/month and default current date
 
-- [ ] 3.0 Update Habits::PositionsController to pass target year/month to service
+- [x] 3.0 Update Habits::PositionsController to pass target year/month to service
   - [x] 3.1 Extract `target_year` and `target_month` from params in the `update` action
   - [x] 3.2 Pass `year:` and `month:` to `HabitPositionUpdater.call` (only if present in params)
   - [x] 3.3 Handle cases where params are missing (should fall back to current month behavior)
 
 - [ ] 4.0 Update SettingsController to provide year/month context variables
-  - [ ] 4.1 Set `@target_year = current_date.year` in the `index` action
-  - [ ] 4.2 Set `@target_month = current_date.month` in the `index` action
-  - [ ] 4.3 Set same variables in the `update` action (within the else block for error rendering)
-  - [ ] 4.4 Verify the `_habit_list.html.erb` partial correctly receives these variables
+  - [x] 4.1 Set `@target_year = current_date.year` in the `index` action
+  - [x] 4.2 Set `@target_month = current_date.month` in the `index` action
+  - [x] 4.3 Set same variables in the `update` action (within the else block for error rendering)
+  - [x] 4.4 Verify the `_habit_list.html.erb` partial correctly receives these variables
 
 - [ ] 5.0 Verify all tests pass and manually test the fix
   - [ ] 5.1 Run `bin/rails test test/services/habit_position_updater_test.rb` - all tests should pass
