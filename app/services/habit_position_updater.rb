@@ -1,11 +1,13 @@
 class HabitPositionUpdater
-  def self.call(user:, positions:)
-    new(user: user, positions: positions).call
+  def self.call(user:, positions:, year: nil, month: nil)
+    new(user: user, positions: positions, year: year, month: month).call
   end
 
-  def initialize(user:, positions:)
+  def initialize(user:, positions:, year: nil, month: nil)
     @user = user
     @positions = positions
+    @year = year
+    @month = month
   end
 
   def call
@@ -57,8 +59,9 @@ class HabitPositionUpdater
 
   def habits_scope
     @habits_scope ||= begin
-      current_date = Date.current
-      @user.habits.where(year: current_date.year, month: current_date.month, active: true)
+      target_year = @year || Date.current.year
+      target_month = @month || Date.current.month
+      @user.habits.where(year: target_year, month: target_month, active: true)
     end
   end
 
