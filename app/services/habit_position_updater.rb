@@ -35,8 +35,9 @@ class HabitPositionUpdater
   end
 
   def reset_positions_to_negative
+    now = Time.current
     habits_scope.each_with_index do |habit, index|
-      habit.update_column(:position, -(index + 1))
+      habit.update_columns(position: -(index + 1), updated_at: now)
     end
   end
 
@@ -50,7 +51,7 @@ class HabitPositionUpdater
     habit = find_habit_by_id(position_data[:id])
     return unless habit && !position_data[:position].nil?
 
-    habit.update_column(:position, position_data[:position].to_i)
+    habit.update_columns(position: position_data[:position].to_i, updated_at: Time.current)
   end
 
   def find_habit_by_id(habit_id)
