@@ -3,6 +3,8 @@ class SettingsController < ApplicationController
     @user = Current.user
     @onboarding_state = @user.onboarding_state
     current_date = Date.current
+    @target_year = current_date.year
+    @target_month = current_date.month
     @habits = Current.user.habits
                      .where(year: current_date.year, month: current_date.month, active: true)
                      .order(:position)
@@ -27,6 +29,8 @@ class SettingsController < ApplicationController
       # Re-render index with errors
       @onboarding_state = @user.onboarding_state
       current_date = Date.current
+      @target_year = current_date.year
+      @target_month = current_date.month
       @habits = Current.user.habits
                        .where(year: current_date.year, month: current_date.month, active: true)
                        .order(:position)
