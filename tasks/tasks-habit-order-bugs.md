@@ -37,8 +37,8 @@ Fix bugs in habit re-ordering functionality where position updates ignore target
   - [x] 5.1 Run `bin/rails test test/services/habit_position_updater_test.rb` - all tests should pass
   - [x] 5.2 Run `bin/rails test test/controllers/habits/positions_controller_test.rb` - all tests should pass
   - [x] 5.3 Run `rubocop -A` to fix any style issues
-  - [ ] 5.4 Manually test reordering habits in settings view (should work for current month)
-  - [ ] 5.5 Manually test that future month habit creation and setup works correctly
+  - [x] 5.4 Manually test reordering habits in settings view (should work for current month)
+  - [x] 5.5 Manually test that future month habit creation and setup works correctly
 
 ## Relevant Files
 
