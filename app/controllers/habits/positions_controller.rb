@@ -1,8 +1,8 @@
 class Habits::PositionsController < ApplicationController
   def update
     habit_positions = params.require(:positions)
-    target_year = params[:target_year]
-    target_month = params[:target_month]
+    target_year = params[:target_year]&.to_i
+    target_month = params[:target_month]&.to_i
 
     result = HabitPositionUpdater.call(
       user: Current.user,
