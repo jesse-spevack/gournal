@@ -4,8 +4,8 @@
     <div class="day-row" data-day="<%= day %>">
       
       <%# Day Number %>
-      <% today = Date.current.day %>
-      <% is_current_month = tracker_data.year == Date.current.year && tracker_data.month == Date.current.month %>
+      <% today = current_date.day %>
+      <% is_current_month = tracker_data.year == current_date.year && tracker_data.month == current_date.month %>
       <div class="day-number<%= ' day-number--today' if is_current_month && day == today %>">
         <% if is_current_month && day == today %>
           <span class="today-indicator">•</span>
