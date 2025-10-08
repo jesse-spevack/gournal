@@ -5,8 +5,13 @@ class TimezoneController < ApplicationController
     timezone = params[:timezone]
 
     if ActiveSupport::TimeZone::MAPPING.value?(timezone)
-      session[:user_timezone] = timezone
-      cookies[:tz] = { value: timezone, expires: 1.year }
+      cookies[:tz] = {
+        value: timezone,
+        expires: 1.year,
+        httponly: true,
+        secure: Rails.env.production?,
+        same_site: :lax
+      }
       Current.timezone = timezone
       head :ok
     else

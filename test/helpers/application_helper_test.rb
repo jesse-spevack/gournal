@@ -6,11 +6,9 @@ class ApplicationHelperTest < ActionView::TestCase
 
     Time.use_zone("UTC") do
       travel_to Time.zone.parse("2025-10-08 06:00:00") do
-        date = current_date
-
-        assert_equal 2025, date.year
-        assert_equal 10, date.month
-        assert_equal 8, date.day
+        assert_equal 2025, current_date.year
+        assert_equal 10, current_date.month
+        assert_equal 8, current_date.day
       end
     end
   end
@@ -20,11 +18,9 @@ class ApplicationHelperTest < ActionView::TestCase
 
     Time.use_zone("UTC") do
       travel_to Time.zone.parse("2025-10-08 12:00:00") do
-        date = current_date
-
-        assert_equal 2025, date.year
-        assert_equal 10, date.month
-        assert_equal 8, date.day
+        assert_equal 2025, current_date.year
+        assert_equal 10, current_date.month
+        assert_equal 8, current_date.day
       end
     end
   end

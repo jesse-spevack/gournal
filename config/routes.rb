@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   patch "settings" => "settings#update"
 
   # Timezone detection
-  post "timezone" => "timezone#create"
+  resource :timezone, only: :create, controller: "timezone"
 
   # Onboarding (authenticated)
   resource :onboarding, only: [ :destroy ]

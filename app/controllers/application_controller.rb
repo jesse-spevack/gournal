@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_timezone
-    Current.timezone = cookies[:tz]
+    tz = cookies[:tz]
+    Current.timezone = tz if tz.present? && ActiveSupport::TimeZone::MAPPING.value?(tz)
   end
 end
