@@ -5,20 +5,20 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
 
 ## Tasks
 
-- [ ] 1.0 Add timezone attribute to Current model and configure application-wide timezone handling
+- [x] 1.0 Add timezone attribute to Current model and configure application-wide timezone handling
   - [x] 1.1 Add `timezone` attribute to `app/models/current.rb`
   - [x] 1.2 Add `timezone` getter method with 'UTC' fallback in `Current` model
   - [x] 1.3 Add `set_timezone` before_action in `ApplicationController`
   - [x] 1.4 Implement `set_timezone` method to read from cookie and set `Current.timezone`
 
 - [ ] 2.0 Create Stimulus controller for browser timezone detection
-  - [ ] 2.1 Create `app/javascript/controllers/timezone_controller.js`
-  - [ ] 2.2 Implement `connect()` method to detect timezone using `Intl.DateTimeFormat().resolvedOptions().timeZone`
-  - [ ] 2.3 Store detected timezone in `sessionStorage` for client-side tracking
-  - [ ] 2.4 Implement `sendTimezoneToServer()` method to POST timezone to `/timezone` endpoint
-  - [ ] 2.5 Add CSRF token handling in fetch request headers
-  - [ ] 2.6 Track sent timezone in `sessionStorage` to avoid redundant requests
-  - [ ] 2.7 Add `data-controller="timezone"` to `<body>` tag in `app/views/layouts/application.html.erb`
+  - [x] 2.1 Create `app/javascript/controllers/timezone_controller.js`
+  - [x] 2.2 Implement `connect()` method to detect timezone using `Intl.DateTimeFormat().resolvedOptions().timeZone`
+  - [x] 2.3 Store detected timezone in `sessionStorage` for client-side tracking
+  - [x] 2.4 Implement `sendTimezoneToServer()` method to POST timezone to `/timezone` endpoint
+  - [x] 2.5 Add CSRF token handling in fetch request headers
+  - [x] 2.6 Track sent timezone in `sessionStorage` to avoid redundant requests
+  - [x] 2.7 Add `data-controller="timezone"` to `<body>` tag in `app/views/layouts/application.html.erb`
 
 - [ ] 3.0 Create TimezoneController for storing user timezone preferences
   - [ ] 3.1 Create `app/controllers/timezone_controller.rb`
