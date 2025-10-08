@@ -1,4 +1,6 @@
 class TimezoneController < ApplicationController
+  allow_unauthenticated_access
+
   def create
     timezone = params[:timezone]
 

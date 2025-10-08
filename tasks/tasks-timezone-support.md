@@ -29,7 +29,7 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
   - [x] 3.6 Return appropriate HTTP status codes (200 for success, 422 for invalid)
   - [x] 3.7 Add `post '/timezone', to: 'timezone#create'` route in `config/routes.rb`
 
-- [ ] 4.0 Add current_date helper to ApplicationHelper and update views
+- [x] 4.0 Add current_date helper to ApplicationHelper and update views
   - [x] 4.1 Create `current_date` helper method in `app/helpers/application_helper.rb`
   - [x] 4.2 Implement helper to use `Time.use_zone(Current.timezone) { Date.current }`
   - [x] 4.3 Update `app/views/shared/_habit_grid_rows.html.erb` to use `current_date` helper
@@ -38,17 +38,17 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
   - [x] 4.6 Review and update any other views using `Date.current` if needed
 
 - [ ] 5.0 Testing and validation
-  - [ ] 5.1 Create `test/controllers/timezone_controller_test.rb`
-  - [ ] 5.2 Write test for storing valid timezone in session and cookie
-  - [ ] 5.3 Write test for rejecting invalid timezone
-  - [ ] 5.4 Write test for verifying `Current.timezone` is set
-  - [ ] 5.5 Create `test/helpers/application_helper_test.rb` (if not exists)
-  - [ ] 5.6 Write test for `current_date` helper with different timezones
-  - [ ] 5.7 Test that helper falls back to UTC when no timezone set
-  - [ ] 5.8 Run `rubocop -A` to fix any style issues
-  - [ ] 5.9 Run full test suite to ensure no regressions
-  - [ ] 5.10 Manual testing: clear cookies, reload page, verify timezone is detected and stored
-  - [ ] 5.11 Manual testing: verify "today" dot appears on correct day in Mountain Time
+  - [x] 5.1 Create `test/controllers/timezone_controller_test.rb`
+  - [x] 5.2 Write test for storing valid timezone in session and cookie
+  - [x] 5.3 Write test for rejecting invalid timezone
+  - [x] 5.4 Write test for verifying `Current.timezone` is set
+  - [x] 5.5 Create `test/helpers/application_helper_test.rb` (if not exists)
+  - [x] 5.6 Write test for `current_date` helper with different timezones
+  - [x] 5.7 Test that helper falls back to UTC when no timezone set
+  - [x] 5.8 Run `rubocop -A` to fix any style issues
+  - [x] 5.9 Run full test suite to ensure no regressions
+  - [x] 5.10 Manual testing: clear cookies, reload page, verify timezone is detected and stored
+  - [x] 5.11 Manual testing: verify "today" dot appears on correct day in Mountain Time
 
 ## Relevant Files
 
