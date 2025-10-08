@@ -11,7 +11,7 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
   - [x] 1.3 Add `set_timezone` before_action in `ApplicationController`
   - [x] 1.4 Implement `set_timezone` method to read from cookie and set `Current.timezone`
 
-- [ ] 2.0 Create Stimulus controller for browser timezone detection
+- [x] 2.0 Create Stimulus controller for browser timezone detection
   - [x] 2.1 Create `app/javascript/controllers/timezone_controller.js`
   - [x] 2.2 Implement `connect()` method to detect timezone using `Intl.DateTimeFormat().resolvedOptions().timeZone`
   - [x] 2.3 Store detected timezone in `sessionStorage` for client-side tracking
@@ -21,13 +21,13 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
   - [x] 2.7 Add `data-controller="timezone"` to `<body>` tag in `app/views/layouts/application.html.erb`
 
 - [ ] 3.0 Create TimezoneController for storing user timezone preferences
-  - [ ] 3.1 Create `app/controllers/timezone_controller.rb`
-  - [ ] 3.2 Implement `create` action to handle POST requests
-  - [ ] 3.3 Add timezone validation using `ActiveSupport::TimeZone::MAPPING.value?`
-  - [ ] 3.4 Store valid timezone in both session and persistent cookie (1 year expiry)
-  - [ ] 3.5 Set `Current.timezone` immediately in the response
-  - [ ] 3.6 Return appropriate HTTP status codes (200 for success, 422 for invalid)
-  - [ ] 3.7 Add `post '/timezone', to: 'timezone#create'` route in `config/routes.rb`
+  - [x] 3.1 Create `app/controllers/timezone_controller.rb`
+  - [x] 3.2 Implement `create` action to handle POST requests
+  - [x] 3.3 Add timezone validation using `ActiveSupport::TimeZone::MAPPING.value?`
+  - [x] 3.4 Store valid timezone in both session and persistent cookie (1 year expiry)
+  - [x] 3.5 Set `Current.timezone` immediately in the response
+  - [x] 3.6 Return appropriate HTTP status codes (200 for success, 422 for invalid)
+  - [x] 3.7 Add `post '/timezone', to: 'timezone#create'` route in `config/routes.rb`
 
 - [ ] 4.0 Add current_date helper to ApplicationHelper and update views
   - [ ] 4.1 Create `current_date` helper method in `app/helpers/application_helper.rb`

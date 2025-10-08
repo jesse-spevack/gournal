@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   get "settings" => "settings#index", as: :settings
   patch "settings" => "settings#update"
 
+  # Timezone detection
+  post "timezone" => "timezone#create"
+
   # Onboarding (authenticated)
   resource :onboarding, only: [ :destroy ]
 
