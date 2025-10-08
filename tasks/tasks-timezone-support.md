@@ -20,7 +20,7 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
   - [x] 2.6 Track sent timezone in `sessionStorage` to avoid redundant requests
   - [x] 2.7 Add `data-controller="timezone"` to `<body>` tag in `app/views/layouts/application.html.erb`
 
-- [ ] 3.0 Create TimezoneController for storing user timezone preferences
+- [x] 3.0 Create TimezoneController for storing user timezone preferences
   - [x] 3.1 Create `app/controllers/timezone_controller.rb`
   - [x] 3.2 Implement `create` action to handle POST requests
   - [x] 3.3 Add timezone validation using `ActiveSupport::TimeZone::MAPPING.value?`
@@ -30,12 +30,12 @@ Implement automatic timezone detection using the browser's `Intl.DateTimeFormat(
   - [x] 3.7 Add `post '/timezone', to: 'timezone#create'` route in `config/routes.rb`
 
 - [ ] 4.0 Add current_date helper to ApplicationHelper and update views
-  - [ ] 4.1 Create `current_date` helper method in `app/helpers/application_helper.rb`
-  - [ ] 4.2 Implement helper to use `Time.use_zone(Current.timezone) { Date.current }`
-  - [ ] 4.3 Update `app/views/shared/_habit_grid_rows.html.erb` to use `current_date` helper
-  - [ ] 4.4 Replace `Date.current.day` with `current_date.day` for today calculation
-  - [ ] 4.5 Replace `Date.current.year` and `Date.current.month` with `current_date.year` and `current_date.month`
-  - [ ] 4.6 Review and update any other views using `Date.current` if needed
+  - [x] 4.1 Create `current_date` helper method in `app/helpers/application_helper.rb`
+  - [x] 4.2 Implement helper to use `Time.use_zone(Current.timezone) { Date.current }`
+  - [x] 4.3 Update `app/views/shared/_habit_grid_rows.html.erb` to use `current_date` helper
+  - [x] 4.4 Replace `Date.current.day` with `current_date.day` for today calculation
+  - [x] 4.5 Replace `Date.current.year` and `Date.current.month` with `current_date.year` and `current_date.month`
+  - [x] 4.6 Review and update any other views using `Date.current` if needed
 
 - [ ] 5.0 Testing and validation
   - [ ] 5.1 Create `test/controllers/timezone_controller_test.rb`

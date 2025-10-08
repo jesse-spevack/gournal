@@ -1,7 +1,7 @@
 <%# Bullet journal style habit list %>
-<div data-controller="context-menu" 
-     data-target-year="<%= @target_year || Date.current.year %>" 
-     data-target-month="<%= @target_month || Date.current.month %>">
+<div data-controller="context-menu"
+     data-target-year="<%= @target_year || current_date.year %>"
+     data-target-month="<%= @target_month || current_date.month %>">
   <ul class="habit-list">
     <% @habits.each do |habit| %>
       <li class="habit-item" 

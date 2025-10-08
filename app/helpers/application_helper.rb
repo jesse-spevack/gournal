@@ -65,4 +65,9 @@ module ApplicationHelper
       raise ArgumentError, "Invalid arguments: expected Date object or year/month integers"
     end
   end
+
+  # Get current date in user's timezone
+  def current_date
+    Time.use_zone(Current.timezone) { Date.current }
+  end
 end
