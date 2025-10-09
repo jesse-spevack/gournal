@@ -7,7 +7,7 @@ class TimezoneController < ApplicationController
     if ActiveSupport::TimeZone::MAPPING.value?(timezone)
       cookies[:tz] = {
         value: timezone,
-        expires: 1.year,
+        expires: 1.year.from_now,
         httponly: true,
         secure: Rails.env.production?,
         same_site: :lax
