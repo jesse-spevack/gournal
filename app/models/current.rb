@@ -3,6 +3,6 @@ class Current < ActiveSupport::CurrentAttributes
   delegate :user, to: :session, allow_nil: true
 
   def timezone
-    @timezone || "UTC"
+    super || "UTC"
   end
 end
