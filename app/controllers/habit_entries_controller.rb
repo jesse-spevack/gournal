@@ -17,10 +17,6 @@ class HabitEntriesController < ApplicationController
       month: month
     )
 
-    last_modified = HabitDataTimestamp.call(user: @current_user, year: year, month: month)
-    etag = ETagGenerator.call(user: @current_user, year: year, month: month, last_modified: last_modified)
-    fresh_when(etag: etag, last_modified: last_modified)
-
     setup_navigation_paths(year, month, current_date)
 
     render_empty_state if @current_user.nil?
