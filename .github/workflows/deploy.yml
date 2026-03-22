@@ -29,8 +29,21 @@ jobs:
 
       - name: Fetch secrets from Secret Manager
         run: |
-          echo "RAILS_MASTER_KEY=$(gcloud secrets versions access latest --secret=gournal-rails-master-key)" >> $GITHUB_ENV
-          echo "KAMAL_REGISTRY_PASSWORD=$(gcloud auth print-access-token)" >> $GITHUB_ENV
+          fetch_secret() {
+            local name=$1
+            local secret_name=$2
+            local value
+            value=$(gcloud secrets versions access latest --secret="$secret_name")
+            echo "::add-mask::$value"
+            echo "$name=$value" >> "$GITHUB_ENV"
+          }
+
+          fetch_secret RAILS_MASTER_KEY gournal-rails-master-key
+
+          # Generate OAuth2 access token for Artifact Registry
+          KAMAL_TOKEN=$(gcloud auth print-access-token)
+          echo "::add-mask::$KAMAL_TOKEN"
+          echo "KAMAL_REGISTRY_PASSWORD=$KAMAL_TOKEN" >> "$GITHUB_ENV"
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.10.0
