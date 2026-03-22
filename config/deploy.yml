@@ -7,7 +7,7 @@ image: very-normal/very-normal-repository-1/gournal
 # Deploy to these servers.
 servers:
   web:
-    - 34.171.73.161
+    - 34.63.167.166
   # job:
   #   hosts:
   #     - 192.168.0.1
