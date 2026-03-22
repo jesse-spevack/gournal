@@ -26,7 +26,7 @@ proxy:
 # Credentials for your image host.
 registry:
   server: us-docker.pkg.dev
-  username: _json_key_base64
+  username: oauth2accesstoken
   password:
     - KAMAL_REGISTRY_PASSWORD
 
