@@ -27,8 +27,13 @@ class MonthSetupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should copy habits and redirect to target month tracker" do
-    # Create some habits for the current month
+    # Target is next month; service copies from the month before target (i.e. current month)
     current_date = Date.current
+    target_date = current_date.next_month
+    target_year = target_date.year
+    target_month = target_date.month
+
+    # Create habits in the current month (source for copy)
     habit1 = @user.habits.create!(
       name: "Exercise",
       year: current_date.year,
@@ -45,9 +50,6 @@ class MonthSetupsControllerTest < ActionDispatch::IntegrationTest
       active: true,
       check_type: "x_marks"
     )
-
-    target_year = 2025
-    target_month = 10
 
     post month_setups_path, params: {
       strategy: "copy",
