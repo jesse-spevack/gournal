@@ -35,6 +35,7 @@ Rails.application.configure do
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
+  require_relative "../../lib/cloud_logging_formatter"
   cloud_logger = ActiveSupport::Logger.new(STDOUT)
   cloud_logger.formatter = CloudLoggingFormatter.new
   config.logger = ActiveSupport::TaggedLogging.new(cloud_logger)
