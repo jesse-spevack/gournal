@@ -62,4 +62,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Pin minitest < 6 to avoid DRb parallel test breakage
+  gem "minitest", "~> 5.0"
 end
