@@ -63,5 +63,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   # Pin minitest < 6 to avoid DRb parallel test breakage
-  gem "minitest", "~> 5.0"
+  gem "minitest", "~> 6.0"
 end
